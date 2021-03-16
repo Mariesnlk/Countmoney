@@ -22,7 +22,7 @@ public class GroupsService {
         return groupsList;
     }
 
-    public Groups getGroups(Integer id) {
+    public Groups getGroup(Integer id) {
         return groupsRepository.findById(id).orElse(null);
     }
 
@@ -31,7 +31,7 @@ public class GroupsService {
         groupsRepository.save(group);
     }
 
-    public void updateGroups(Groups groups, Integer id) {
+    public void updateGroup(Groups groups, Integer id) {
 
         groupsRepository.save(groups);
     }
