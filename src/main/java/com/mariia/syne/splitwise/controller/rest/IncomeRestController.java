@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("income")
+@RequestMapping("incomes")
 public class IncomeRestController {
         /*
-    GET     /income
-    GET     /income/1
-    POST    /income
-    PUT     /income/1
-    DELETE  /income/1
+    GET     /incomes
+    GET     /incomes/1
+    POST    /incomes
+    PUT     /incomes/1
+    DELETE  /incomes/1
     */
 
     @Autowired

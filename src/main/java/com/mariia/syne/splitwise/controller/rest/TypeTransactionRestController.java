@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("typeTransaction")
+@RequestMapping("typeTransactions")
 public class TypeTransactionRestController {
         /*
-    GET     /typeTransaction
-    GET     /typeTransaction/1
-    POST    /typeTransaction
-    PUT     /typeTransaction/1
-    DELETE  /typeTransaction/1
+    GET     /typeTransactions
+    GET     /typeTransactions/1
+    POST    /typeTransactions
+    PUT     /typeTransactions/1
+    DELETE  /typeTransactions/1
     */
 
     @Autowired
