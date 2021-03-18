@@ -21,9 +21,9 @@
 
                 <div class="col">
                     <a class="navbar-brand">
-                        <img src="../static/images/icon.png" width="50" height="50" class="d-inline-block"
-                             th:src="@{images/icon.png}"/>
-<!--                        <img th:src="@{/images/icon.png}"-->
+                        <img th:src="@{images/icon.png}" width="50" height="50" class="d-inline-block"/>
+<!--                        src="../static/images/icon.png"-->
+                        <!--                        <img th:src="@{/images/icon.png}"-->
 <!--                             alt="icon"-->
 <!--                             style="width:50px;height:50px;"-->
 <!--                             title="icon">-->
@@ -64,7 +64,7 @@
                 <h1 class="display-6 font-italic">Welcome to Splitwise App!</h1>
                 <p class="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and
                     efficiently about what's most interesting in this post's contents.</p>
-                <p class="lead mb-0"><a href="/login" class="text-black font-weight-bold">Registration</a></p>
+                <p class="lead mb-0"><a class="text-black font-weight-bold" href="/ui/users/create">Registration</a></p>
             </div>
         </div>
     </div>

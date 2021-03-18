@@ -1,7 +1,7 @@
 package com.mariia.syne.splitwise.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Groups {
@@ -11,6 +11,10 @@ public class Groups {
     private Integer id_group;
 
     private String name_group;
+
+    @OneToMany
+    @JoinColumn(name = "id_group")
+    private List<Users> users;
 
     public Groups() {
     }

@@ -1,13 +1,13 @@
 package com.mariia.syne.splitwise.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Users {
 
     @Id
-    private Integer id_user;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id_users;
 
     private String first_name;
 
@@ -19,13 +19,14 @@ public class Users {
 
     private String role;
 
-    //FK
-    private Integer id_group;
+    @ManyToOne
+    @JoinColumn(name = "id_group")
+    private Groups id_group;
 
     public Users() {
     }
 
-    public Users(String first_name, String last_name, String login, String password, String role, Integer id_group) {
+    public Users(String first_name, String last_name, String login, String password, String role, Groups id_group) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.login = login;
@@ -34,8 +35,8 @@ public class Users {
         this.id_group = id_group;
     }
 
-    public Users(Integer id_user, String first_name, String last_name, String login, String password, String role, Integer id_group) {
-        this.id_user = id_user;
+    public Users(Integer id_users, String first_name, String last_name, String login, String password, String role, Groups id_group) {
+        this.id_users = id_users;
         this.first_name = first_name;
         this.last_name = last_name;
         this.login = login;
@@ -45,12 +46,12 @@ public class Users {
     }
 
 
-    public void setId_user(Integer user) {
-        this.id_user = user;
+    public void setId_user(Integer users) {
+        this.id_users = users;
     }
 
     public Integer getId_user() {
-        return id_user;
+        return id_users;
     }
 
     public String getFirst_name() {
@@ -93,18 +94,18 @@ public class Users {
         this.role = role;
     }
 
-    public Integer getId_group() {
+    public Groups getId_group() {
         return id_group;
     }
 
-    public void setId_group(Integer id_group) {
+    public void setId_group(Groups id_group) {
         this.id_group = id_group;
     }
 
     @Override
     public String toString() {
         return "Users{" +
-                "id_user=" + id_user +
+                "id_user=" + id_users +
                 ", first_name='" + first_name + '\'' +
                 ", last_name='" + last_name + '\'' +
                 ", login='" + login + '\'' +
