@@ -1,6 +1,7 @@
 package com.mariia.syne.splitwise.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Users {
@@ -22,6 +23,14 @@ public class Users {
     @ManyToOne
     @JoinColumn(name = "id_group")
     private Groups id_group;
+
+    @OneToMany
+    @JoinColumn(name = "id_user")
+    private List<Income> incomes;
+
+    @OneToMany
+    @JoinColumn(name = "id_user")
+    private List<Transactions> transactions;
 
     public Users() {
     }

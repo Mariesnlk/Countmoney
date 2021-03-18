@@ -2,6 +2,9 @@ package com.mariia.syne.splitwise.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Entity
 public class TypeTransaction {
@@ -10,6 +13,10 @@ public class TypeTransaction {
     private Integer id_type_transaction;
 
     private String name_type_transaction;
+
+    @OneToMany
+    @JoinColumn(name = "id_type_transaction")
+    private List<Transactions> transactions;
 
     public TypeTransaction() {
     }

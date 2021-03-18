@@ -2,6 +2,8 @@ package com.mariia.syne.splitwise.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.util.Date;
 
 @Entity
@@ -21,16 +23,19 @@ public class Transactions {
 
     private Date period_to;
 
-    //FK
-    private Integer id_user;
+    @ManyToOne
+    @JoinColumn(name = "id_user")
+    private Users id_user;
 
-    //FK
-    private Integer id_type_transaction;
+    @ManyToOne
+    @JoinColumn(name = "id_type_transaction")
+    private TypeTransaction id_type_transaction;
 
     public Transactions() {
     }
 
-    public Transactions(Date date, String destination, double sum, Date period_from, Date period_to, Integer id_user, Integer id_type_transaction) {
+    public Transactions(Date date, String destination, double sum, Date period_from, Date period_to, Users id_user,
+                        TypeTransaction id_type_transaction) {
         this.date = date;
         this.destination = destination;
         this.sum = sum;
@@ -40,7 +45,8 @@ public class Transactions {
         this.id_type_transaction = id_type_transaction;
     }
 
-    public Transactions(Integer id_transaction, Date date, String destination, double sum, Date period_from, Date period_to, Integer id_user, Integer id_type_transaction) {
+    public Transactions(Integer id_transaction, Date date, String destination, double sum, Date period_from,
+                        Date period_to, Users id_user, TypeTransaction id_type_transaction) {
         this.id_transaction = id_transaction;
         this.date = date;
         this.destination = destination;
@@ -99,19 +105,19 @@ public class Transactions {
         this.period_to = period_to;
     }
 
-    public Integer getId_user() {
+    public Users getId_user() {
         return id_user;
     }
 
-    public void setId_user(Integer id_user) {
+    public void setId_user(Users id_user) {
         this.id_user = id_user;
     }
 
-    public Integer getId_type_transaction() {
+    public TypeTransaction getId_type_transaction() {
         return id_type_transaction;
     }
 
-    public void setId_type_transaction(Integer id_type_transaction) {
+    public void setId_type_transaction(TypeTransaction id_type_transaction) {
         this.id_type_transaction = id_type_transaction;
     }
 

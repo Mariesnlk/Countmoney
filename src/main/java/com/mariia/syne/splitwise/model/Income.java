@@ -1,33 +1,33 @@
 package com.mariia.syne.splitwise.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 public class Income {
 
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_income;
 
     private Date period_from_income;
 
     private Date period_to_income;
 
-    //FK
-    private Integer id_user;
+    @ManyToOne
+    @JoinColumn(name = "id_user")
+    private Users id_user;
 
     public Income() {
     }
 
-    public Income(Date period_from_income, Date period_to_income, Integer id_user) {
+    public Income(Date period_from_income, Date period_to_income, Users id_user) {
         this.period_from_income = period_from_income;
         this.period_to_income = period_to_income;
         this.id_user = id_user;
     }
 
-    public Income(Integer id_income, Date period_from_income, Date period_to_income, Integer id_user) {
+    public Income(Integer id_income, Date period_from_income, Date period_to_income, Users id_user) {
         this.id_income = id_income;
         this.period_from_income = period_from_income;
         this.period_to_income = period_to_income;
@@ -58,11 +58,11 @@ public class Income {
         this.period_to_income = period_to_income;
     }
 
-    public Integer getId_user() {
+    public Users getId_user() {
         return id_user;
     }
 
-    public void setId_user(Integer id_user) {
+    public void setId_user(Users id_user) {
         this.id_user = id_user;
     }
 
