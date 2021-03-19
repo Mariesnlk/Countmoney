@@ -38,11 +38,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .inMemoryAuthentication()
                 .withUser(adminLogin)
                 .password(passwordEncoder().encode(adminPassword))
-                .roles("ADMIN")
+                .roles("admin")
                 .and()
                 .withUser(userLogin)
                 .password(passwordEncoder().encode(userPassword))
-                .roles("USER");
+                .roles("user");
 
 //        auth
 //                .inMemoryAuthentication()
@@ -58,10 +58,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/index", "/ui/users/create", "/users").permitAll()
+                .antMatchers("/", "/index", "/ui/users/create", "/users", "/ui/users/list").permitAll()
 //                .antMatchers("/users/create","/orders/**").hasAnyRole("ADMIN","USER")
-                .antMatchers("/autos/**","/ui/autos/**").hasAnyRole("ADMIN")
-//                .antMatchers("/users/**","/projects/**","/tasks/**","/mvc-users/**","/mvc-projects/**","/mvc-tasks/**").hasAnyRole("ADMIN","MANAGER","QA","DEVELOPER","USER")
+//                .antMatchers("/ui/users/list").hasAnyRole("admin")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
