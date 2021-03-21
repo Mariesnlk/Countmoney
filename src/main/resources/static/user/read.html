@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <title>User Info</title>
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand navbar-dark bg-dark">
+
+    <div class="collapse navbar-collapse">
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col">
+                    <a class="navbar-brand">
+                        <img th:src="@{images/icon.png}" width="50" height="50" class="d-inline-block"/>
+                        Splitwise App
+                    </a>
+                </div>
+
+                <div class="col-8">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link">Choose language</a>
+                            <a href="?lang=ru">ru</a>
+                            <a href="?lang=en">en</a>
+                        </li>
+                        <li class="nav-item">
+                            <a th:href="@{'/ui/users/update/' + ${user_id}}">
+                                <img th:src="@{/images/icon_edit.gif}"
+                                     alt="modify"
+                                     style="width:27px;height:27px;"
+                                     title="modify"></a>
+                        </li>
+                        <li class="nav-item">
+                            <img th:src="@{/images/icon_delete.gif}"
+                                 alt="delete"
+                                 style="width:27px;height:27px;"
+                                 title="delete"
+                                 id="btnDeleteUser">
+
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col">
+                    <a class="btn btn-sm btn-outline-secondary" href="/login">Sign in</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="w3-container">
+    <p id="userId" hidden><span th:text="${user_id}"/></p>
+
+    <table id="users_entity_table" class="w3-table w3-striped ">
+        <tr>
+            <!--            <th>Property Name</th>-->
+            <!--            <th>Property Value</th>-->
+            <th></th>
+            <th></th>
+
+        </tr>
+    </table>
+    <br>
+    <br>
+
+    <form action="/ui/users/list">
+        <input type="submit" value="Back"/>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+
+        $.ajaxSetup({
+            cache: false,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }
+        });
+
+
+        $(document).delegate('#btnDeleteUser', 'click', function (event) {
+            event.preventDefault();
+
+            var userId = $('#userId').text();
+
+            console.log(userId);
+
+            alert("userId=" + userId);
+
+            alert("button Delete!");
+
+            $.ajax({
+                type: "DELETE",
+                url: '/users/' + userId,
+                //data: JSON.stringify(userDTO),
+                success: function (result) {
+                    location.href = "/ui/users/list";
+                    window.setTimeout(function () {
+                        location.reload();
+                    }, 1000);
+
+                    alert('SUCCESS!');
+                },
+                error: function (err) {
+                    alert('ERROR!');
+                }
+            });
+        });
+
+
+        function ajaxGet() {
+
+            var userId = $('#userId').text();
+
+            $.getJSON('/users/' + userId, function (json) {
+
+                console.log(json);
+                alert('json.firstName=' + json.first_name);
+
+                var tr = [];
+
+                tr.push('<tr>');
+                tr.push('<td>Id</td>');
+                tr.push('<td>' + json.id + '</td>');
+                tr.push('</tr>');
+
+                tr.push('<tr>');
+                tr.push('<td>First Name</td>');
+                tr.push('<td>' + json.first_name + '</td>');
+                tr.push('</tr>');
+
+                tr.push('<tr>');
+                tr.push('<td>Last Name</td>');
+                tr.push('<td>' + json.last_name + '</td>');
+                tr.push('</tr>');
+
+                tr.push('<tr>');
+                tr.push('<td>Login</td>');
+                tr.push('<td>' + json.login + '</td>');
+                tr.push('</tr>');
+
+                tr.push('<tr>');
+                tr.push('<td>Password</td>');
+                tr.push('<td>' + json.password + '</td>');
+                tr.push('</tr>');
+
+                tr.push('<tr>');
+                tr.push('<td>Role</td>');
+                tr.push('<td>' + json.role + '</td>');
+                tr.push('</tr>');
+
+                tr.push('<tr>');
+                tr.push('<td>Group</td>');
+                tr.push('<td>' + json.id_group + '</td>');
+                tr.push('</tr>');
+
+
+                $('#users_entity_table').append($(tr.join('')))
+            });
+        }
+
+        $(document).ready(function () {
+
+            ajaxGet();
+        });
+
+    </script>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>

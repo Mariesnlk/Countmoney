@@ -8,11 +8,11 @@
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
-    <title>Create User | Registration</title>
+    <title>User Update</title>
 
 </head>
-<body>
 
+<body>
 <nav class="navbar navbar-expand navbar-dark bg-dark">
 
     <div class="collapse navbar-collapse">
@@ -22,8 +22,8 @@
 
                 <div class="col">
                     <a class="navbar-brand">
-                        <img src="../static/images/icon.png" width="50" height="50" class="d-inline-block"
-                             th:src="@{images/icon.png}"/>
+                        <img th:src="@{images/icon.png}" width="50" height="50" class="d-inline-block"/>
+                        <!--                        src="../static/images/icon.png"-->
                         <!--                        <img th:src="@{/images/icon.png}"-->
                         <!--                             alt="icon"-->
                         <!--                             style="width:50px;height:50px;"-->
@@ -32,14 +32,14 @@
                     </a>
                 </div>
 
-                <div class="col-5">
+                <div class="col-6">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
                             <a class="nav-link" href="/">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
-                        </li>
+                        <!--                        <li class="nav-item">-->
+                        <!--                            <a class="nav-link" href="/ui/users/create">Create User</a>-->
+                        <!--                        </li>-->
                         <li class="nav-item">
                             <a class="nav-link">Choose language</a>
                             <a href="?lang=ru">ru</a>
@@ -59,18 +59,20 @@
 
 <div class="w3-container">
 
-    <h2>Registration</h2>
+    <p id="userId" hidden><span th:text="${user_id}"/></p>
 
-    <table id="create_user_entity_table" class="w3-table w3-bordered">
+    <table id="update_user_entity_table" class="w3-table w3-bordered">
         <tr>
+            <!--            <th>Property Name</th>-->
+            <!--            <th>Property Value</th>-->
             <th></th>
             <th></th>
         </tr>
+        <tr>
+            <td>Id</td>
+            <td><label id="user_id" name="user_id_name"></label></td>
+        </tr>
 
-<!--        <tr>-->
-<!--            <td>Id</td>-->
-<!--            <td><input id="user_id" name="user_id_name" type="text"></td>-->
-<!--        </tr>-->
         <tr>
             <td>First Name</td>
             <td><input id="firstName" name="firstName_name" type="text"></td>
@@ -85,20 +87,25 @@
         </tr>
         <tr>
             <td>Password</td>
-            <td><input id="password" name="password_name" type="password"></td>
+            <td><input id="password" name="password_name" type="text"></td>
         </tr>
-<!--        <tr>-->
-<!--            <td>Role</td>-->
-<!--            <td><input id="role" name="role_name" type="text"></td>-->
-<!--        </tr>-->
+        <tr>
+            <td>Role</td>
+            <td><input id="role" name="role_name" type="text"></td>
+        </tr>
+        <tr>
+            <td>Group</td>
+            <td><input id="group_id" name="group_id_name" type="text"></td>
+        </tr>
 
     </table>
     <br>
     <br>
 
+
     <div class="container">
         <button id="btnSave" class="btnSaveUser">Save</button>
-        <button onclick="location.href='/'" type="button">Cancel</button>
+        <button id="btnGoToRead" type="button">Cancel</button>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -126,16 +133,15 @@
         $(document).delegate('#btnSave', 'click', function (event) {
             event.preventDefault();
 
-            // var id = 0;
-            var id = $('#user_id').val();
+            var userId = $('#userId').text();
+
+            var id = userId;
             var firstName = $('#firstName').val();
             var lastName = $('#lastName').val();
             var login = $('#login').val();
             var password = $('#password').val();
-            // var role = $('#role').val();
-            var role = "user";
+            var role = $('#role').val();
             var group = null;
-
 
             var usersDTO = new UsersDTO(id, firstName, lastName, login, password, role, group);
 
@@ -147,11 +153,11 @@
             alert("button Save!");
 
             $.ajax({
-                type: "POST",
-                url: "/users",
+                type: "PUT",
+                url: '/users/' + userId,
                 data: JSON.stringify(usersDTO),
                 success: function (result) {
-                    location.href = "/ui/users/list";
+                    location.href = "/ui/users/read/" + userId;
                     window.setTimeout(function () {
                         location.reload();
                     }, 1000);
@@ -161,13 +167,50 @@
                 error: function (err) {
                     alert('ERROR!');
                 }
-
             });
-
         });
 
 
+        $(document).delegate('#btnGoToRead', 'click', function (result) {
+
+            var userId = $('#userId').text();
+
+            location.href = "/ui/users/read/" + userId;
+            window.setTimeout(function () {
+                location.reload();
+            }, 1000);
+
+            alert('SUCCESS!');
+        });
+
+
+        function ajaxGet() {
+
+            var userId = $('#userId').text();
+
+            $.getJSON('/users/' + userId, function (json) {
+
+                console.log(json);
+                alert("json.firstName=" + json.first_name);
+
+                $('#user_id').text(json.id);
+                $('#firstName').val(json.first_name);
+                $('#lastName').val(json.last_name);
+                $('#login').val(json.login);
+                $('#password').val(json.password);
+                $('#role').val(json.role);
+                $('#group_id').val(json.id_group);
+
+            });
+        }
+
+        $(document).ready(function () {
+
+            ajaxGet();
+        });
+
     </script>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
