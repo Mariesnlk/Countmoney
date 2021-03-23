@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      lang="en">
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <title>Users List</title>
+</head>
+<body>
+
+
+<nav class="navbar navbar-expand navbar-dark bg-dark">
+
+    <div class="collapse navbar-collapse">
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col">
+                    <a class="navbar-brand">
+                        <img th:src="@{images/icon.png}" width="50" height="50" class="d-inline-block"/>
+                        <!--                        src="../static/images/icon.png"-->
+                        <!--                        <img th:src="@{/images/icon.png}"-->
+                        <!--                             alt="icon"-->
+                        <!--                             style="width:50px;height:50px;"-->
+                        <!--                             title="icon">-->
+                        Splitwise App
+                    </a>
+                </div>
+
+                <div class="col-5">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/">Home</a>
+                        </li>
+<!--                        <li class="nav-item">-->
+<!--                            <a class="nav-link" href="/ui/users/create">Create User</a>-->
+<!--                        </li>-->
+                        <li class="nav-item">
+                            <a class="nav-link">Choose language</a>
+                            <a href="?lang=ru">ru</a>
+                            <a href="?lang=en">en</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col">
+                    <a class="btn btn-sm btn-outline-secondary" href="/login">Sign in</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class = "w3-container">
+
+    <table id="users_table" class="w3-table w3-striped w3-bordered w3-hoverable">
+
+        <tr>
+            <th>Id</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Login</th>
+            <th>Password</th>
+            <th>Role</th>
+            <th>Group</th>
+        </tr>
+
+    </table>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+
+
+        function ajaxGet(){
+
+            $.getJSON('/users', function (json) {
+                console.log(json);
+
+                var tr = [];
+                for (var i = 0; i < json.length; i++) {
+
+                    tr.push('<tr>');
+                    tr.push('<td><a id=' + json[i].id_users + ' href="/ui/users/read/' + json[i].id_users + '">' +
+                        json[i].id_users + '</a></td>');
+                    tr.push('<td>'+json[i].first_name+'</td>');
+                    tr.push('<td>'+json[i].last_name+'</td>');
+                    tr.push('<td>'+json[i].login+'</td>');
+                    tr.push('<td>'+json[i].password+'</td>');
+                    tr.push('<td>'+json[i].role+'</td>');
+                    tr.push('<td>'+json[i].id_group+'</td>');
+                }
+
+                $('#users_table').append($(tr.join('')));
+            });
+        }
+
+
+        $(document).ready(function(){
+
+            ajaxGet();
+
+        });
+    </script>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>
