@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      lang="en">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <title>Transaction Create</title>
+
+</head>
+<body>
+<div class="w3-container">
+
+
+    <div class="w3-container w3-bar w3-blue">
+        <span class="w3-bar-item" style="padding-left:1px"><b>Create Transaction</b></span>
+    </div>
+    <br>
+
+    <table id="create_transaction_entity_table" class="w3-table w3-bordered">
+        <tr>
+            <th>Property Name</th>
+            <th>Property Value</th>
+        </tr>
+
+        <tr>
+            <td>Id</td>
+            <td><input id="id_transaction" name="id_transaction_name" type="text"></td>
+        </tr>
+        <tr>
+            <td>Date</td>
+            <td><input id="date" name="date_name" type="date"></td>
+        </tr>
+        <tr>
+            <td>Destination</td>
+            <td><input id="destination" name="destination_name" type="text"></td>
+        </tr>
+        <tr>
+            <td>Sum</td>
+            <td><input id="sum" name="sum_name" type="text"></td>
+        </tr>
+        <tr>
+            <td>Id User</td>
+            <td><input id="id_user" name="id_user_name" type="text"></td>
+        </tr>
+        <tr>
+            <td>Id Type Transaction</td>
+            <td><input id="id_type_transaction" name="id_type_transaction_name" type="text"></td>
+        </tr>
+        <tr>
+            <td>Period from</td>
+            <td><input id="period_from" name="period_from_name" type="date"></td>
+        </tr>
+        <tr>
+            <td>Period to</td>
+            <td><input id="period_to" name="period_to_name" type="date"></td>
+        </tr>
+    </table>
+    <br>
+    <br>
+
+    <div class="container">
+        <button id="btnSave" class="btnSaveTransaction">Save</button>
+        <button onclick="location.href='/ui/transactions/list'" type="button">Cancel</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+    <script type="text/javascript">
+
+        $.ajaxSetup({
+            cache: false,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }
+        });
+
+        function TransactionDTO(id, date, destination, sum, periodFrom, periodTo, idUser, idTypeTransaction) {
+            this.id_transaction = id;
+            this.date = date;
+            this.destination = destination;
+            this.sum = sum;
+            this.period_from = periodFrom;
+            this.period_to = periodTo;
+            this.id_user = idUser;
+            this.id_type_transaction = idTypeTransaction;
+        }
+
+        $(document).delegate('#btnSave', 'click', function (event) {
+            event.preventDefault();
+
+            var id = $('#id_transaction').val();
+            var date = $('#date').val();
+            var destination = $('#destination').val();
+            var sum = $('#sum').val();
+            var idUser = $('#id_user').val();
+            var idTypeTransaction = $('#id_type_transaction').val();
+            var periodFrom = $('#period_from').val();
+            var periodTo = $('#period_to').val();
+
+            var transactionDTO = new TransactionDTO(id, date, destination, sum, idUser, idTypeTransaction,
+                periodFrom, periodTo);
+
+            console.log(transactionDTO);
+            console.log(JSON.stringify(transactionDTO));
+
+            alert("button Save!");
+
+            $.ajax({
+                type: "POST",
+                url: "/transactions",
+                data: JSON.stringify(transactionDTO),
+                success: function (result) {
+                    location.href = "/ui/transactions/list";
+                    window.setTimeout(function () {
+                        location.reload();
+                    }, 1000);
+
+                    alert('SUCCESS!');
+                },
+                error: function (err) {
+                    alert('ERROR!');
+                }
+
+            });
+
+
+        });
+
+
+    </script>
+</div>
+</body>
+</html>

@@ -1,22 +1,19 @@
 package com.mariia.syne.splitwise.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 public class Transactions {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_transaction;
 
     private Date date;
 
     private String destination;
 
-    //double ?
     private double sum;
 
     private Date period_from;
