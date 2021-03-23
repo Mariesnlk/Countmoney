@@ -88,7 +88,8 @@
                 for (var i = 0; i < json.length; i++) {
 
                     tr.push('<tr>');
-                    tr.push('<td><a id=' + json[i].id + ' href="/ui/users/read/' + json[i].id + '">' + json[i].id + '</a></td>');
+                    tr.push('<td><a id=' + json[i].id_users + ' href="/ui/users/read/' + json[i].id_users + '">' +
+                        json[i].id_users + '</a></td>');
                     tr.push('<td>'+json[i].first_name+'</td>');
                     tr.push('<td>'+json[i].last_name+'</td>');
                     tr.push('<td>'+json[i].login+'</td>');

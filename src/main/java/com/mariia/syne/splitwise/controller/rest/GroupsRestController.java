@@ -34,9 +34,9 @@ public class GroupsRestController {
     }
 
     @PostMapping
-    public void addGroup(@RequestBody Groups group) {
+    public void addGroup(@RequestBody Groups groups) {
 
-        groupsService.addGroup(group);
+        groupsService.addGroup(groups);
     }
 
     @PutMapping("/{id}")

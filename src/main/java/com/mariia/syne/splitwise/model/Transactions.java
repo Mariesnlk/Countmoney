@@ -10,14 +10,17 @@ public class Transactions {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_transaction;
 
+    @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
     private String destination;
 
     private double sum;
 
+    @Temporal(TemporalType.DATE)
     private Date period_from;
 
+    @Temporal(TemporalType.DATE)
     private Date period_to;
 
     @ManyToOne

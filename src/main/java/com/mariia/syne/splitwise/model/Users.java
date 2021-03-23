@@ -55,11 +55,11 @@ public class Users {
     }
 
 
-    public void setId_user(Integer users) {
+    public void setId_users(Integer users) {
         this.id_users = users;
     }
 
-    public Integer getId_user() {
+    public Integer getId_users() {
         return id_users;
     }
 

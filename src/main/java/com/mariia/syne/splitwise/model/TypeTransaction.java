@@ -1,15 +1,13 @@
 package com.mariia.syne.splitwise.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
 public class TypeTransaction {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_type_transaction;
 
     private String name_type_transaction;

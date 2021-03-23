@@ -51,7 +51,7 @@
 
 <div class="w3-container">
 
-    <p id="groupId" hidden><span th:text="${id_group}"/></p>
+    <p id="groupId" hidden><span th:text="${group_id}"/></p>
 
     <table id="update_group_entity_table" class="w3-table w3-bordered">
         <tr>
@@ -92,15 +92,15 @@
         });
 
         function GroupDTO(idGroup, nameGroup) {
-            this.id_group = idGroup;
+            this.id_groups = idGroup;
             this.name_group = nameGroup;
         }
 
         $(document).delegate('#btnSave', 'click', function (event) {
             event.preventDefault();
 
-            var id = $('#groupId').val();
-            var groupName = $('#group').val();
+            var id = $('#groupId').text();
+            var groupName = $('#name').val();
 
             var groupDTO = new GroupDTO(id, groupName);
 
@@ -150,10 +150,10 @@
             $.getJSON('/groups/' + groupId, function (json) {
 
                 console.log(json);
-                alert("json.name=" + json.group_name);
+                alert("json.name=" + json.name_group);
 
-                $('#group_id').text(json.id);
-                $('#name').val(json.group_name);
+                $('#group_id').text(json.id_groups);
+                $('#name').val(json.name_group);
 
             });
         }

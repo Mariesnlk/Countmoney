@@ -38,7 +38,7 @@
                             <a href="?lang=en">en</a>
                         </li>
                         <li class="nav-item">
-                            <a th:href="@{'/ui/groups/update/' + ${id_group}}">
+                            <a th:href="@{'/ui/groups/update/' + ${group_id}}">
                                 <img th:src="@{/images/icon_edit.gif}"
                                      alt="modify"
                                      style="width:27px;height:27px;"
@@ -65,7 +65,7 @@
 </nav>
 
 <div class="w3-container">
-    <p id="groupId" hidden><span th:text="${id_group}"/></p>
+    <p id="groupId" hidden><span th:text="${group_id}"/></p>
 
     <table id="groups_entity_table" class="w3-table w3-striped ">
         <tr>
@@ -129,6 +129,8 @@
 
             var groupId = $('#groupId').text();
 
+            console.log(groupId);
+
             $.getJSON('/groups/' + groupId, function (json) {
 
                 console.log(json);
@@ -138,7 +140,7 @@
 
                 tr.push('<tr>');
                 tr.push('<td>Id</td>');
-                tr.push('<td>' + json.id_group + '</td>');
+                tr.push('<td>' + json.id_groups + '</td>');
                 tr.push('</tr>');
 
                 tr.push('<tr>');

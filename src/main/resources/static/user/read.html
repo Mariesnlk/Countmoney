@@ -129,8 +129,70 @@
 
             var userId = $('#userId').text();
 
-            $.getJSON('/users/' + userId, function (json) {
+            console.log(userId);
 
+            // $.ajax({
+            //     type: "GET",
+            //     url: '/users/' + userId,
+            //     //data: JSON.stringify(userDTO),
+            //     success: function (result) {
+            //         // location.href = "/ui/users/list";
+            //         console.log(result);
+            //
+            //         var json = JSON.parse(result);
+            //         var tr = [];
+            //
+            //         tr.push('<tr>');
+            //         tr.push('<td>Id</td>');
+            //         tr.push('<td>' + json.id_users + '</td>');
+            //         tr.push('</tr>');
+            //
+            //         tr.push('<tr>');
+            //         tr.push('<td>First Name</td>');
+            //         tr.push('<td>' + json.first_name + '</td>');
+            //         tr.push('</tr>');
+            //
+            //         tr.push('<tr>');
+            //         tr.push('<td>Last Name</td>');
+            //         tr.push('<td>' + json.last_name + '</td>');
+            //         tr.push('</tr>');
+            //
+            //         tr.push('<tr>');
+            //         tr.push('<td>Login</td>');
+            //         tr.push('<td>' + json.login + '</td>');
+            //         tr.push('</tr>');
+            //
+            //         tr.push('<tr>');
+            //         tr.push('<td>Password</td>');
+            //         tr.push('<td>' + json.password + '</td>');
+            //         tr.push('</tr>');
+            //
+            //         tr.push('<tr>');
+            //         tr.push('<td>Role</td>');
+            //         tr.push('<td>' + json.role + '</td>');
+            //         tr.push('</tr>');
+            //
+            //         tr.push('<tr>');
+            //         tr.push('<td>Group</td>');
+            //         tr.push('<td>' + json.id_group + '</td>');
+            //         tr.push('</tr>');
+            //
+            //
+            //         $('#users_entity_table').append($(tr.join('')))
+            //
+            //         window.setTimeout(function () {
+            //             location.reload();
+            //         }, 1000);
+            //
+            //         alert('SUCCESS!');
+            //     },
+            //     error: function (err) {
+            //         alert('ERROR!');
+            //     }
+            // });
+
+            $.getJSON('/users/' + userId, function (json) {
+                // console.log("Hello");
                 console.log(json);
                 alert('json.firstName=' + json.first_name);
 
@@ -138,7 +200,7 @@
 
                 tr.push('<tr>');
                 tr.push('<td>Id</td>');
-                tr.push('<td>' + json.id + '</td>');
+                tr.push('<td>' + json.id_users + '</td>');
                 tr.push('</tr>');
 
                 tr.push('<tr>');

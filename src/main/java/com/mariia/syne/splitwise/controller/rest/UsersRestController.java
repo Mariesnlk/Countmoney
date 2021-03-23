@@ -41,7 +41,7 @@ public class UsersRestController {
 
     @PutMapping("/{id}")
     public void updateUser(@RequestBody Users user, @PathVariable Integer id) {
-
+        System.out.println("Work " + id);
         usersService.updateUser(user, id);
     }
 

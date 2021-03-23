@@ -4,11 +4,12 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name = "user_groups")
 public class Groups {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_group;
+    private Integer id_groups;
 
     private String name_group;
 
@@ -24,16 +25,16 @@ public class Groups {
     }
 
     public Groups(Integer id_group, String name_group) {
-        this.id_group = id_group;
+        this.id_groups = id_group;
         this.name_group = name_group;
     }
 
-    public Integer getId_group() {
-        return id_group;
+    public Integer getId_groups() {
+        return id_groups;
     }
 
-    public void setId_group(Integer id_group) {
-        this.id_group = id_group;
+    public void setId_groups(Integer id_group) {
+        this.id_groups = id_group;
     }
 
     public String getName_group() {
@@ -47,7 +48,7 @@ public class Groups {
     @Override
     public String toString() {
         return "Groups{" +
-                "id_group=" + id_group +
+                "id_group=" + id_groups +
                 ", name_group='" + name_group + '\'' +
                 '}';
     }

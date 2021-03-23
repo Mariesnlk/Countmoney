@@ -10,8 +10,10 @@ public class Income {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_income;
 
+    @Temporal(TemporalType.DATE)
     private Date period_from_income;
 
+    @Temporal(TemporalType.DATE)
     private Date period_to_income;
 
     @ManyToOne
