@@ -54,7 +54,7 @@
 
 <div class="w3-container">
 
-    <p id="transactionId" hidden><span th:text="${id_transaction}"/></p>
+    <p id="transactionId" hidden><span th:text="${transaction_id}"/></p>
 
     <table id="update_transaction_entity_table" class="w3-table w3-bordered">
         <tr>
@@ -134,7 +134,7 @@
             event.preventDefault();
 
             var id = $('#id_transaction').val();
-            var date = $('#date').val();
+            var date = $('#date').val(); //not fix date
             var destination = $('#destination').val();
             var sum = $('#sum').val();
             var idUser = $('#id_user').val();
@@ -142,13 +142,12 @@
             var periodFrom = $('#period_from').val();
             var periodTo = $('#period_to').val();
 
-            var transactionDTO = new TransactionDTO(id, date, destination, sum, idUser, idTypeTransaction,
+            var transactionDTO = new TransactionDTO(id, date, destination, sum, null, null,
                 periodFrom, periodTo);
 
             console.log(transactionDTO);
             console.log(JSON.stringify(transactionDTO));
 
-            //alert("User " + usersDTO.first_name+ " " + usersDTO.last_name + " was added!");
 
             alert("button Save!");
 

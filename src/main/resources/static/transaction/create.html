@@ -131,13 +131,14 @@
             var date = $('#date').val();
             var destination = $('#destination').val();
             var sum = $('#sum').val();
-            var idUser = $('#id_user').val();
-            var idTypeTransaction = $('#id_type_transaction').val();
             var periodFrom = $('#period_from').val();
             var periodTo = $('#period_to').val();
+            var idUser = $('#id_user').val();
+            var idTypeTransaction = $('#id_type_transaction').val();
 
-            var transactionDTO = new TransactionDTO(id, date, destination, sum, idUser, idTypeTransaction,
-                periodFrom, periodTo);
+
+            var transactionDTO = new TransactionDTO(id, date, destination, sum, periodFrom, periodTo, null,
+                null);
 
             console.log(transactionDTO);
             console.log(JSON.stringify(transactionDTO));

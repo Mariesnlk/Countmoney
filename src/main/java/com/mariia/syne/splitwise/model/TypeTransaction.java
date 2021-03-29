@@ -28,6 +28,12 @@ public class TypeTransaction {
         this.name_type_transaction = name_type_transaction;
     }
 
+    public TypeTransaction(Integer id_type_transaction, String name_type_transaction, List<Transactions> transactions) {
+        this.id_type_transaction = id_type_transaction;
+        this.name_type_transaction = name_type_transaction;
+        this.transactions = transactions;
+    }
+
     public Integer getId_type_transaction() {
         return id_type_transaction;
     }
@@ -42,6 +48,14 @@ public class TypeTransaction {
 
     public void setName_type_transaction(String name_type_transaction) {
         this.name_type_transaction = name_type_transaction;
+    }
+
+    public List<Transactions> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<Transactions> transactions) {
+        this.transactions = transactions;
     }
 
     @Override

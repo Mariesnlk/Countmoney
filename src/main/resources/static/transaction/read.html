@@ -49,7 +49,7 @@
                                  alt="delete"
                                  style="width:27px;height:27px;"
                                  title="delete"
-                                 id="btnDeleteUser">
+                                 id="btnDeleteTransaction">
 
                         </li>
                     </ul>
@@ -128,6 +128,7 @@
         function ajaxGet() {
 
             var transactionId = $('#transactionId').text();
+            console.log(transactionId);
 
             $.getJSON('/transactions/' + transactionId, function (json) {
 

@@ -44,7 +44,8 @@ public class Users {
         this.id_group = id_group;
     }
 
-    public Users(Integer id_users, String first_name, String last_name, String login, String password, String role, Groups id_group) {
+    public Users(Integer id_users, String first_name, String last_name, String login, String password, String role,
+                 Groups id_group) {
         this.id_users = id_users;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -52,6 +53,19 @@ public class Users {
         this.password = password;
         this.role = role;
         this.id_group = id_group;
+    }
+
+    public Users(Integer id_users, String first_name, String last_name, String login, String password, String role,
+                 Groups id_group, List<Income> incomes, List<Transactions> transactions) {
+        this.id_users = id_users;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.login = login;
+        this.password = password;
+        this.role = role;
+        this.id_group = id_group;
+        this.incomes = incomes;
+        this.transactions = transactions;
     }
 
 
@@ -109,6 +123,22 @@ public class Users {
 
     public void setId_group(Groups id_group) {
         this.id_group = id_group;
+    }
+
+    public List<Income> getIncomes() {
+        return incomes;
+    }
+
+    public void setIncomes(List<Income> incomes) {
+        this.incomes = incomes;
+    }
+
+    public List<Transactions> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<Transactions> transactions) {
+        this.transactions = transactions;
     }
 
     @Override
