@@ -12,6 +12,13 @@
 </head>
 <body>
 
+<style>
+    body {
+        background: url("/static/images/backgr.jpg") no-repeat center center fixed;
+        background-size: cover;
+    }
+</style>
+
 <nav class="navbar navbar-expand navbar-dark bg-dark">
 
     <div class="collapse navbar-collapse">
@@ -22,28 +29,36 @@
                 <div class="col">
                     <a class="navbar-brand">
                         <img src="/static/images/icon.png" width="50" height="50" class="d-inline-block"/>
-                        Splitwise App
+                        CountMoney
                     </a>
                 </div>
 
-                <div class="col-5">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="/">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link">Choose language</a>
-                            <a href="?lang=ru">ru</a>
-                            <a href="?lang=en">en</a>
-                        </li>
-                    </ul>
+                <div class="col">
+                    <a class="nav-link link-light" href="/">Home</a>
                 </div>
 
+
                 <div class="col">
-                    <a class="btn btn-sm btn-outline-secondary" href="/login">Sign in</a>
+                    <div class="container" style="text-align: right">
+                        <div class="row">
+                            <div class="col">
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button"
+                                            id="dropdownMenuButton"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Choose language
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="?lang=ru">ua</a>
+                                        <a class="dropdown-item" href="?lang=en">en</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <a class="btn btn-sm btn-outline-secondary" href="/login">Sign in</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -53,30 +68,40 @@
 
 <div class="w3-container">
 
-<!--    <div th:if="${param.error}">-->
-<!--        Invalid username and password.-->
-<!--    </div>-->
+    <!--    <div th:if="${param.error}">-->
+    <!--        Invalid username and password.-->
+    <!--    </div>-->
 
-<!--    <div th:if="${param.logout}">-->
-<!--        You have been logged out.-->
-<!--    </div>-->
+    <!--    <div th:if="${param.logout}">-->
+    <!--        You have been logged out.-->
+    <!--    </div>-->
 
 
     <div class="w3-container">
-        <div style="width:600px;margin-left: auto;margin-right: auto;margin-top:24px;padding: 24px;">
-            <div class="card">
+        <div class="card" style="width:600px;margin-left: auto;margin-right: auto;margin-top:50px;padding: 24px;">
 
+            <div class="container">
                 <form th:action="@{/login}" method="post">
-                    <div><label> Login : <input type="text" name="username"/> </label></div>
-                    <div><label> Password: <input type="password" name="password"/> </label></div>
-                    <div><input type="submit" value="Sign In"/></div>
+                    <div class="login-form" style="margin-bottom: 2px; margin-top: 2px">
+                        <label> Login : <input type="text" name="username"/> </label>
+                    </div>
+                    <div class="login-form" style="margin-bottom: 2px; margin-top: 2px">
+                        <label> Password: <input type="password" name="password"/> </label>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-dark">Sign In</button>
+                    <!--                        <div><input type="submit" value="Sign In"/></div>-->
                 </form>
+            </div>
 
-                <p class="lead mb-0">new user?<a class="text-black font-weight-bold" href="/ui/users/create">create new account</a></p>
-
+            <div class="container" style="text-align: center">
+                <p class="lead mb-0">new user?<a class="text-black font-weight-bold" href="/ui/users/create">create
+                    new
+                    account</a></p>
             </div>
         </div>
     </div>
+</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"

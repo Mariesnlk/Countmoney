@@ -2,7 +2,6 @@
       xmlns="http://www.w3.org/1999/xhtml"
       lang="en">
 <head>
-<!--    <link rel="stylesheet" href="../static/css/style.css">-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
@@ -11,6 +10,13 @@
 
 </head>
 <body>
+
+<style>
+    body {
+        background: url("/static/images/backgr.jpg") no-repeat center center fixed;
+        background-size: cover;
+    }
+</style>
 
 <nav class="navbar navbar-expand navbar-dark bg-dark">
 
@@ -22,28 +28,36 @@
                 <div class="col">
                     <a class="navbar-brand">
                         <img src="/static/images/icon.png" width="50" height="50" class="d-inline-block"/>
-                        Splitwise App
+                        CountMoney
                     </a>
                 </div>
 
-                <div class="col-5">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="/">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link">Choose language</a>
-                            <a href="?lang=ru">ru</a>
-                            <a href="?lang=en">en</a>
-                        </li>
-                    </ul>
+                <div class="col">
+                    <a class="nav-link link-light" href="/">Home</a>
                 </div>
 
+
                 <div class="col">
-                    <a class="btn btn-sm btn-outline-secondary" href="/login">Sign in</a>
+                    <div class="container" style="text-align: right">
+                        <div class="row">
+                            <div class="col">
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button"
+                                            id="dropdownMenuButton"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Choose language
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="?lang=ru">ua</a>
+                                        <a class="dropdown-item" href="?lang=en">en</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <a class="btn btn-sm btn-outline-secondary" href="/login">Sign in</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -54,21 +68,17 @@
 <div class="w3-container">
 
     <div id="background-info">
-        <div class="jumbotron p-3 p-md-5 text-black">
+        <div class="jumbotron p-3 p-md-5 text-black ">
             <div class="col-md-6 px-0">
-                <h1 class="display-6 font-italic">Welcome to Splitwise App!</h1>
-                <p class="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and
-                    efficiently about what's most interesting in this post's contents.</p>
-                <p class="lead mb-0"><a class="text-black font-weight-bold" href="/ui/users/create">Registration</a></p>
+                <h1 class="display-6 font-italic">Welcome to CountMoney!</h1>
+                <p class="lead my-3">This app will help you control your incomes and outgoings. You can use it with
+                    your friends and family.</p>
+                <p class="lead ">
+                    <a class="btn btn-primary btn-sm btn-dark" href="/ui/users/create" role="button">Registration</a>
+                </p>
             </div>
         </div>
     </div>
-
-
-    <!--    <p><a href="/ui/autos/list">Autos</a></p>-->
-    <!--    <p><a href="/ui/autos/list-active">Available Autos</a></p>-->
-    <!--    <p><a href="/ui/users/list">Users</a></p>-->
-    <!--    <p><a href="/ui/orders/list">Orders</a></p>-->
 
 </div>
 
