@@ -62,6 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/static/images/**",
                         "/ui/users/**", "/users", "/users/**",
                         "/ui/groups/**", "/groups", "/groups/**",
+                        "/ui/incomes/**", "/incomes", "/incomes/**",
                         "/ui/transactions/**", "/transactions","/transactions/**",
                         "/ui/typeTransactions/**", "/typeTransactions", "/typeTransactions/**").permitAll()
 //                .antMatchers("/users/create","/orders/**").hasAnyRole("ADMIN","USER")

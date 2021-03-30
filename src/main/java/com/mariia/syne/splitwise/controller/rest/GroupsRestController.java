@@ -1,6 +1,6 @@
 package com.mariia.syne.splitwise.controller.rest;
 
-import com.mariia.syne.splitwise.model.Groups;
+import com.mariia.syne.splitwise.entity.Groups;
 import com.mariia.syne.splitwise.service.GroupsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

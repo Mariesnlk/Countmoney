@@ -1,6 +1,6 @@
 package com.mariia.syne.splitwise.service;
 
-import com.mariia.syne.splitwise.model.Users;
+import com.mariia.syne.splitwise.entity.Users;
 import com.mariia.syne.splitwise.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

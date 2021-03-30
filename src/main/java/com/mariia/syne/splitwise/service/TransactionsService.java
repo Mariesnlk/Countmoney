@@ -1,6 +1,6 @@
 package com.mariia.syne.splitwise.service;
 
-import com.mariia.syne.splitwise.model.Transactions;
+import com.mariia.syne.splitwise.entity.Transactions;
 import com.mariia.syne.splitwise.repository.TransactionsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -62,18 +62,14 @@
             <th></th>
         </tr>
 
-        <tr>
-            <td>Id</td>
-            <td><input id="id_group" name="group_id_name" type="text"></td>
-        </tr>
+<!--        <tr>-->
+<!--            <td>Id</td>-->
+<!--            <td><input id="id_group" name="group_id_name" type="text"></td>-->
+<!--        </tr>-->
         <tr>
             <td>Name</td>
             <td><input id="name_group" name="group_name" type="text"></td>
         </tr>
-        <!--        <tr>-->
-        <!--            <td>Role</td>-->
-        <!--            <td><input id="role" name="role_name" type="text"></td>-->
-        <!--        </tr>-->
 
     </table>
     <br>
@@ -82,6 +78,8 @@
     <div class="container">
         <button id="btnSave" class="btnSaveGroup">Save</button>
         <button onclick="location.href='/'" type="button">Cancel</button>
+        <button onclick="location.href='/ui/users/create'" type="button">Back to registration</button>
+
     </div>
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -104,37 +102,48 @@
         $(document).delegate('#btnSave', 'click', function (event) {
             event.preventDefault();
 
-            // var id = 0;
-            var id = $('#id_group').val();
-            var nameGroup = $('#name_group').val();
-
-            var groupDTO = new GroupDTO(id, nameGroup);
-
-            console.log(groupDTO);
-            console.log(JSON.stringify(groupDTO));
-
-            alert("Group " + groupDTO.name_group + " was added!");
-
-            alert("button Save!");
-
-            $.ajax({
-                type: "POST",
-                url: "/groups",
-                data: JSON.stringify(groupDTO),
-                success: function (result) {
-                    location.href = "/ui/groups/list";
-                    window.setTimeout(function () {
-                        location.reload();
-                    }, 1000);
-
-                    alert('SUCCESS!');
-                },
-                error: function (err) {
-                    alert('ERROR!');
+            $.getJSON('/groups', function (json) {
+                var nameGroup = $('#name_group').val();
+                console.log(json);
+                let gr=json.filter(elem=>elem.name_group===nameGroup);
+                if(gr.length){
+                    alert('Группа с таким именем уже существует!')
                 }
+                else {
 
+                    // var id = 0;
+                    var id = $('#id_group').val();
+
+
+                    var groupDTO = new GroupDTO(1, nameGroup);
+
+                    console.log(groupDTO);
+                    console.log(JSON.stringify(groupDTO));
+
+                    alert("Group " + groupDTO.name_group + " was added!");
+
+                    alert("button Save!");
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/groups",
+                        data: JSON.stringify(groupDTO),
+                        success: function (result) {
+                            //location.href = "/ui/groups/list";
+                            localStorage.groupName=nameGroup;
+                            window.setTimeout(function () {
+                                location.reload();
+                            }, 1000);
+
+                            alert('SUCCESS!');
+                        },
+                        error: function (err) {
+                            alert('ERROR!');
+                        }
+
+                    });
+                }
             });
-
         });
 
 

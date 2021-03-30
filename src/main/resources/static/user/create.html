@@ -82,10 +82,10 @@
             <td>Password</td>
             <td><input id="password" name="password_name" type="password"></td>
         </tr>
-<!--        <tr>-->
-<!--            <td>Role</td>-->
-<!--            <td><input id="role" name="role_name" type="text"></td>-->
-<!--        </tr>-->
+        <tr>
+            <td>Group</td>
+            <td><input id="group" name="group_name" type="text"> <p><a href="/ui/groups/create" style="margin-left:25px">Добавить группу</a></p></td>
+        </tr>
 
     </table>
     <br>
@@ -99,7 +99,11 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
     <script type="text/javascript">
+        if(localStorage.groupName){
+            $("#group").val(localStorage.groupName);
 
+
+        }
         $.ajaxSetup({
             cache: false,
             headers: {
@@ -114,50 +118,89 @@
             this.last_name = lastName;
             this.login = login;
             this.password = password;
-            this.role = role;
+            this.roles = role;
             this.id_group = id_group;
         }
 
         $(document).delegate('#btnSave', 'click', function (event) {
             event.preventDefault();
+            var group = $('#group').val();
+            $.getJSON('/groups', function (json) {
+                console.log(json);
+                let gr=json.filter(elem=>elem.name_group===group);
+                if(!gr.length){
+                    alert('Такой группы не существует. Вы можете использовать опцию добавления группы')
+                }
+                else{
+                    var id = $('#user_id').val();
+                    var firstName = $('#firstName').val();
+                    var lastName = $('#lastName').val();
+                    var login = $('#login').val();
+                    var password = $('#password').val();
+                    // var role = $('#role').val();
+                    var role = [{id:1}];
+                    //var group = null;
 
-            // var id = 0;
-            var id = $('#user_id').val();
-            var firstName = $('#firstName').val();
-            var lastName = $('#lastName').val();
-            var login = $('#login').val();
-            var password = $('#password').val();
-            // var role = $('#role').val();
-            var role = "user";
-            var group = null;
+
+                    var usersDTO = new UsersDTO(id, firstName, lastName, login, password, role, gr[0]);
+
+                    console.log(usersDTO);
+                    console.log(JSON.stringify(usersDTO));
+
+                    alert("User " + usersDTO.first_name+ " " + usersDTO.last_name + " was added!");
+
+                    alert("button Save!");
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/users",
+                        data: JSON.stringify(usersDTO),
+                        success: function (result) {
+                            location.href = "/ui/users/list";
+                            window.setTimeout(function () {
+                                location.reload();
+                            }, 1000);
+
+                            alert('SUCCESS!');
+                        },
+                        error: function (err) {
+                            alert('ERROR!');
+                        }
+
+                    });
 
 
-            var usersDTO = new UsersDTO(id, firstName, lastName, login, password, role, group);
 
-            console.log(usersDTO);
-            console.log(JSON.stringify(usersDTO));
 
-            alert("User " + usersDTO.first_name+ " " + usersDTO.last_name + " was added!");
 
-            alert("button Save!");
 
-            $.ajax({
-                type: "POST",
-                url: "/users",
-                data: JSON.stringify(usersDTO),
-                success: function (result) {
-                    location.href = "/ui/users/list";
-                    window.setTimeout(function () {
-                        location.reload();
-                    }, 1000);
 
-                    alert('SUCCESS!');
-                },
-                error: function (err) {
-                    alert('ERROR!');
+
+
+
+
                 }
 
+
+
+
+
+
+
+
+
+
             });
+
+
+
+
+
+
+
+
+            // var id = 0;
+
 
         });
 
