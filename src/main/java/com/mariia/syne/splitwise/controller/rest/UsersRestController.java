@@ -3,6 +3,7 @@ package com.mariia.syne.splitwise.controller.rest;
 import com.mariia.syne.splitwise.entity.Users;
 import com.mariia.syne.splitwise.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +22,9 @@ public class UsersRestController {
     @Autowired
     private UsersService usersService;
 
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @GetMapping
     public List<Users> getAllUsers() {
 
@@ -35,7 +39,7 @@ public class UsersRestController {
 
     @PostMapping
     public void addUser(@RequestBody Users user) {
-
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         usersService.addUser(user);
     }
 

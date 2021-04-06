@@ -1,5 +1,6 @@
 package com.mariia.syne.splitwise.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -193,6 +194,7 @@ public class Users implements UserDetails {
         this.incomes = incomes;
     }
 
+    @JsonIgnore
     public List<Transactions> getTransactions() {
         return transactions;
     }

@@ -1,8 +1,10 @@
 package com.mariia.syne.splitwise.controller.rest;
 
 import com.mariia.syne.splitwise.entity.Transactions;
+import com.mariia.syne.splitwise.entity.Users;
 import com.mariia.syne.splitwise.service.TransactionsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,7 +37,8 @@ public class TransactionsRestController {
 
     @PostMapping
     public void addTransaction(@RequestBody Transactions transaction) {
-
+        Users user = (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        transaction.setId_user(user);
         transactionsService.addTransaction(transaction);
     }
 

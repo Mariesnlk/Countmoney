@@ -1,6 +1,7 @@
 package com.mariia.syne.splitwise.config;
 
-import org.springframework.beans.factory.annotation.Value;
+import com.mariia.syne.splitwise.service.UsersService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -10,7 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 @Configuration
@@ -19,39 +19,35 @@ import org.springframework.security.web.session.HttpSessionEventPublisher;
 @PropertySource("classpath:admin.properties")
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Value("${user.login}")
-    private String userLogin;
+//    @Value("${user.login}")
+//    private String userLogin;
+//
+//    @Value("${user.password}")
+//    private String userPassword;
 
-    @Value("${user.password}")
-    private String userPassword;
+//    @Value("${admin.login}")
+//    private String adminLogin;
+//
+//    @Value("${admin.password}")
+//    private String adminPassword;
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-    @Value("${admin.login}")
-    private String adminLogin;
-
-    @Value("${admin.password}")
-    private String adminPassword;
-
-
-    @Override
+   /* @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .inMemoryAuthentication()
                 .withUser(adminLogin)
-                .password(passwordEncoder().encode(adminPassword))
+                .password(bCryptPasswordEncoder().encode(adminPassword))
                 .roles("admin")
                 .and()
                 .withUser(userLogin)
-                .password(passwordEncoder().encode(userPassword))
+                .password(bCryptPasswordEncoder().encode(userPassword))
                 .roles("user");
 
-//        auth
-//                .inMemoryAuthentication()
-//                .withUser("user1").password(passwordEncoder().encode("user1Pass")).roles("USER")
-//                .and()
-//                .withUser("user2").password(passwordEncoder().encode("user2Pass")).roles("USER")
-//                .and()
-//                .withUser("admin").password(passwordEncoder().encode("adminPass")).roles("ADMIN");
-    }
+    }*/
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -82,28 +78,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
 
-        //enable the scenario which allows multiple concurrent sessions
-        //for the same user
         http
                 .sessionManagement().maximumSessions(2);
 
-        //on authentication a new HTTP Session is created,
-        //the old one is invalidated and
-        //(migrateSession) the attributes from the old session are copied over
-        //(newSession) the attributes from the old session are NOT copied over
         http
                 .sessionManagement().sessionFixation().newSession();
     }
 
 
-    @Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+
+
+    @Autowired
+    UsersService userService;
+
+    @Autowired
+    protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder());
     }
 
-    //for the enabling the concurrent session-control support we add listener
-    //to make sure that the Spring Security session registry is notified
-    //when the session is destroyed
     @Bean
     public HttpSessionEventPublisher httpSessionEventPublisher() {
         return new HttpSessionEventPublisher();

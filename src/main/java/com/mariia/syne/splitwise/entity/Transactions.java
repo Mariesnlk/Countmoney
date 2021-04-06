@@ -1,5 +1,7 @@
 package com.mariia.syne.splitwise.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -104,6 +106,7 @@ public class Transactions {
     public void setPeriod_to(Date period_to) {
         this.period_to = period_to;
     }
+
 
     public Users getId_user() {
         return id_user;

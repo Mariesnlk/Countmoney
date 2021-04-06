@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <title>Transaction Create</title>
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand navbar-dark bg-dark">
+
+    <div class="collapse navbar-collapse">
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col">
+                    <a class="navbar-brand">
+                        <img src="/static/images/icon.png" width="50" height="50" class="d-inline-block"/>
+                        Splitwise App
+                    </a>
+                </div>
+
+                <div class="col-5">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Link</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link">Choose language</a>
+                            <a href="?lang=ru">ru</a>
+                            <a href="?lang=en">en</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col">
+                    <a class="btn btn-sm btn-outline-secondary" href="/login">Sign in</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="w3-container">
+
+    <table id="create_transaction_entity_table" class="w3-table w3-bordered">
+        <tr>
+            <th>Property Name</th>
+            <th>Property Value</th>
+        </tr>
+
+        <tr>
+            <td>Id</td>
+            <td><input id="id_transaction" name="id_transaction_name" type="text"></td>
+        </tr>
+        <tr>
+            <td>Date</td>
+            <td><input id="date" name="date_name" type="date"></td>
+        </tr>
+        <tr>
+            <td>Destination</td>
+            <td><input id="destination" name="destination_name" type="text"></td>
+        </tr>
+        <tr>
+            <td>Sum</td>
+            <td><input id="sum" name="sum_name" type="text"></td>
+        </tr>
+        <tr>
+            <td>Id User</td>
+            <td><input id="id_user" name="id_user_name" type="text"></td>
+        </tr>
+        <tr>
+            <td>Id Type Transaction</td>
+            <td><input id="id_type_transaction" name="id_type_transaction_name" type="text"></td>
+        </tr>
+        <tr>
+            <td>Period from</td>
+            <td><input id="period_from" name="period_from_name" type="date"></td>
+        </tr>
+        <tr>
+            <td>Period to</td>
+            <td><input id="period_to" name="period_to_name" type="date"></td>
+        </tr>
+    </table>
+    <br>
+    <br>
+
+    <div class="container">
+        <button id="btnSave" class="btnSaveTransaction">Save</button>
+        <button onclick="location.href='/ui/transactions/list'" type="button">Cancel</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+    <script type="text/javascript">
+
+        $.ajaxSetup({
+            cache: false,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }
+        });
+
+        function TransactionDTO(id, date, destination, sum, periodFrom, periodTo, idUser, idTypeTransaction) {
+            this.id_transaction = id;
+            this.date = date;
+            this.destination = destination;
+            this.sum = sum;
+            this.period_from = periodFrom;
+            this.period_to = periodTo;
+            this.id_user = idUser;
+            this.id_type_transaction = idTypeTransaction;
+        }
+
+        $(document).delegate('#btnSave', 'click', function (event) {
+            event.preventDefault();
+
+            var id = $('#id_transaction').val();
+            var date = $('#date').val();
+            var destination = $('#destination').val();
+            var sum = $('#sum').val();
+            var periodFrom = $('#period_from').val();
+            var periodTo = $('#period_to').val();
+            var idUser = $('#id_user').val();
+            var idTypeTransaction = $('#id_type_transaction').val();
+
+
+            var transactionDTO = new TransactionDTO(id, date, destination, sum, periodFrom, periodTo, null,
+                null);
+
+            console.log(transactionDTO);
+            console.log(JSON.stringify(transactionDTO));
+
+            alert("button Save!");
+
+            $.ajax({
+                type: "POST",
+                url: "/transactions",
+                data: JSON.stringify(transactionDTO),
+                success: function (result) {
+                    location.href = "/ui/transactions/list";
+                    window.setTimeout(function () {
+                        location.reload();
+                    }, 1000);
+
+                    alert('SUCCESS!');
+                },
+                error: function (err) {
+                    alert('ERROR!');
+                }
+
+            });
+
+
+        });
+
+
+    </script>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+        crossorigin="anonymous">
+</script>
+
+</body>
+</html>
