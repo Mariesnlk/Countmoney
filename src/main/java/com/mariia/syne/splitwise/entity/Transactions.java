@@ -1,6 +1,7 @@
 package com.mariia.syne.splitwise.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -67,6 +68,8 @@ public class Transactions {
         this.id_transaction = id_transaction;
     }
 
+    @JsonFormat(pattern="yyyy-MM-dd")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     public Date getDate() {
         return date;
     }
@@ -91,6 +94,8 @@ public class Transactions {
         this.sum = sum;
     }
 
+    @JsonFormat(pattern="yyyy-MM-dd")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     public Date getPeriod_from() {
         return period_from;
     }
@@ -99,6 +104,8 @@ public class Transactions {
         this.period_from = period_from;
     }
 
+    @JsonFormat(pattern="yyyy-MM-dd")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     public Date getPeriod_to() {
         return period_to;
     }

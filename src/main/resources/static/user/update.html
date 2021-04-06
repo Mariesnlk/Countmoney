@@ -13,6 +13,7 @@
 </head>
 
 <body>
+
 <nav class="navbar navbar-expand navbar-dark bg-dark">
 
     <div class="collapse navbar-collapse">
@@ -23,28 +24,36 @@
                 <div class="col">
                     <a class="navbar-brand">
                         <img src="/static/images/icon.png" width="50" height="50" class="d-inline-block"/>
-                        Splitwise App
+                        CountMoney
                     </a>
                 </div>
 
-                <div class="col-6">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="/">Home</a>
-                        </li>
-                        <!--                        <li class="nav-item">-->
-                        <!--                            <a class="nav-link" href="/ui/users/create">Create User</a>-->
-                        <!--                        </li>-->
-                        <li class="nav-item">
-                            <a class="nav-link">Choose language</a>
-                            <a href="?lang=ru">ru</a>
-                            <a href="?lang=en">en</a>
-                        </li>
-                    </ul>
+                <div class="col">
+                    <a class="nav-link link-light" href="/">Home</a>
                 </div>
 
+
                 <div class="col">
-                    <a class="btn btn-sm btn-outline-secondary" href="/login">Sign in</a>
+                    <div class="container" style="text-align: right">
+                        <div class="row">
+                            <div class="col">
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button"
+                                            id="dropdownMenuButton"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Choose language
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="?lang=ru">ua</a>
+                                        <a class="dropdown-item" href="?lang=en">en</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <a class="btn btn-sm btn-outline-secondary" href="/login">Sign in</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -52,14 +61,13 @@
     </div>
 </nav>
 
+
 <div class="w3-container">
 
     <p id="userId" hidden><span th:text="${user_id}"/></p>
 
     <table id="update_user_entity_table" class="w3-table w3-bordered">
         <tr>
-            <!--            <th>Property Name</th>-->
-            <!--            <th>Property Value</th>-->
             <th></th>
             <th></th>
         </tr>
@@ -86,11 +94,11 @@
         </tr>
         <tr>
             <td>Role</td>
-            <td><input id="role" name="role_name" type="text"></td>
+            <td><input id="role" name="role_name"></td>
         </tr>
         <tr>
             <td>Group</td>
-            <td><input id="group_id" name="group_id_name" type="text"></td>
+            <td><input id="group_id" name="group_id_name"></td>
         </tr>
 
     </table>
@@ -129,16 +137,14 @@
             event.preventDefault();
 
             var userId = $('#userId').text();
-
-            var id = userId;
             var firstName = $('#firstName').val();
             var lastName = $('#lastName').val();
             var login = $('#login').val();
             var password = $('#password').val();
-            var role = $('#role').val();
-            var group = null;
+            var role = $('#role').text();
+            var group = $('#group_id').text();
 
-            var usersDTO = new UsersDTO(id, firstName, lastName, login, password, role, group);
+            var usersDTO = new UsersDTO(userId, firstName, lastName, login, password, role, group);
 
             console.log(usersDTO);
             console.log(JSON.stringify(usersDTO));
@@ -186,15 +192,15 @@
             $.getJSON('/users/' + userId, function (json) {
 
                 console.log(json);
-                alert("json.firstName=" + json.first_name);
+                // alert("json.firstName=" + json.first_name);
 
                 $('#user_id').text(json.id);
                 $('#firstName').val(json.first_name);
                 $('#lastName').val(json.last_name);
                 $('#login').val(json.login);
                 $('#password').val(json.password);
-                $('#role').val(json.role);
-                $('#group_id').val(json.id_group);
+                $('#role').text(json.roles[0].name);
+                $('#group_id').text(json.id_group["name_group"]);
 
             });
         }

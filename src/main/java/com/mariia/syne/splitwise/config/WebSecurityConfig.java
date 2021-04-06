@@ -19,17 +19,6 @@ import org.springframework.security.web.session.HttpSessionEventPublisher;
 @PropertySource("classpath:admin.properties")
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-//    @Value("${user.login}")
-//    private String userLogin;
-//
-//    @Value("${user.password}")
-//    private String userPassword;
-
-//    @Value("${admin.login}")
-//    private String adminLogin;
-//
-//    @Value("${admin.password}")
-//    private String adminPassword;
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();

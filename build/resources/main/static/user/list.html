@@ -90,7 +90,7 @@
                     tr.push('<td>'+json[i].login+'</td>');
                     tr.push('<td>'+json[i].password+'</td>');
                     tr.push('<td>'+json[i].roles[0].name+'</td>');
-                    tr.push('<td>'+json[i].id_group+'</td>');
+                    tr.push('<td>'+json[i].id_group["name_group"]+'</td>');
                 }
 
                 $('#users_table').append($(tr.join('')));

@@ -13,6 +13,13 @@
 </head>
 <body>
 
+<style>
+    body {
+        background: url("/static/images/backgr.jpg") no-repeat center center fixed;
+        background-size: cover;
+    }
+</style>
+
 <nav class="navbar navbar-expand navbar-dark bg-dark">
 
     <div class="collapse navbar-collapse">
@@ -23,28 +30,36 @@
                 <div class="col">
                     <a class="navbar-brand">
                         <img src="/static/images/icon.png" width="50" height="50" class="d-inline-block"/>
-                        Splitwise App
+                        CountMoney
                     </a>
                 </div>
 
-                <div class="col-5">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="/">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link">Choose language</a>
-                            <a href="?lang=ru">ru</a>
-                            <a href="?lang=en">en</a>
-                        </li>
-                    </ul>
+                <div class="col">
+                    <a class="nav-link link-light" href="/">Home</a>
                 </div>
 
+
                 <div class="col">
-                    <a class="btn btn-sm btn-outline-secondary" href="/login">Sign in</a>
+                    <div class="container" style="text-align: right">
+                        <div class="row">
+                            <div class="col">
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button"
+                                            id="dropdownMenuButton"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Choose language
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="?lang=ru">ua</a>
+                                        <a class="dropdown-item" href="?lang=en">en</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <a class="btn btn-sm btn-outline-secondary" href="/login">Sign in</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -56,14 +71,13 @@
 
     <table id="create_transaction_entity_table" class="w3-table w3-bordered">
         <tr>
-            <th>Property Name</th>
-            <th>Property Value</th>
+            <th></th>
+            <th></th>
         </tr>
-
-        <tr>
-            <td>Id</td>
-            <td><input id="id_transaction" name="id_transaction_name" type="text"></td>
-        </tr>
+        <!--        <tr>-->
+        <!--            <td>Id</td>-->
+        <!--            <td><input id="id_transaction" name="id_transaction_name" type="text"></td>-->
+        <!--        </tr>-->
         <tr>
             <td>Date</td>
             <td><input id="date" name="date_name" type="date"></td>
@@ -77,12 +91,13 @@
             <td><input id="sum" name="sum_name" type="text"></td>
         </tr>
         <tr>
-            <td>Id User</td>
+            <td>User</td>
             <td><input id="id_user" name="id_user_name" type="text"></td>
         </tr>
         <tr>
-            <td>Id Type Transaction</td>
-            <td><input id="id_type_transaction" name="id_type_transaction_name" type="text"></td>
+            <td>Type Transaction</td>
+            <td><input id="id_type_transaction" name="id_type_transaction_name" type="text">
+                <p><a href="/ui/typeTransactions/create" style="margin-left:25px">Add type transaction</a></p></td>
         </tr>
         <tr>
             <td>Period from</td>
@@ -104,6 +119,10 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
     <script type="text/javascript">
+        if (localStorage.idTypeTransaction) {
+            $("#id_type_transaction").val(localStorage.idTypeTransaction);
+
+        }
 
         $.ajaxSetup({
             cache: false,
@@ -127,42 +146,52 @@
         $(document).delegate('#btnSave', 'click', function (event) {
             event.preventDefault();
 
-            var id = $('#id_transaction').val();
-            var date = $('#date').val();
-            var destination = $('#destination').val();
-            var sum = $('#sum').val();
-            var periodFrom = $('#period_from').val();
-            var periodTo = $('#period_to').val();
-            var idUser = $('#id_user').val();
-            var idTypeTransaction = $('#id_type_transaction').val();
+            var typeTransaction = $('#id_type_transaction').val();
+            $.getJSON('/typeTransactions', function (json) {
+                console.log(json);
+                let typeTrans = json.filter(elem => elem.name_type_transaction === typeTransaction);
+                if (!typeTrans.length) {
+                    alert('This type transaction doesn`t exist. You can create your own type transaction')
+                } else {
+
+                    var id = $('#id_transaction').val();
+                    var date = $('#date').val();
+                    var destination = $('#destination').val();
+                    var sum = $('#sum').val();
+                    var periodFrom = $('#period_from').val();
+                    var periodTo = $('#period_to').val();
+                    var idUser = $('#id_user').val();
 
 
-            var transactionDTO = new TransactionDTO(id, date, destination, sum, periodFrom, periodTo, null,
-                null);
+                    var transactionDTO = new TransactionDTO(id, date, destination, sum, periodFrom, periodTo, null,
+                        typeTrans[0]);
 
-            console.log(transactionDTO);
-            console.log(JSON.stringify(transactionDTO));
+                    console.log(transactionDTO);
+                    console.log(JSON.stringify(transactionDTO));
 
-            alert("button Save!");
+                    alert("button Save!");
 
-            $.ajax({
-                type: "POST",
-                url: "/transactions",
-                data: JSON.stringify(transactionDTO),
-                success: function (result) {
-                    location.href = "/ui/transactions/list";
-                    window.setTimeout(function () {
-                        location.reload();
-                    }, 1000);
+                    $.ajax({
+                        type: "POST",
+                        url: "/transactions",
+                        data: JSON.stringify(transactionDTO),
+                        success: function (result) {
+                            location.href = "/ui/transactions/list";
+                            window.setTimeout(function () {
+                                location.reload();
+                            }, 1000);
 
-                    alert('SUCCESS!');
-                },
-                error: function (err) {
-                    alert('ERROR!');
+                            alert('SUCCESS!');
+                        },
+                        error: function (err) {
+                            alert('ERROR!');
+                        }
+
+                    });
+
                 }
 
             });
-
 
         });
 

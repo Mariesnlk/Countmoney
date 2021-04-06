@@ -45,7 +45,7 @@ public class UsersRestController {
 
     @PutMapping("/{id}")
     public void updateUser(@RequestBody Users user, @PathVariable Integer id) {
-        System.out.println("Work " + id);
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         usersService.updateUser(user, id);
     }
 
