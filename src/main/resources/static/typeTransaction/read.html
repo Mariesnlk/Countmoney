@@ -23,40 +23,49 @@
                 <div class="col">
                     <a class="navbar-brand">
                         <img src="/static/images/icon.png" width="50" height="50" class="d-inline-block"/>
-                        Splitwise App
+                        CountMoney
                     </a>
                 </div>
 
-                <div class="col-8">
-                    <ul class="navbar-nav">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="/">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link">Choose language</a>
-                            <a href="?lang=ru">ru</a>
-                            <a href="?lang=en">en</a>
-                        </li>
-                        <li class="nav-item">
-                            <a th:href="@{'/ui/typeTransactions/update/' + ${typeTransaction_id}}">
-                                <img th:src="@{/images/icon_edit.gif}"
-                                     alt="modify"
-                                     style="width:27px;height:27px;"
-                                     title="modify"></a>
-                        </li>
-                        <li class="nav-item">
-                            <img th:src="@{/images/icon_delete.gif}"
-                                 alt="delete"
-                                 style="width:27px;height:27px;"
-                                 title="delete"
-                                 id="btnDeleteTypeTransaction">
-
-                        </li>
-                    </ul>
+                <div class="col">
+                    <a class="nav-link link-light" href="/">Home</a>
+                    <a class="nav-link link-light"  th:href="@{'/ui/typeTransactions/update/' + ${typeTransaction_id}}">
+                        <img src="/static/images/icon_edit.gif"
+                             alt="modify"
+                             style="width:27px;height:27px;"
+                             title="modify">
+                    </a>
+                    <a class="nav-link link-light">
+                        <img src="/static/images/icon_delete.gif"
+                             alt="delete"
+                             style="width:27px;height:27px;"
+                             title="delete"
+                             id="btnDeleteTypeTransaction">
+                    </a>
                 </div>
 
+
                 <div class="col">
-                    <a class="btn btn-sm btn-outline-secondary" href="/login">Sign in</a>
+                    <div class="container" style="text-align: right">
+                        <div class="row">
+                            <div class="col">
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button"
+                                            id="dropdownMenuButton"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Choose language
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="?lang=ru">ua</a>
+                                        <a class="dropdown-item" href="?lang=en">en</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <a class="btn btn-sm btn-outline-secondary" href="/login">Sign in</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -69,8 +78,6 @@
 
     <table id="typeTransactions_entity_table" class="w3-table w3-striped ">
         <tr>
-            <!--            <th>Property Name</th>-->
-            <!--            <th>Property Value</th>-->
             <th></th>
             <th></th>
 

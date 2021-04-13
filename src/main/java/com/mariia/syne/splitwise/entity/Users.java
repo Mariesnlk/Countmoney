@@ -186,6 +186,7 @@ public class Users implements UserDetails {
         this.id_group = id_group;
     }
 
+    @JsonIgnore
     public List<Income> getIncomes() {
         return incomes;
     }

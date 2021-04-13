@@ -13,6 +13,13 @@
 </head>
 <body>
 
+<style>
+    body {
+        background: url("/static/images/backgr.jpg") no-repeat center center fixed;
+        background-size: cover;
+    }
+</style>
+
 <nav class="navbar navbar-expand navbar-dark bg-dark">
 
     <div class="collapse navbar-collapse">
@@ -23,28 +30,36 @@
                 <div class="col">
                     <a class="navbar-brand">
                         <img src="/static/images/icon.png" width="50" height="50" class="d-inline-block"/>
-                        Splitwise App
+                        CountMoney
                     </a>
                 </div>
 
-                <div class="col-5">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="/">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link">Choose language</a>
-                            <a href="?lang=ru">ru</a>
-                            <a href="?lang=en">en</a>
-                        </li>
-                    </ul>
+                <div class="col">
+                    <a class="nav-link link-light" href="/">Home</a>
                 </div>
 
+
                 <div class="col">
-                    <a class="btn btn-sm btn-outline-secondary" href="/login">Sign in</a>
+                    <div class="container" style="text-align: right">
+                        <div class="row">
+                            <div class="col">
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button"
+                                            id="dropdownMenuButton"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Choose language
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="?lang=ru">ua</a>
+                                        <a class="dropdown-item" href="?lang=en">en</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <a class="btn btn-sm btn-outline-secondary" href="/login">Sign in</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -52,101 +67,105 @@
     </div>
 </nav>
 
-<div class="w3-container">
+<div style="width:600px;margin-left: auto;margin-right: auto;margin-top:24px;padding: 24px;">
+    <div class="card">
+        <div class="w3-container">
 
-    <h2>Add Income</h2>
+            <h2 style="text-align: center">Add Income</h2>
 
-    <table id="create_income_entity_table" class="w3-table w3-bordered">
-        <tr>
-            <th></th>
-            <th></th>
-        </tr>
+            <table id="create_income_entity_table" class="w3-table w3-bordered">
+                <tr>
+                    <th></th>
+                    <th></th>
+                </tr>
 
-        <tr>
-            <td>Id</td>
-            <td><input id="id_income" name="id_income_name" type="text"></td>
-        </tr>
-        <tr>
-            <td>Period from </td>
-            <td><input id="periodFromIncome" name="periodFromIncome_name" type="date"></td>
-        </tr>
-        <tr>
-            <td>Period to</td>
-            <td><input id="periodToIncome" name="periodToIncome_name" type="date"></td>
-        </tr>
-        <tr>
-            <td>Id User</td>
-            <td><input id="isUser" name="isUser_name" type="text"></td>
-        </tr>
+                <tr>
+                    <td>Period from</td>
+                    <td><input id="periodFromIncome" name="periodFromIncome_name" type="date"></td>
+                </tr>
+                <tr>
+                    <td>Period to</td>
+                    <td><input id="periodToIncome" name="periodToIncome_name" type="date"></td>
+                </tr>
+                <tr>
+                    <td>Sum</td>
+                    <td><input id="sum" name="sum_name" type="text"></td>
+                </tr>
+                <tr>
+                    <td>Id User</td>
+                    <td><input id="isUser" name="isUser_name" type="text"></td>
+                </tr>
 
-    </table>
-    <br>
-    <br>
+            </table>
+            <br>
+            <br>
 
-    <div class="container">
-        <button id="btnSave" class="btnSaveIncome">Save</button>
-        <button onclick="location.href='/'" type="button">Cancel</button>
+            <div class="container" style="text-align: center; margin-bottom: 10px">
+                <button id="btnSave" class="btnSaveUser btn btn-dark">Save</button>
+                <button onclick="location.href='/'" type="button" class="btn btn-dark">Cancel</button>
+            </div>
+
+        </div>
     </div>
+</div>
 
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
-    <script type="text/javascript">
+<script type="text/javascript">
 
-        $.ajaxSetup({
-            cache: false,
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            }
-        });
-
-        function IncomeDTO(idIncome, periodFromIncome, periodToIncome, idUser) {
-            this.id_income = idIncome;
-            this.period_from_income = periodFromIncome;
-            this.period_to_income = periodToIncome;
-            this.id_user = idUser;
+    $.ajaxSetup({
+        cache: false,
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
         }
+    });
 
-        $(document).delegate('#btnSave', 'click', function (event) {
-            event.preventDefault();
+    function IncomeDTO(idIncome, periodFromIncome, periodToIncome,sum) {
+        this.id_income = idIncome;
+        this.period_from_income = periodFromIncome;
+        this.period_to_income = periodToIncome;
+        this.sum_income = sum;
+    }
 
-            // var id = 0;
-            var id = $('#id_income').val();
-            var periodFromIncome = $('#periodFromIncome').val();
-            var periodToIncome = $('#periodToIncome').val();
-            // var idUser = $('#isUser').val();
-            var idUser = null;
+    $(document).delegate('#btnSave', 'click', function (event) {
+        event.preventDefault();
 
+        var id = $('#id_income').val();
+        var periodFromIncome = $('#periodFromIncome').val();
+        var periodToIncome = $('#periodToIncome').val();
+       // var idUser = $('#isUser').val();
+        var sum = $('#sum').val();
 
-            var incomeDTO = new IncomeDTO(id, periodFromIncome, periodToIncome, idUser);
+        var incomeDTO = new IncomeDTO(id, periodFromIncome, periodToIncome,  sum);
 
-            console.log(incomeDTO);
-            console.log(JSON.stringify(incomeDTO));
+        console.log(incomeDTO);
+        console.log(JSON.stringify(incomeDTO));
 
-            alert("button Save!");
+        alert("button Save!");
 
-            $.ajax({
-                type: "POST",
-                url: "/incomes",
-                data: JSON.stringify(incomeDTO),
-                success: function (result) {
-                    location.href = "/ui/incomes/list";
-                    window.setTimeout(function () {
-                        location.reload();
-                    }, 1000);
+        $.ajax({
+            type: "POST",
+            url: "/incomes",
+            data: JSON.stringify(incomeDTO),
+            success: function (result) {
+                location.href = "/ui/incomes/list";
+                window.setTimeout(function () {
+                    location.reload();
+                }, 1000);
 
-                    alert('SUCCESS!');
-                },
-                error: function (err) {
-                    alert('ERROR!');
-                }
-
-            });
+                alert('SUCCESS!');
+            },
+            error: function (err) {
+                alert('ERROR!');
+            }
 
         });
 
+    });
 
-    </script>
+
+</script>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"

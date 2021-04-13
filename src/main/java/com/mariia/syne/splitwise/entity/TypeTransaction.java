@@ -1,5 +1,7 @@
 package com.mariia.syne.splitwise.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -50,6 +52,7 @@ public class TypeTransaction {
         this.name_type_transaction = name_type_transaction;
     }
 
+    @JsonIgnore
     public List<Transactions> getTransactions() {
         return transactions;
     }

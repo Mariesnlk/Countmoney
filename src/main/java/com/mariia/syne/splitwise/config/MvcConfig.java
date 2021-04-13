@@ -25,8 +25,8 @@ public class MvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler(
                 "/static/images/**",
-                "/css/**",
-                "/js/**")
+                "/static/css/**",
+                "/static/js/**")
                 .addResourceLocations(
                         "classpath:/static/images/",
                         "classpath:/static/css/",

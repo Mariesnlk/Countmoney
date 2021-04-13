@@ -22,6 +22,13 @@ public class IncomeService {
         return incomes;
     }
 
+    public Double getSumAllIncomes(Integer user_id) {
+
+        return incomeRepository.getSumAllIncomes(user_id);
+    }
+
+
+
     public Income getIncome(Integer id) {
         return incomeRepository.findById(id).orElse(null);
     }

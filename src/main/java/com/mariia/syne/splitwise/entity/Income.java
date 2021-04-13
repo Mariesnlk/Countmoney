@@ -23,20 +23,31 @@ public class Income {
     @JoinColumn(name = "id_user")
     private Users id_user;
 
+    private Double sum_income;
+
     public Income() {
     }
 
-    public Income(Date period_from_income, Date period_to_income, Users id_user) {
+    public Income(Date period_from_income, Date period_to_income, Users id_user, Double sum_income) {
         this.period_from_income = period_from_income;
         this.period_to_income = period_to_income;
         this.id_user = id_user;
+        this.sum_income = sum_income;
     }
 
-    public Income(Integer id_income, Date period_from_income, Date period_to_income, Users id_user) {
+    public Income(Integer id_income, Date period_from_income, Date period_to_income, Users id_user, Double sum_income) {
         this.id_income = id_income;
         this.period_from_income = period_from_income;
         this.period_to_income = period_to_income;
         this.id_user = id_user;
+        this.sum_income = sum_income;
+    }
+
+    public Income(Integer id_income, Date period_from_income, Date period_to_income, Double sum_income) {
+        this.id_income = id_income;
+        this.period_from_income = period_from_income;
+        this.period_to_income = period_to_income;
+        this.sum_income = sum_income;
     }
 
     public Integer getId_income() {
@@ -75,6 +86,14 @@ public class Income {
         this.id_user = id_user;
     }
 
+    public Double getSum_income() {
+        return sum_income;
+    }
+
+    public void setSum_income(Double sum_income) {
+        this.sum_income = sum_income;
+    }
+
     @Override
     public String toString() {
         return "Income{" +
@@ -82,6 +101,7 @@ public class Income {
                 ", period_from_income=" + period_from_income +
                 ", period_to_income=" + period_to_income +
                 ", id_user=" + id_user +
+                ", sum_income=" + sum_income +
                 '}';
     }
 }

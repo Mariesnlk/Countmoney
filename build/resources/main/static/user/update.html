@@ -3,17 +3,20 @@
       xmlns="http://www.w3.org/1999/xhtml"
       lang="en">
 <head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="/static/css/styleUserInfo.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
 
     <title>User Update</title>
 
 </head>
 
 <body>
+
 <nav class="navbar navbar-expand navbar-dark bg-dark">
+
+    <p id="userId" hidden><span th:text="${user_id}"/></p>
 
     <div class="collapse navbar-collapse">
         <div class="container">
@@ -23,28 +26,36 @@
                 <div class="col">
                     <a class="navbar-brand">
                         <img src="/static/images/icon.png" width="50" height="50" class="d-inline-block"/>
-                        Splitwise App
+                        CountMoney
                     </a>
                 </div>
 
-                <div class="col-6">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="/">Home</a>
-                        </li>
-                        <!--                        <li class="nav-item">-->
-                        <!--                            <a class="nav-link" href="/ui/users/create">Create User</a>-->
-                        <!--                        </li>-->
-                        <li class="nav-item">
-                            <a class="nav-link">Choose language</a>
-                            <a href="?lang=ru">ru</a>
-                            <a href="?lang=en">en</a>
-                        </li>
-                    </ul>
+                <div class="col">
+                    <a class="nav-link link-light" href="/">Home</a>
                 </div>
 
+
                 <div class="col">
-                    <a class="btn btn-sm btn-outline-secondary" href="/login">Sign in</a>
+                    <div class="container" style="text-align: right">
+                        <div class="row">
+                            <div class="col">
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button"
+                                            id="dropdownMenuButton"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Choose language
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="?lang=ru">ua</a>
+                                        <a class="dropdown-item" href="?lang=en">en</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <a class="btn btn-sm btn-outline-secondary" href="/login">Sign in</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -52,159 +63,220 @@
     </div>
 </nav>
 
-<div class="w3-container">
 
-    <p id="userId" hidden><span th:text="${user_id}"/></p>
+<div class="container emp-profile">
+    <form method="post">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="profile-img">
+                    <img src="/static/images/unknown_user.jpg" alt="unknown_user"/>
+                    <div class="file btn btn-lg btn-primary">
+                        Change Photo
+                        <input type="file" name="file"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="profile-head">
+                    <h5 id="user-name"></h5>
 
-    <table id="update_user_entity_table" class="w3-table w3-bordered">
-        <tr>
-            <!--            <th>Property Name</th>-->
-            <!--            <th>Property Value</th>-->
-            <th></th>
-            <th></th>
-        </tr>
-        <tr>
-            <td>Id</td>
-            <td><label id="user_id" name="user_id_name"></label></td>
-        </tr>
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                               aria-controls="home" aria-selected="true">About</a>
+                        </li>
+                    </ul>
 
-        <tr>
-            <td>First Name</td>
-            <td><input id="firstName" name="firstName_name" type="text"></td>
-        </tr>
-        <tr>
-            <td>Last Name</td>
-            <td><input id="lastName" name="lastName_name" type="text"></td>
-        </tr>
-        <tr>
-            <td>Login</td>
-            <td><input id="login" name="login_name" type="text"></td>
-        </tr>
-        <tr>
-            <td>Password</td>
-            <td><input id="password" name="password_name" type="text"></td>
-        </tr>
-        <tr>
-            <td>Role</td>
-            <td><input id="role" name="role_name" type="text"></td>
-        </tr>
-        <tr>
-            <td>Group</td>
-            <td><input id="group_id" name="group_id_name" type="text"></td>
-        </tr>
-
-    </table>
-    <br>
-    <br>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Incomes: </h5>
+                        </div>
+                        <div class="col-md-6">
+                            <p id="income_sum"></p>
+                        </div>
+                    </div>
 
 
-    <div class="container">
-        <button id="btnSave" class="btnSaveUser">Save</button>
-        <button id="btnGoToRead" type="button">Cancel</button>
-    </div>
 
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
-    <script type="text/javascript">
 
-        $.ajaxSetup({
-            cache: false,
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
+                </div>
+            </div>
+            <div class="col-md-2">
+                <input type="submit" class="profile-edit-btn btnSaveUser" name="btnAddMore" id="btnSave"
+                       value="Save Changes"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="profile-work">
+                    <input type="submit" class="profile-edit-btn" name="btnAddTransaction" value="Add Transaction"/>
+                </div>
+                <div class="profile-work">
+                    <input type="submit" class="profile-edit-btn" name="btnAllTransactions" value="All Transactions"/>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="tab-content profile-tab" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Group</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p id="group_id"><!--<input id="group_id" name="group_id_name">--></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>First name</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p><input id="firstName" name="firstName_name" type="text"></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Last name</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p><input id="lastName" name="lastName_name" type="text"></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Login</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p><input id="login" name="login_name" type="text"></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Password</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p><input id="password" name="password_name" type="text" placeholder="change password">
+                                </p>
+                            </div>
+                        </div>
+                        <!--                        add button change group-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+<script type="text/javascript">
+
+    $.ajaxSetup({
+        cache: false,
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        }
+    });
+
+    function UsersDTO(id, firstName, lastName, login, password, role, id_group) {
+        this.id_users = id;
+        this.first_name = firstName;
+        this.last_name = lastName;
+        this.login = login;
+        this.password = password;
+        this.role = role;
+        this.id_group = id_group;
+    }
+
+    $(document).delegate('#btnSave', 'click', function (event) {
+        event.preventDefault();
+
+        var userId = $('#userId').text();
+        var firstName = $('#firstName').val();
+        var lastName = $('#lastName').val();
+        var login = $('#login').text();
+        var password = $('#password').text();
+        var role = $('#role').text();
+        var group = $('#group_id').text();
+
+        var usersDTO = new UsersDTO(userId, firstName, lastName, login, password, role, group);
+
+        console.log(usersDTO);
+        console.log(JSON.stringify(usersDTO));
+
+        alert("User " + usersDTO.first_name + " " + usersDTO.last_name + " was added!");
+
+        alert("button Save!");
+
+        $.ajax({
+            type: "PUT",
+            url: '/users/' + userId,
+            data: JSON.stringify(usersDTO),
+            success: function (result) {
+                location.href = "/ui/users/read/" + userId;
+                window.setTimeout(function () {
+                    location.reload();
+                }, 1000);
+
+                alert('SUCCESS!');
+            },
+            error: function (err) {
+                alert('ERROR!');
             }
         });
+    });
 
-        function UsersDTO(id, firstName, lastName, login, password, role, id_group) {
-            this.id_users = id;
-            this.first_name = firstName;
-            this.last_name = lastName;
-            this.login = login;
-            this.password = password;
-            this.role = role;
-            this.id_group = id_group;
-        }
 
-        $(document).delegate('#btnSave', 'click', function (event) {
-            event.preventDefault();
+    $(document).delegate('#btnGoToRead', 'click', function (result) {
 
-            var userId = $('#userId').text();
+        var userId = $('#userId').text();
 
-            var id = userId;
-            var firstName = $('#firstName').val();
-            var lastName = $('#lastName').val();
-            var login = $('#login').val();
-            var password = $('#password').val();
-            var role = $('#role').val();
-            var group = null;
+        location.href = "/ui/users/read/" + userId;
+        window.setTimeout(function () {
+            location.reload();
+        }, 1000);
 
-            var usersDTO = new UsersDTO(id, firstName, lastName, login, password, role, group);
+        alert('SUCCESS!');
+    });
 
-            console.log(usersDTO);
-            console.log(JSON.stringify(usersDTO));
 
-            alert("User " + usersDTO.first_name+ " " + usersDTO.last_name + " was added!");
+    function ajaxGet() {
+        var userId = $('#userId').text();
+        $.getJSON('/incomes/sum', function (json) {
 
-            alert("button Save!");
+            console.log(json);
 
-            $.ajax({
-                type: "PUT",
-                url: '/users/' + userId,
-                data: JSON.stringify(usersDTO),
-                success: function (result) {
-                    location.href = "/ui/users/read/" + userId;
-                    window.setTimeout(function () {
-                        location.reload();
-                    }, 1000);
+            $('#income_sum').text(json);
 
-                    alert('SUCCESS!');
-                },
-                error: function (err) {
-                    alert('ERROR!');
-                }
-            });
         });
 
 
-        $(document).delegate('#btnGoToRead', 'click', function (result) {
+        $.getJSON('/users/' + userId, function (json) {
 
-            var userId = $('#userId').text();
+            console.log(json);
+            // alert("json.firstName=" + json.first_name);
+            $('#user-name').text(json.first_name + ' ' + json.last_name)
+            $('#user_id').text(json.id);
+            $('#firstName').val(json.first_name);
+            $('#lastName').val(json.last_name);
+            $('#login').val(json.login);
+            $('#password').val('');
+            $('#role').text(json.roles[0].name);
+            console.log(json);
+            $('#group_id').text(json.id_group["name_group"]);
 
-            location.href = "/ui/users/read/" + userId;
-            window.setTimeout(function () {
-                location.reload();
-            }, 1000);
-
-            alert('SUCCESS!');
         });
+    }
 
+    $(document).ready(function () {
 
-        function ajaxGet() {
+        ajaxGet();
+    });
 
-            var userId = $('#userId').text();
-
-            $.getJSON('/users/' + userId, function (json) {
-
-                console.log(json);
-                alert("json.firstName=" + json.first_name);
-
-                $('#user_id').text(json.id);
-                $('#firstName').val(json.first_name);
-                $('#lastName').val(json.last_name);
-                $('#login').val(json.login);
-                $('#password').val(json.password);
-                $('#role').val(json.role);
-                $('#group_id').val(json.id_group);
-
-            });
-        }
-
-        $(document).ready(function () {
-
-            ajaxGet();
-        });
-
-    </script>
+</script>
 
 </div>
 

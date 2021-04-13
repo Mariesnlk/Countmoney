@@ -12,7 +12,6 @@
 
 </head>
 
-<body>
 <nav class="navbar navbar-expand navbar-dark bg-dark">
 
     <div class="collapse navbar-collapse">
@@ -23,28 +22,35 @@
                 <div class="col">
                     <a class="navbar-brand">
                         <img src="/static/images/icon.png" width="50" height="50" class="d-inline-block"/>
-                        Splitwise App
+                        CountMoney
                     </a>
                 </div>
 
-                <div class="col-6">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="/">Home</a>
-                        </li>
-                        <!--                        <li class="nav-item">-->
-                        <!--                            <a class="nav-link" href="/ui/users/create">Create User</a>-->
-                        <!--                        </li>-->
-                        <li class="nav-item">
-                            <a class="nav-link">Choose language</a>
-                            <a href="?lang=ru">ru</a>
-                            <a href="?lang=en">en</a>
-                        </li>
-                    </ul>
+                <div class="col">
+                    <a class="nav-link link-light" href="/">Home</a>
                 </div>
 
                 <div class="col">
-                    <a class="btn btn-sm btn-outline-secondary" href="/login">Sign in</a>
+                    <div class="container" style="text-align: right">
+                        <div class="row">
+                            <div class="col">
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button"
+                                            id="dropdownMenuButton"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Choose language
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="?lang=ru">ua</a>
+                                        <a class="dropdown-item" href="?lang=en">en</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <a class="btn btn-sm btn-outline-secondary" href="/login">Sign in</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -58,8 +64,6 @@
 
     <table id="update_transaction_entity_table" class="w3-table w3-bordered">
         <tr>
-            <!--            <th>Property Name</th>-->
-            <!--            <th>Property Value</th>-->
             <th></th>
             <th></th>
         </tr>
@@ -89,12 +93,12 @@
             <td><input id="period_to" name="period_to_name" type="date"></td>
         </tr>
         <tr>
-            <td>Id user</td>
-            <td><input id="id_user" name="id_user_name" type="text"></td>
+            <td>User</td>
+            <td><input id="id_user" name="id_user_name"></td>
         </tr>
         <tr>
-            <td>Id type transaction</td>
-            <td><input id="id_type_transaction" name="id_type_transaction_name" type="text"></td>
+            <td>Type Transaction</td>
+            <td><input id="id_type_transaction" name="id_type_transaction_name"></td>
         </tr>
 
     </table>
@@ -134,16 +138,16 @@
             event.preventDefault();
 
             var id = $('#id_transaction').val();
-            var date = $('#date').val(); //not fix date
+            var date = $('#date').val();
             var destination = $('#destination').val();
             var sum = $('#sum').val();
-            var idUser = $('#id_user').val();
-            var idTypeTransaction = $('#id_type_transaction').val();
             var periodFrom = $('#period_from').val();
             var periodTo = $('#period_to').val();
+            var idUser = $('#id_user').text();
+            var idTypeTransaction = $('#id_type_transaction').text();
 
-            var transactionDTO = new TransactionDTO(id, date, destination, sum, null, null,
-                periodFrom, periodTo);
+            var transactionDTO = new TransactionDTO(id, date, destination, sum, periodFrom, periodTo, idUser,
+                idTypeTransaction);
 
             console.log(transactionDTO);
             console.log(JSON.stringify(transactionDTO));
@@ -198,8 +202,8 @@
                 $('#sum').val(json.sum);
                 $('#period_from').val(json.period_from);
                 $('#period_to').val(json.period_to);
-                $('#id_user').val(json.id_user);
-                $('#id_type_transaction').val(json.id_type_transaction);
+                $('#id_user').text(json.id_user.id_users);
+                $('#id_type_transaction').text(json.id_type_transaction["name_type_transaction"]);
 
             });
         }
