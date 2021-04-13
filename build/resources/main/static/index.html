@@ -33,7 +33,7 @@
                 </div>
 
                 <div class="col">
-                    <a class="nav-link link-light" href="/">Home</a>
+                    <a class="nav-link link-light" th:text="#{navbar.home}" href="/">Home</a>
                 </div>
 
 
@@ -44,17 +44,19 @@
                                 <div class="dropdown">
                                     <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button"
                                             id="dropdownMenuButton"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Choose language
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                            th:text="#{navbar.choose_lang}"> Choose language
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="?lang=ru">ua</a>
-                                        <a class="dropdown-item" href="?lang=en">en</a>
+                                        <a class="dropdown-item" href="?lang=ua" th:text="#{navbar.ua}">ua</a>
+                                        <a class="dropdown-item" href="?lang=en" th:text="#{navbar.en}">en</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col">
-                                <a class="btn btn-sm btn-outline-secondary" href="/login">Sign in</a>
+                                <a class="btn btn-sm btn-outline-secondary" href="/login" th:text="#{navbar.sign_in}">
+                                    Sign in
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -70,11 +72,14 @@
     <div id="background-info">
         <div class="jumbotron p-3 p-md-5 text-black ">
             <div class="col-md-6 px-0">
-                <h1 class="display-6 font-italic">Welcome to CountMoney!</h1>
-                <p class="lead my-3">This app will help you control your incomes and outgoings. You can use it with
+                <h1 class="display-6 font-italic" th:text="#{index_jsp.logo}">Welcome to CountMoney!</h1>
+                <p class="lead my-3" th:text="#{index_jsp.logo_text}">This app will help you control your incomes and
+                    outgoings. You can use it with
                     your friends and family.</p>
                 <p class="lead ">
-                    <a class="btn btn-primary btn-sm btn-dark" href="/ui/users/create" role="button">Registration</a>
+                    <a class="btn btn-primary btn-sm btn-dark" href="/ui/users/create" role="button"
+                       th:text="#{index_jsp.registration}">Registration
+                    </a>
                 </p>
             </div>
         </div>
@@ -82,9 +87,15 @@
 
 </div>
 
+<!--dropdown for locatization-->
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<!---->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous">
+</script>
 
 </body>
 </html>

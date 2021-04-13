@@ -1,0 +1,15 @@
+div.login-form {
+    margin-bottom: 5px;
+    margin-top: 5px;
+    margin-left: 20%;
+}
+
+button.btn.btn-dark.login-form {
+    margin-left: 40%;
+}
+
+a.font-weight-bold {
+    text-decoration-color: black;
+    color: black;
+    font-weight: bold;
+}
