@@ -74,32 +74,35 @@
     <div class="card">
         <div class="w3-container">
 
-            <h2 style="text-align: center">Registration</h2>
+            <h2 style="text-align: center" th:text="#{registration.registration}">Registration</h2>
             <table id="create_user_entity_table" class="w3-table w3-bordered">
                 <tr>
                     <th></th>
                     <th></th>
                 </tr>
                 <tr>
-                    <td>Surname</td>
+                    <td th:text="#{registration.surname}">Surname</td>
                     <td><input id="firstName" name="firstName_name" type="text" placeholder="Enter surname..."></td>
                 </tr>
                 <tr>
-                    <td>Name</td>
+                    <td th:text="#{registration.name}">Name</td>
                     <td><input id="lastName" name="lastName_name" type="text" placeholder="Enter name..."></td>
                 </tr>
                 <tr>
-                    <td>Login</td>
+                    <td th:text="#{registration.login}">Login</td>
                     <td><input id="login" name="login_name" type="text" placeholder="Enter login..."></td>
                 </tr>
                 <tr>
-                    <td>Password</td>
+                    <td th:text="#{registration.password}">Password</td>
                     <td><input id="password" name="password_name" type="password" placeholder="Enter password..."></td>
                 </tr>
                 <tr>
-                    <td>Group</td>
+                    <td th:text="#{registration.group}">Group</td>
                     <td><input id="group" name="group_name" type="text">
-                        <p><a href="/ui/groups/create" style="margin-left:25px">Add group</a></p></td>
+                        <p><a href="/ui/groups/create" style="margin-left:25px" th:text="#{registration.add_group}">
+                            Add group</a>
+                        </p>
+                    </td>
                 </tr>
 
             </table>
@@ -107,95 +110,103 @@
             <br>
 
             <div class="container" style="text-align: center; margin-bottom: 10px">
-                <button id="btnSave" class="btnSaveUser btn btn-dark">Save</button>
-                <button onclick="location.href='/'" type="button"  class="btn btn-dark">Cancel</button>
+                <button id="btnSave" class="btnSaveUser btn btn-dark" th:text="#{button.save}">Save</button>
+                <button onclick="location.href='/'" type="button" class="btn btn-dark" th:text="#{button.cancel}">
+                    Cancel
+                </button>
             </div>
 
             <div class="container">
-                <p class="lead mb-0">Already have account?<a class="text-black font-weight-bold" href="/login">Sign in</a></p>
+                <div class="row">
+                    <div class="col">
+                        <p class="lead mb-0" th:text="#{registration.text}">Already have account?</p>
+                    </div>
+                    <div class="col">
+                        <a class="text-black font-weight-bold lead mb-0" href="/login" th:text="#{navbar.sign_in}">Sign in</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
-<script type="text/javascript">
-    if (localStorage.groupName) {
-        $("#group").val(localStorage.groupName);
+    <script type="text/javascript">
+        if (localStorage.groupName) {
+            $("#group").val(localStorage.groupName);
 
 
-    }
-    $.ajaxSetup({
-        cache: false,
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
         }
-    });
-
-    function UsersDTO(id, firstName, lastName, login, password, role, id_group) {
-        this.id_users = id;
-        this.first_name = firstName;
-        this.last_name = lastName;
-        this.login = login;
-        this.password = password;
-        this.roles = role;
-        this.id_group = id_group;
-    }
-
-    $(document).delegate('#btnSave', 'click', function (event) {
-        event.preventDefault();
-        var group = $('#group').val();
-        $.getJSON('/groups', function (json) {
-            console.log(json);
-            let gr = json.filter(elem => elem.name_group === group);
-            if (!gr.length) {
-                alert('This group doesn`t exist. You can create your own group')
-            } else {
-                var id = $('#user_id').val();
-                var firstName = $('#firstName').val();
-                var lastName = $('#lastName').val();
-                var login = $('#login').val();
-                var password = $('#password').val();
-                var role = [{id: 1}];
-
-
-                var usersDTO = new UsersDTO(id, firstName, lastName, login, password, role, gr[0]);
-
-                console.log(usersDTO);
-                console.log(JSON.stringify(usersDTO));
-
-                alert("User " + usersDTO.first_name + " " + usersDTO.last_name + " was added!");
-
-                alert("button Save!");
-
-                $.ajax({
-                    type: "POST",
-                    url: "/users",
-                    data: JSON.stringify(usersDTO),
-                    success: function (result) {
-                        location.href = "/ui/users/list";
-                        window.setTimeout(function () {
-                            location.reload();
-                        }, 1000);
-
-                        alert('SUCCESS!');
-                    },
-                    error: function (err) {
-                        alert('ERROR!');
-                    }
-
-                });
-
+        $.ajaxSetup({
+            cache: false,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
             }
+        });
+
+        function UsersDTO(id, firstName, lastName, login, password, role, id_group) {
+            this.id_users = id;
+            this.first_name = firstName;
+            this.last_name = lastName;
+            this.login = login;
+            this.password = password;
+            this.roles = role;
+            this.id_group = id_group;
+        }
+
+        $(document).delegate('#btnSave', 'click', function (event) {
+            event.preventDefault();
+            var group = $('#group').val();
+            $.getJSON('/groups', function (json) {
+                console.log(json);
+                let gr = json.filter(elem => elem.name_group === group);
+                if (!gr.length) {
+                    alert('This group doesn`t exist. You can create your own group')
+                } else {
+                    var id = $('#user_id').val();
+                    var firstName = $('#firstName').val();
+                    var lastName = $('#lastName').val();
+                    var login = $('#login').val();
+                    var password = $('#password').val();
+                    var role = [{id: 1}];
+
+
+                    var usersDTO = new UsersDTO(id, firstName, lastName, login, password, role, gr[0]);
+
+                    console.log(usersDTO);
+                    console.log(JSON.stringify(usersDTO));
+
+                    alert("User " + usersDTO.first_name + " " + usersDTO.last_name + " was added!");
+
+                    alert("button Save!");
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/users",
+                        data: JSON.stringify(usersDTO),
+                        success: function (result) {
+                            location.href = "/ui/users/list";
+                            window.setTimeout(function () {
+                                location.reload();
+                            }, 1000);
+
+                            alert('SUCCESS!');
+                        },
+                        error: function (err) {
+                            alert('ERROR!');
+                        }
+
+                    });
+
+                }
+
+            });
 
         });
 
-    });
 
-
-</script>
+    </script>
 </div>
 
 <!--dropdown for locatization-->
