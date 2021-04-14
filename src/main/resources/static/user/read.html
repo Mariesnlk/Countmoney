@@ -102,10 +102,10 @@
             </div>
 
             <div class="col-md-2">
-                <input type="submit" class="profile-edit-btn btnSaveUser" name="btnAddMore" id="btnSave"
-                       th:href="@{'/ui/users/update/' + ${user_id}}"
-                       value="Edit"/>
-                <!--                not work edit page -->
+                <button type="submit" class="profile-edit-btn btnSaveUser" name="btnAddMore" id="btnSave"
+                        th:href="@{'/ui/users/update/' + ${user_id}}" method="post"
+                        th:text="#{edit}">Edit
+                </button>
             </div>
         </div>
 
@@ -113,11 +113,16 @@
 
             <div class="col-md-4">
                 <div class="profile-work">
-                    <input type="submit" class="profile-edit-btn" name="btnAddTransaction" value="Add Transaction"/>
+                    <button type="submit" class="profile-edit-btn" name="btnAddTransaction"
+                            th:href="@{'/ui/transactions/create/'}" method="post"
+                            th:text="#{transaction.add}">Add Transaction
+                    </button>
                 </div>
                 <div class="profile-work">
-                    <input type="submit" class="profile-edit-btn" name="btnAllTransactions"
-                           value="All Transactions"/>
+                    <button type="submit" class="profile-edit-btn" name="btnAllTransactions"
+                            th:href="@{'/ui/transactions/list/'}" method="post"
+                            th:text="#{transaction.list}">All Transactions
+                    </button>
                 </div>
             </div>
 
