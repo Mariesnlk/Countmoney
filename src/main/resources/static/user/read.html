@@ -114,9 +114,10 @@
             <div class="col-md-4">
                 <div class="profile-work">
                     <button type="submit" class="profile-edit-btn" name="btnAddTransaction"
-                            th:href="@{'/ui/transactions/create/'}" method="post"
+                            onclick="location.href='/ui/transactions/create'"
                             th:text="#{transaction.add}">Add Transaction
                     </button>
+                    <!--  th:href="@{'/ui/transactions/create/'}" method="post"-->
                 </div>
                 <div class="profile-work">
                     <button type="submit" class="profile-edit-btn" name="btnAllTransactions"

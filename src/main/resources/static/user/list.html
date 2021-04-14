@@ -8,8 +8,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-
 
     <title>Users List</title>
 </head>
@@ -71,13 +69,13 @@
     <table id="users_table" class="table table-bordered">
 
         <tr class="table-active">
-            <th>Id</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Login</th>
-            <th>Password</th>
-            <th>Role</th>
-            <th>Group</th>
+            <th th:text="#{user.id}">Id</th>
+            <th th:text="#{user.name}">First Name</th>
+            <th th:text="#{user.surname}">Last Name</th>
+            <th th:text="#{user.login}">Login</th>
+            <th th:text="#{user.password}">Password</th>
+            <th th:text="#{user.role}">Role</th>
+            <th th:text="#{user.group}">Group</th>
         </tr>
 
     </table>
