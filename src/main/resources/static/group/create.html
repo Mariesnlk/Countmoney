@@ -127,7 +127,7 @@
             console.log(json);
             let gr = json.filter(elem => elem.name_group === nameGroup);
             if (gr.length) {
-                alert('Группа с таким именем уже существует!')
+                alert('Group with this name already exist!')
             } else {
 
                 var id = $('#id_group').val();
@@ -147,7 +147,8 @@
                     data: JSON.stringify(groupDTO),
                     success: function (result) {
                         //location.href = "/ui/groups/list";
-                        localStorage.groupName = nameGroup;
+                        // localStorage.groupName = nameGroup;
+                        sessionStorage.groupName = nameGroup;
                         window.setTimeout(function () {
                             location.reload();
                         }, 1000);

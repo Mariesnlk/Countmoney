@@ -122,7 +122,8 @@
                         <p class="lead mb-0" th:text="#{registration.text}">Already have account?</p>
                     </div>
                     <div class="col">
-                        <a class="text-black font-weight-bold lead mb-0" href="/login" th:text="#{navbar.sign_in}">Sign in</a>
+                        <a class="text-black font-weight-bold lead mb-0" href="/login" th:text="#{navbar.sign_in}">Sign
+                            in</a>
                     </div>
                 </div>
             </div>
@@ -132,11 +133,11 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
     <script type="text/javascript">
-        if (localStorage.groupName) {
-            $("#group").val(localStorage.groupName);
-
+        if (sessionStorage.groupName) {
+            $("#group").val(sessionStorage.groupName);
 
         }
+
         $.ajaxSetup({
             cache: false,
             headers: {
@@ -157,10 +158,14 @@
 
         $(document).delegate('#btnSave', 'click', function (event) {
             event.preventDefault();
+
             var group = $('#group').val();
+
             $.getJSON('/groups', function (json) {
                 console.log(json);
+
                 let gr = json.filter(elem => elem.name_group === group);
+
                 if (!gr.length) {
                     alert('This group doesn`t exist. You can create your own group')
                 } else {
@@ -186,7 +191,8 @@
                         url: "/users",
                         data: JSON.stringify(usersDTO),
                         success: function (result) {
-                            location.href = "/ui/users/list";
+                            // location.href = "/ui/users/list";
+                            location.href = "/ui/users/" + id;
                             window.setTimeout(function () {
                                 location.reload();
                             }, 1000);

@@ -42,8 +42,6 @@ public class IncomeRestController {
     }
 
 
-
-
     @PostMapping
     public void addIncome(@RequestBody Income income) {
 

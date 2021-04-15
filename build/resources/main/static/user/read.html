@@ -102,9 +102,10 @@
             </div>
 
             <div class="col-md-2">
-                <button type="submit" class="profile-edit-btn btnSaveUser" name="btnAddMore" id="btnSave"
-                        th:href="@{'/ui/users/update/' + ${user_id}}" method="post"
+                <button type="button" class="profile-edit-btn btnSaveUser" name="btnAddMore" id="btnSave"
+                        th:href="@{'/ui/users/update/' + ${user_id}}"
                         th:text="#{edit}">Edit
+                    <!--    not work                -->
                 </button>
             </div>
         </div>
@@ -113,15 +114,14 @@
 
             <div class="col-md-4">
                 <div class="profile-work">
-                    <button type="submit" class="profile-edit-btn" name="btnAddTransaction"
+                    <button type="button" class="profile-edit-btn" name="btnAddTransaction"
                             onclick="location.href='/ui/transactions/create'"
                             th:text="#{transaction.add}">Add Transaction
                     </button>
-                    <!--  th:href="@{'/ui/transactions/create/'}" method="post"-->
                 </div>
                 <div class="profile-work">
-                    <button type="submit" class="profile-edit-btn" name="btnAllTransactions"
-                            th:href="@{'/ui/transactions/list/'}" method="post"
+                    <button type="button" class="profile-edit-btn" name="btnAllTransactions"
+                            onclick="location.href='/ui/transactions/list'"
                             th:text="#{transaction.list}">All Transactions
                     </button>
                 </div>
