@@ -33,9 +33,9 @@ public class UsersService implements UserDetailsService {
         return usersRepository.findById(id).orElse(null);
     }
 
-    public void addUser(Users user) {
+    public Integer addUser(Users user) {
 
-        usersRepository.save(user);
+        return usersRepository.save(user).getId_users();
     }
 
     public void updateUser(Users user, Integer id) {

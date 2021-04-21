@@ -188,11 +188,15 @@
 
                     $.ajax({
                         type: "POST",
+                       headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                        },
                         url: "/users",
                         data: JSON.stringify(usersDTO),
                         success: function (result) {
                             // location.href = "/ui/users/list";
-                            location.href = "/ui/users/" + id;
+                            location.href = "/ui/users/read/" + result;
                             window.setTimeout(function () {
                                 location.reload();
                             }, 1000);
@@ -216,9 +220,10 @@
 </div>
 
 <!--dropdown for locatization-->
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<!--<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+
 <!---->
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"

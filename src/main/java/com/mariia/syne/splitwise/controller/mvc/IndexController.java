@@ -20,8 +20,6 @@ public class IndexController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
 
-        /*if (roles.contains("ROLE_ADMIN"))
-            return "redirect:/admin/profile";*/
         if (roles.contains("ROLE_USER")) {
             Integer user_id = ((Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId_users();
             model.addAttribute("user_id",user_id);

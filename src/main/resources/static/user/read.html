@@ -102,10 +102,8 @@
             </div>
 
             <div class="col-md-2">
-                <button type="button" class="profile-edit-btn btnSaveUser" name="btnAddMore" id="btnSave"
-                        th:href="@{'/ui/users/update/' + ${user_id}}"
+                <button id="updateUser" type="button" class="profile-edit-btn btnSaveUser" name="btnAddMore"
                         th:text="#{edit}">Edit
-                    <!--    not work                -->
                 </button>
             </div>
         </div>
@@ -120,8 +118,7 @@
                     </button>
                 </div>
                 <div class="profile-work">
-                    <button type="button" class="profile-edit-btn" name="btnAllTransactions"
-                            onclick="location.href='/ui/transactions/list'"
+                    <button id="getTransactions" type="button" class="profile-edit-btn" name="btnAllTransactions"
                             th:text="#{transaction.list}">All Transactions
                     </button>
                 </div>
@@ -242,15 +239,6 @@
             tr.push('<div class="col-md-6">' + json.login + '</div>');
             tr.push('</div>');
 
-            // tr.push('<div class="row">');
-            // tr.push('<div class="col-md-6">' + json.password + '</div>');
-            // tr.push('</div>');
-
-            // tr.push('<div class="row">');
-            // tr.push('<div class="col-md-6">' + json.roles[0].name + '</div>');
-            // tr.push('</div>');
-
-
             $('#users_entity_table').append($(tr.join('')))
 
             $('#user-name').text(json.first_name + ' ' + json.last_name)
@@ -269,6 +257,14 @@
     $(document).ready(function () {
 
         ajaxGet();
+    });
+
+    $("#getTransactions").click(function () {
+        location.href = '/ui/transactions/list/user/' + $('#userId').text()
+    });
+
+    $("#updateUser").click(function () {
+        location.href = '/ui/users/update/' + $('#userId').text()
     });
 
 </script>

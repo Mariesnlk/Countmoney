@@ -189,6 +189,10 @@
 
                 $.ajax({
                     type: "POST",
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
                     url: "/transactions",
                     data: JSON.stringify(transactionDTO),
                     success: function (result) {

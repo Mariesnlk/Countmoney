@@ -65,6 +65,8 @@
 
 <div>
 
+    <p id="userId" hidden><span th:text="${user_id}"/></p>
+
     <table id="transactions_table" class="table table-bordered">
 
         <tr class="table-active">
@@ -74,7 +76,7 @@
             <th th:text="#{transaction.sum}">Sum</th>
             <th th:text="#{transaction.period_from}">Period from</th>
             <th th:text="#{transaction.period_to}">Period to</th>
-            <th th:text="#{transaction.user}">User</th>
+<!--            <th th:text="#{transaction.user}">User</th>-->
             <th th:text="#{transaction.type_transaction}">Type Transaction</th>
         </tr>
 
@@ -85,8 +87,13 @@
 
 
         function ajaxGet() {
+            let user_id = $('#userId').text();
+            let url='/transactions'
+            if(user_id!=0){
+                url='/transactions/user/'+user_id
+            }
 
-            $.getJSON('/transactions', function (json) {
+            $.getJSON(url, function (json) {
                 console.log(json);
 
                 var tr = [];
@@ -98,14 +105,14 @@
                     tr.push('<td>' + json[i].date + '</td>');
                     tr.push('<td>' + json[i].destination + '</td>');
                     tr.push('<td>' + json[i].sum + '</td>');
-                    if(json[i].period_from == null && json[i].period_to == null){
+                    if (json[i].period_from == null && json[i].period_to == null) {
                         tr.push('<td>' + " " + '</td>');
                         tr.push('<td>' + " " + '</td>');
                     } else {
                         tr.push('<td>' + json[i].period_from + '</td>');// если null то не показывать
                         tr.push('<td>' + json[i].period_to + '</td>');
                     }
-                    tr.push('<td>' + json[i].id_user.id_users + '</td>');//не показывать
+                    // tr.push('<td>' + json[i].idUser.id_users + '</td>');//не показывать
                     tr.push('<td>' + json[i].id_type_transaction["name_type_transaction"] + '</td>');
                 }
 

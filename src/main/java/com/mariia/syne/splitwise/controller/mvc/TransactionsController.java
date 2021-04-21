@@ -11,7 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class TransactionsController {
 
     @GetMapping("/list")
-    public String showTransactionsList(){
+    public String showTransactionsList(Model model){
+        model.addAttribute("user_id",0);
+        return "transaction/list";
+    }
+
+    @GetMapping("/list/user/{user_id}")
+    public String showTransactionsByUser(@PathVariable String user_id, Model model){
+
+        model.addAttribute("user_id",user_id);
 
         return "transaction/list";
     }

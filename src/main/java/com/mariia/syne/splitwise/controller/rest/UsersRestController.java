@@ -38,9 +38,9 @@ public class UsersRestController {
     }
 
     @PostMapping
-    public void addUser(@RequestBody Users user) {
+    public Integer addUser(@RequestBody Users user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        usersService.addUser(user);
+        return usersService.addUser(user);
     }
 
     @PutMapping("/{id}")

@@ -33,8 +33,6 @@ public class Users implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
-//    private String role;
-
     @ManyToOne
     @JoinColumn(name = "id_group")
     private Groups id_group;

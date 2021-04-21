@@ -28,6 +28,14 @@ public class TransactionsRestController {
 
         return transactionsService.getAllTransactions();
     }
+    @GetMapping("user/{user_id}")
+    public List<Transactions> getTransactionsByUser(@PathVariable Integer user_id) {
+
+        return transactionsService.getTransactionsByUser(user_id);
+    }
+
+
+
 
     @GetMapping("/{id}")
     public Transactions getTransaction(@PathVariable Integer id) {
@@ -38,7 +46,7 @@ public class TransactionsRestController {
     @PostMapping
     public void addTransaction(@RequestBody Transactions transaction) {
         Users user = (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        transaction.setId_user(user);
+        transaction.setIdUser(user);
         transactionsService.addTransaction(transaction);
     }
 

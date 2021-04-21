@@ -28,7 +28,7 @@ public class Transactions {
 
     @ManyToOne
     @JoinColumn(name = "id_user")
-    private Users id_user;
+    private Users idUser;
 
     @ManyToOne
     @JoinColumn(name = "id_type_transaction")
@@ -44,7 +44,7 @@ public class Transactions {
         this.sum = sum;
         this.period_from = period_from;
         this.period_to = period_to;
-        this.id_user = id_user;
+        this.idUser = id_user;
         this.id_type_transaction = id_type_transaction;
     }
 
@@ -56,7 +56,7 @@ public class Transactions {
         this.sum = sum;
         this.period_from = period_from;
         this.period_to = period_to;
-        this.id_user = id_user;
+        this.idUser = id_user;
         this.id_type_transaction = id_type_transaction;
     }
 
@@ -115,12 +115,12 @@ public class Transactions {
     }
 
 
-    public Users getId_user() {
-        return id_user;
+    public Users getIdUser() {
+        return idUser;
     }
 
-    public void setId_user(Users id_user) {
-        this.id_user = id_user;
+    public void setIdUser(Users id_user) {
+        this.idUser = id_user;
     }
 
     public TypeTransaction getId_type_transaction() {
@@ -140,7 +140,7 @@ public class Transactions {
                 ", sum=" + sum +
                 ", period_from=" + period_from +
                 ", period_to=" + period_to +
-                ", id_user=" + id_user +
+                ", id_user=" + idUser +
                 ", id_type_transaction=" + id_type_transaction +
                 '}';
     }
