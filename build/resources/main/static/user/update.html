@@ -99,6 +99,15 @@
                             <p id="income_sum"></p>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5 th:text="#{transactions}">Transactions: </h5>
+                        </div>
+                        <div class="col-md-6">
+                            <p id="transactions_sum"></p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -121,6 +130,12 @@
                 <div class="profile-work">
                     <button id="getTransactions" type="button" class="profile-edit-btn" name="btnAllTransactions"
                             th:text="#{transaction.list}">All Transactions
+                    </button>
+                </div>
+                <div class="profile-work">
+                    <button type="button" class="profile-edit-btn" name="btnAddIncomes"
+                            onclick="location.href='/ui/incomes/create'"
+                            th:text="#{income.add}">Add Incomes
                     </button>
                 </div>
             </div>
@@ -240,7 +255,6 @@
 
                 alert('SUCCESS!');
                 location.href = '/ui/users/read/' + $('#userId').text()
-                //location.href = "/ui/users/read/" + userId;
             },
             error: function (err) {
                 alert('ERROR!');
@@ -288,6 +302,14 @@
             console.log(json);
 
             $('#income_sum').text(json);
+
+        });
+
+        $.getJSON('/transactions/sum', function (json) {
+
+            console.log(json);
+
+            $('#transactions_sum').text(json);
 
         });
     }

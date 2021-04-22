@@ -137,6 +137,11 @@
                             th:text="#{income.add}">Add Incomes
                     </button>
                 </div>
+                <div class="profile-work">
+                    <button id="groupInfo" type="button" class="profile-edit-btn" name="btnAddIncomes"
+                            th:text="#{group.info}">Group Info
+                    </button>
+                </div>
             </div>
 
             <div class="col-md-4">
@@ -184,6 +189,8 @@
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
+
+    let groupId = 0;
 
     $.ajaxSetup({
         cache: false,
@@ -234,6 +241,7 @@
 
             tr.push('<div class="row">');
             tr.push('<div class="col-md-6">' + json.id_group["name_group"] + '</div>');
+            groupId = json.id_group["id_groups"]
             tr.push('</div>');
 
             tr.push('<div class="row">');
@@ -255,19 +263,44 @@
         });
 
         $.getJSON('/incomes/sum', function (json) {
-
+            if (json == null) {
+                json = 0.00;
+            }
             console.log(json);
 
             $('#income_sum').text(json);
 
         });
 
-        $.getJSON('/transactions/sum', function (json) {
+        /* $.getJSON('/transactions/sum', function (json) {
 
-            console.log(json);
+         if (json == null) {
+                 json = 0.00;
+             }
+              $('#transactions_sum').text(json);
 
-            $('#transactions_sum').text(json);
+             console.log(json);
 
+         });*/
+
+        let sum = 0.00
+
+        $.ajax({
+            type: "GET",
+            url: '/transactions/sum',
+            success: function (result) {
+                if (result) {
+                    sum = result
+                }
+
+                $('#transactions_sum').text(sum);
+                alert('success');
+
+
+            },
+            error: function (err) {
+                alert('error');
+            }
         });
     }
 
@@ -282,6 +315,10 @@
 
     $("#updateUser").click(function () {
         location.href = '/ui/users/update/' + $('#userId').text()
+    });
+
+    $("#groupInfo").click(function () {
+        location.href = '/ui/groups/read/' + groupId
     });
 
 </script>
