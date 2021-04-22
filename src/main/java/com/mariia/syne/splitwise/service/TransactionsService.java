@@ -33,6 +33,11 @@ public class TransactionsService {
         return transactionsRepository.getAllByIdUser(user);
     }
 
+    public Double getSumUserTransactions(Integer user_id) {
+
+        return transactionsRepository.getSumUserTransactions(user_id);
+    }
+
     public void addTransaction(Transactions transactions) {
 
         transactionsRepository.save(transactions);

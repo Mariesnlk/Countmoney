@@ -195,7 +195,6 @@
                         url: "/users",
                         data: JSON.stringify(usersDTO),
                         success: function (result) {
-                            // location.href = "/ui/users/list";
                             location.href = "/ui/users/read/" + result;
                             window.setTimeout(function () {
                                 location.reload();

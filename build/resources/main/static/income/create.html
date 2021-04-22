@@ -69,6 +69,8 @@
     </div>
 </nav>
 
+<p id="userId" hidden><span th:text="${user_id}"/></p>
+
 <div style="width:600px;margin-left: auto;margin-right: auto;margin-top:24px;padding: 24px;">
     <div class="card">
         <div class="w3-container">
@@ -93,11 +95,6 @@
                     <td th:text="#{transaction.sum}">Sum</td>
                     <td><input id="sum" name="sum_name" type="text"></td>
                 </tr>
-                <!--                <tr>-->
-                <!--                    <td>Id User</td>-->
-                <!--                    <td><input id="isUser" name="isUser_name" type="text"></td>-->
-                <!--                </tr>-->
-
             </table>
             <br>
             <br>
@@ -105,7 +102,6 @@
             <div class="container" style="text-align: center; margin-bottom: 10px">
                 <button id="btnSave" class="btnSaveUser btn btn-dark">Save</button>
                 <button onclick="location.href='/'" type="button" class="btn btn-dark">Cancel</button>
-                <!--     back to user page           -->
             </div>
 
         </div>
@@ -137,7 +133,6 @@
         var id = $('#id_income').val();
         var periodFromIncome = $('#periodFromIncome').val();
         var periodToIncome = $('#periodToIncome').val();
-        // var idUser = $('#isUser').val();
         var sum = $('#sum').val();
 
         var incomeDTO = new IncomeDTO(id, periodFromIncome, periodToIncome, sum);
@@ -149,10 +144,14 @@
 
         $.ajax({
             type: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
             url: "/incomes",
             data: JSON.stringify(incomeDTO),
             success: function (result) {
-                location.href = "/ui/incomes/list";
+                location.href = "/ui/users/read/" + $('#userId').text();
                 window.setTimeout(function () {
                     location.reload();
                 }, 1000);

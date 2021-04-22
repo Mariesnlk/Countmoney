@@ -1,5 +1,7 @@
 package com.mariia.syne.splitwise.controller.mvc;
 
+import com.mariia.syne.splitwise.entity.Users;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +27,9 @@ public class IncomeController {
     }
 
     @GetMapping("/create")
-    public String showIncomesCreate(){
+    public String showIncomesCreate(Model model){
+        Integer userId = ((Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId_users();
+        model.addAttribute("user_id",userId);
 
         return "income/create";
     }

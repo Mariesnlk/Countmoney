@@ -72,13 +72,23 @@
 
 <div class="w3-container">
 
-    <!--    <div th:if="${param.error}">-->
-    <!--        Invalid username and password.-->
-    <!--    </div>-->
+    <!-- show notification on error -->
+    <div th:if="${param.error}">
+        Invalid username or password.
+    </div>
 
-    <!--    <div th:if="${param.logout}">-->
-    <!--        You have been logged out.-->
-    <!--    </div>-->
+    <!-- show notification of logout -->
+    <div th:if="${param.logout}">
+        You have been logged out.
+    </div>
+
+<!-- Logout -->
+<!--    <div>-->
+<!--        <h3>Welcome <span th:text="${#authentication.name}"/></h3>-->
+<!--        <form th:action="@{/logout}" method="post">-->
+<!--            <input type="submit" value="Logout"/>-->
+<!--        </form>-->
+<!--    </div>-->
 
 
     <div style="width:600px;margin-left: auto;margin-right: auto;margin-top:50px;padding: 24px;">

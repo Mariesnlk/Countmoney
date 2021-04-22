@@ -3,6 +3,7 @@ package com.mariia.syne.splitwise.controller.rest;
 import com.mariia.syne.splitwise.entity.Users;
 import com.mariia.syne.splitwise.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,7 +46,15 @@ public class UsersRestController {
 
     @PutMapping("/{id}")
     public void updateUser(@RequestBody Users user, @PathVariable Integer id) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        Users currentUser=(Users) SecurityContextHolder.getContext().
+                getAuthentication().getPrincipal();
+        if (user.getPassword().equals("")) {
+            user.setPassword(currentUser.getPassword());
+        } else {
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        }
+        user.setRole(currentUser.getRole());
+
         usersService.updateUser(user, id);
     }
 

@@ -34,8 +34,11 @@ public class TransactionsRestController {
         return transactionsService.getTransactionsByUser(user_id);
     }
 
-
-
+    @GetMapping("/sum")
+    public Double getSum() {
+        Integer id = ((Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId_users();
+        return transactionsService.getSumUserTransactions(id);
+    }
 
     @GetMapping("/{id}")
     public Transactions getTransaction(@PathVariable Integer id) {

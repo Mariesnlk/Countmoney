@@ -189,7 +189,7 @@
 </script>
 
 <script type="text/javascript">
-
+    var userGroup;
     $.ajaxSetup({
         cache: false,
         headers: {
@@ -208,18 +208,18 @@
         this.id_group = id_group;
     }
 
-    $(document).delegate('#btnSave', 'click', function (event) {
+    $(document).delegate('#saveUser', 'click', function (event) {
         event.preventDefault();
 
         var userId = $('#userId').text();
         var firstName = $('#firstName').val();
         var lastName = $('#lastName').val();
-        var login = $('#login').text();
-        var password = $('#password').text();
-        var role = $('#role').text();
-        var group = $('#group_id').text();
+        var login = $('#login').val();
+        var password = $('#password').val();
+        var role = null;
+        // var group = $('#group_id').text();
 
-        var usersDTO = new UsersDTO(userId, firstName, lastName, login, password, role, group);
+        var usersDTO = new UsersDTO(userId, firstName, lastName, login, password, role, userGroup);
 
         console.log(usersDTO);
         console.log(JSON.stringify(usersDTO));
@@ -233,12 +233,14 @@
             url: '/users/' + userId,
             data: JSON.stringify(usersDTO),
             success: function (result) {
-                location.href = "/ui/users/read/" + userId;
+
                 window.setTimeout(function () {
                     location.reload();
                 }, 1000);
 
                 alert('SUCCESS!');
+                location.href = '/ui/users/read/' + $('#userId').text()
+                //location.href = "/ui/users/read/" + userId;
             },
             error: function (err) {
                 alert('ERROR!');
@@ -274,8 +276,10 @@
             $('#login').val(json.login);
             $('#password').val('');
             $('#role').text(json.roles[0].name);
-            console.log(json);
+            userGroup=json.id_group;
             $('#group_id').text(json.id_group["name_group"]);
+
+            console.log(json);
 
         });
 
@@ -297,9 +301,9 @@
         location.href = '/ui/transactions/list/user/' + $('#userId').text()
     });
 
-    $("#saveUser").click(function () {
+    /*$("#saveUser").click(function () {
         location.href = '/ui/users/read/' + $('#userId').text()
-    });
+    });*/
 
 </script>
 

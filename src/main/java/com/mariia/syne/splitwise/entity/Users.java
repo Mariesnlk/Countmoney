@@ -39,10 +39,12 @@ public class Users implements UserDetails {
 
     @OneToMany
     @JoinColumn(name = "id_user")
+    @Transient
     private List<Income> incomes;
 
     @OneToMany
     @JoinColumn(name = "id_user")
+    @Transient
     private List<Transactions> transactions;
 
     public Users() {

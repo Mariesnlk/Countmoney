@@ -73,6 +73,8 @@
     <div class="card">
         <div class="w3-container">
 
+            <p id="userId" hidden><span th:text="${user_id}"/></p>
+
             <h2 style="text-align: center" th:text="#{transaction.add}">Add Transaction</h2>
 
             <table id="create_transaction_entity_table" class="w3-table w3-bordered">
@@ -93,10 +95,6 @@
                     <td th:text="#{transaction.sum}">Sum</td>
                     <td><input id="sum" name="sum_name" type="text"></td>
                 </tr>
-<!--                <tr>-->
-<!--                    <td th:text="#{transaction.user}">User</td>-->
-<!--                    <td><input id="id_user" name="id_user_name" type="text"></td>-->
-<!--                </tr>-->
                 <tr>
                     <td th:text="#{transaction.type_transaction}">Type Transaction</td>
                     <td><input id="id_type_transaction" name="id_type_transaction_name" type="text">
@@ -121,7 +119,6 @@
                 <button onclick="location.href='/'" type="button" class="btn btn-dark" th:text="#{button.cancel}">
                     Cancel
                 </button>
-<!--                возвращаться на страницу пользователя-->
             </div>
 
         </div>
@@ -196,7 +193,7 @@
                     url: "/transactions",
                     data: JSON.stringify(transactionDTO),
                     success: function (result) {
-                        location.href = "/ui/transactions/list";
+                        location.href = "/ui/users/read/" + $('#userId').text();
                         window.setTimeout(function () {
                             location.reload();
                         }, 1000);
