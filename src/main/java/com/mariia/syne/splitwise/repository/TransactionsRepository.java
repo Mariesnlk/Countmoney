@@ -14,4 +14,7 @@ public interface TransactionsRepository extends CrudRepository<Transactions, Int
     @Query(value ="SELECT SUM(sum) FROM Transactions WHERE id_user=?", nativeQuery = true)
     public Double getSumUserTransactions(Integer id_user);
 
+    @Query(value ="SELECT DISTINCT destination FROM Transactions", nativeQuery = true)
+    public List<String> getDescription();
+
 }

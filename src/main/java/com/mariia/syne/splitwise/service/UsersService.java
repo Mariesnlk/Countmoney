@@ -29,6 +29,13 @@ public class UsersService implements UserDetailsService {
         return users;
     }
 
+    public List<Users> getListUsersByGroup(Integer id_group) {
+
+        List<Users> users = new ArrayList<>();
+        users.addAll(usersRepository.getListUsersByGroup(id_group));
+        return users;
+    }
+
     public Users getUser(Integer id) {
         return usersRepository.findById(id).orElse(null);
     }

@@ -272,17 +272,6 @@
 
         });
 
-        /* $.getJSON('/transactions/sum', function (json) {
-
-         if (json == null) {
-                 json = 0.00;
-             }
-              $('#transactions_sum').text(json);
-
-             console.log(json);
-
-         });*/
-
         let sum = 0.00
 
         $.ajax({
@@ -294,8 +283,7 @@
                 }
 
                 $('#transactions_sum').text(sum);
-                alert('success');
-
+                // alert('success');
 
             },
             error: function (err) {

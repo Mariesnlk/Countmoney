@@ -28,6 +28,13 @@ public class TransactionsRestController {
 
         return transactionsService.getAllTransactions();
     }
+
+    @GetMapping("/allDescriptions")
+    public List<String> getDescription() {
+
+        return transactionsService.getDescription();
+    }
+
     @GetMapping("user/{user_id}")
     public List<Transactions> getTransactionsByUser(@PathVariable Integer user_id) {
 

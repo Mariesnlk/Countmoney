@@ -32,6 +32,12 @@ public class UsersRestController {
         return usersService.getAllUsers();
     }
 
+//    @GetMapping
+//    public List<Users> getListUsersByGroup() {
+//        Groups groupId = ((Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId_group();
+//        return usersService.getListUsersByGroup((Integer) groupId);
+//    }
+
     @GetMapping("/{id}")
     public Users getUser(@PathVariable Integer id) {
 

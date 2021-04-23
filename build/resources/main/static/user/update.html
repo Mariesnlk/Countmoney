@@ -298,19 +298,32 @@
         });
 
         $.getJSON('/incomes/sum', function (json) {
-
+            if (json == null) {
+                json = 0.00;
+            }
             console.log(json);
 
             $('#income_sum').text(json);
 
         });
 
-        $.getJSON('/transactions/sum', function (json) {
+        let sum = 0.00
 
-            console.log(json);
+        $.ajax({
+            type: "GET",
+            url: '/transactions/sum',
+            success: function (result) {
+                if (result) {
+                    sum = result
+                }
 
-            $('#transactions_sum').text(json);
+                $('#transactions_sum').text(sum);
+                // alert('success');
 
+            },
+            error: function (err) {
+                alert('error');
+            }
         });
     }
 
@@ -323,9 +336,6 @@
         location.href = '/ui/transactions/list/user/' + $('#userId').text()
     });
 
-    /*$("#saveUser").click(function () {
-        location.href = '/ui/users/read/' + $('#userId').text()
-    });*/
 
 </script>
 

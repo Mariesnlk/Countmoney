@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("ui/typeTransactions")
 public class TypeTransactionController {
 
-//    @RequestMapping(value = "/list", method = RequestMethod.POST)
     @GetMapping("/list")
     public String showTypeTransactionsList(){
 
@@ -25,7 +24,6 @@ public class TypeTransactionController {
         return "typeTransaction/read";
     }
 
-//    @RequestMapping(value = "/create", method = RequestMethod.POST)
     @GetMapping("/create")
     public String showTypeTransactionsCreate(){
 

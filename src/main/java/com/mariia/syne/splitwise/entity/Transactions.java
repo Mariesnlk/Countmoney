@@ -60,6 +60,17 @@ public class Transactions {
         this.id_type_transaction = id_type_transaction;
     }
 
+    public Transactions(Integer id_transaction, Date date, String destination, double sum, Date period_from,
+                        Date period_to, TypeTransaction id_type_transaction) {
+        this.id_transaction = id_transaction;
+        this.date = date;
+        this.destination = destination;
+        this.sum = sum;
+        this.period_from = period_from;
+        this.period_to = period_to;
+        this.id_type_transaction = id_type_transaction;
+    }
+
     public Integer getId_transaction() {
         return id_transaction;
     }

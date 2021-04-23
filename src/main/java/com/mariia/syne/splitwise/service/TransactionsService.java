@@ -23,12 +23,18 @@ public class TransactionsService {
         return transactions;
     }
 
+    public List<String> getDescription() {
+        List<String> transactions = new ArrayList<>();
+        transactionsRepository.getDescription().forEach(transactions::add);
+        return transactions;
+    }
+
     public Transactions getTransaction(Integer id) {
         return transactionsRepository.findById(id).orElse(null);
     }
 
     public List<Transactions> getTransactionsByUser(Integer user_id) {
-        Users user=new Users();
+        Users user = new Users();
         user.setId_users(user_id);
         return transactionsRepository.getAllByIdUser(user);
     }

@@ -89,7 +89,15 @@
                 </tr>
                 <tr>
                     <td th:text="#{transaction.description}">Destination</td>
-                    <td><input id="destination" name="destination_name" type="text"></td>
+                    <td>
+                        <input id="description" name="description_name"  type='text' list='description-dropdown'>
+                        <datalist id='description-dropdown'>
+                            <option selected="true" disabled></option>
+                        </datalist>
+<!--                        <select id="description-dropdown" name="description">-->
+<!--                            <option selected="true" disabled>Choose destination</option>-->
+<!--                        </select>-->
+                    </td>
                 </tr>
                 <tr>
                     <td th:text="#{transaction.sum}">Sum</td>
@@ -97,9 +105,10 @@
                 </tr>
                 <tr>
                     <td th:text="#{transaction.type_transaction}">Type Transaction</td>
-                    <td><input id="id_type_transaction" name="id_type_transaction_name" type="text">
-                        <p><a href="/ui/typeTransactions/create" style="margin-left:25px"
-                              th:text="#{type_transaction.add}">Add type transaction</a></p>
+                    <td>
+                        <select id="type_transaction-dropdown" name="type_transaction_name">
+                            <option selected="true" disabled>Choose type transaction</option>
+                        </select>
                     </td>
                 </tr>
                 <tr>
@@ -129,10 +138,29 @@
 
 <script type="text/javascript">
 
-    if (sessionStorage.nameTypeTransaction) {
-        $("#id_type_transaction").val(sessionStorage.nameTypeTransaction);
+    let description_dropdown = $('#description-dropdown');
 
-    }
+    description_dropdown.empty();
+    description_dropdown.prop('selectedIndex', 0);
+
+    $.getJSON('/transactions/allDescriptions', function (json) {
+        console.log(json);
+        $.each(json, function (key, entry) {
+            description_dropdown.append($('<option></option>').attr('value', entry).text(entry));
+        })
+    });
+
+    let type_transaction_dropdown = $('#type_transaction-dropdown');
+
+    type_transaction_dropdown.empty();
+    type_transaction_dropdown.prop('selectedIndex', 0);
+
+    $.getJSON('/typeTransactions', function (json) {
+        console.log(json);
+        $.each(json, function (key, entry) {
+            type_transaction_dropdown.append($('<option></option>').attr('value', entry.id_type_transaction).text(entry.name_type_transaction));
+        })
+    });
 
     $.ajaxSetup({
         cache: false,
@@ -156,62 +184,51 @@
     $(document).delegate('#btnSave', 'click', function (event) {
         event.preventDefault();
 
-        var typeTransaction = $('#id_type_transaction').val();
-
         $.getJSON('/typeTransactions', function (json) {
             console.log(json);
 
-            let typeTrans = json.filter(elem => elem.name_type_transaction === typeTransaction);
+            var id = $('#id_transaction').val();
+            var date = $('#date').val();
+            var destination = $('#description').val();
+            var sum = $('#sum').val();
+            var periodFrom = $('#period_from').val();
+            var periodTo = $('#period_to').val();
+            var idUser = $('#userId').text();
+            var typeTransaction = $('#type_transaction-dropdown').val();
 
-            if (!typeTrans.length) {
-                alert('This type transaction doesn`t exist. You can create your own type transaction')
-            } else {
+            var transactionDTO = new TransactionDTO(id, date, destination, sum, periodFrom, periodTo, idUser, typeTransaction);
 
-                var id = $('#id_transaction').val();
-                var date = $('#date').val();
-                var destination = $('#destination').val();
-                var sum = $('#sum').val();
-                var periodFrom = $('#period_from').val();
-                var periodTo = $('#period_to').val();
-                // var idUser = $('#id_user').val();
+            console.log(transactionDTO);
+            console.log(JSON.stringify(transactionDTO));
 
+            alert("button Save!");
 
-                var transactionDTO = new TransactionDTO(id, date, destination, sum, periodFrom, periodTo, null,
-                    typeTrans[0]);
+            $.ajax({
+                type: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                url: "/transactions",
+                data: JSON.stringify(transactionDTO),
+                success: function (result) {
+                    location.href = "/ui/users/read/" + $('#userId').text();
+                    window.setTimeout(function () {
+                        location.reload();
+                    }, 1000);
 
-                console.log(transactionDTO);
-                console.log(JSON.stringify(transactionDTO));
+                    console.log(result);
+                    alert('SUCCESS!');
+                },
+                error: function (err) {
+                    alert('ERROR!');
+                }
 
-                alert("button Save!");
-
-                $.ajax({
-                    type: "POST",
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-                    url: "/transactions",
-                    data: JSON.stringify(transactionDTO),
-                    success: function (result) {
-                        location.href = "/ui/users/read/" + $('#userId').text();
-                        window.setTimeout(function () {
-                            location.reload();
-                        }, 1000);
-
-                        alert('SUCCESS!');
-                    },
-                    error: function (err) {
-                        alert('ERROR!');
-                    }
-
-                });
-
-            }
+            });
 
         });
 
     });
-
 
 </script>
 </div>
