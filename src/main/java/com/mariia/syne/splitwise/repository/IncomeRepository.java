@@ -6,8 +6,16 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface IncomeRepository extends CrudRepository<Income, Integer> {
 
-    @Query(value ="SELECT SUM(sum_income) FROM Income WHERE id_user=?", nativeQuery = true)
-    public Double getSumAllIncomes(Integer id_user);
+    @Query(value = "SELECT SUM(sum_income) FROM Income WHERE id_user=?", nativeQuery = true)
+    Double getSumAllIncomes(Integer id_user);
+
+    @Query(value = "SELECT SUM(sum_income) FROM Income " +
+            "LEFT JOIN Users " +
+            "ON Users.id_users=Income.id_user " +
+            "LEFT JOIN User_groups " +
+            "ON User_groups.id_groups=Users.id_group " +
+            "WHERE User_groups.id_groups=?", nativeQuery = true)
+    Double getSumUserGroupIncomes(Integer id_groups);
 
 
 }

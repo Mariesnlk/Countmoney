@@ -41,6 +41,11 @@ public class IncomeRestController {
         return incomeService.getSumAllIncomes(id);
     }
 
+    @GetMapping("/sum-by-group")
+    public Double getSumByGroup() {
+        Integer id = ((Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId_group().getId_groups();
+        return incomeService.getSumUserGroupIncomes(id);
+    }
 
     @PostMapping
     public void addIncome(@RequestBody Income income) {

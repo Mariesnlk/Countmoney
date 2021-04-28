@@ -10,6 +10,17 @@ body {
     background-size: cover;
 }
 
+.headline h5, .headline p {
+    display: inline;
+    vertical-align: top;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    line-height: 28px;
+}
+.headline h5 {
+    font-weight: bold;
+}
+
 h2, form{
     text-align: center;
     margin-bottom: 2%;
@@ -17,8 +28,8 @@ h2, form{
 
 #page-content {
     margin-top: 1%;
-    margin-left: 2%;
-    margin-right: 2%;
+    margin-left: 5%;
+    margin-right: 5%;
 }
 
 a {
