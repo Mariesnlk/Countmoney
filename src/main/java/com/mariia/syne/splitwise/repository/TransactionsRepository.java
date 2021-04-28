@@ -5,16 +5,28 @@ import com.mariia.syne.splitwise.entity.Users;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.Date;
 import java.util.List;
 
 public interface TransactionsRepository extends CrudRepository<Transactions, Integer> {
 
-    public List<Transactions> getAllByIdUser(Users id_user);
+    List<Transactions> getAllByIdUser(Users id_user);
 
     @Query(value ="SELECT SUM(sum) FROM Transactions WHERE id_user=?", nativeQuery = true)
-    public Double getSumUserTransactions(Integer id_user);
+    Double getSumUserTransactions(Integer id_user);
+
+    @Query(value ="SELECT SUM(sum) FROM Transactions " +
+            "LEFT JOIN users " +
+            "ON users.id_users=Transactions.id_user " +
+            "LEFT JOIN user_groups " +
+            "ON user_groups.id_groups=users.id_group " +
+            "WHERE user_groups.id_groups=?", nativeQuery = true)
+    Double getSumUserGroupTransactions(Integer id_groups);
+
 
     @Query(value ="SELECT DISTINCT destination FROM Transactions", nativeQuery = true)
-    public List<String> getDescription();
+    List<String> getDescription();
+
+    List<Transactions> findAllByDateBetween(Date dateStart, Date dateEnd);
 
 }

@@ -11,10 +11,10 @@ public interface UsersRepository extends CrudRepository<Users, Integer> {
 
     public UserDetails  getUserByLogin(String login);
 
-    @Query(value ="SELECT U.last_name, U.first_name\n" +
-            "    FROM Users U\n" +
-            "    INNER JOIN Groups G\n" +
-            "    ON U.id_group=G.id_groups\n" +
-            "    WHERE U.id_group = ?;", nativeQuery = true)
+    @Query(value ="SELECT *\n" +
+            "    FROM Users \n" +
+            "    INNER JOIN User_groups\n" +
+            "    ON Users.id_group=User_groups.id_groups\n" +
+            "    WHERE Users.id_group = ?;", nativeQuery = true)
     public List<Users> getListUsersByGroup(Integer id_group);
 }

@@ -32,7 +32,7 @@ public class UsersService implements UserDetailsService {
     public List<Users> getListUsersByGroup(Integer id_group) {
 
         List<Users> users = new ArrayList<>();
-        users.addAll(usersRepository.getListUsersByGroup(id_group));
+        usersRepository.getListUsersByGroup(id_group).forEach(users::add);
         return users;
     }
 

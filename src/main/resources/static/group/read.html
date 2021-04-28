@@ -6,6 +6,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/static/css/groupInfo.css" rel="stylesheet">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
     <title>Group Info</title>
@@ -69,98 +70,160 @@
     </div>
 </nav>
 
-<div class="w3-container">
+<div>
     <p id="groupId" hidden><span th:text="${group_id}"/></p>
+    <p id="userId" hidden><span th:text="${user_id}"/></p>
 
-    <table id="groups_entity_table" class="w3-table w3-striped ">
-        <tr>
-            <th></th>
-            <th></th>
+    <div class="page-content page-container" id="page-content">
+        <div class="row">
+            <div class="list list-row block">
+                <h2 id="group_name"></h2>
 
-        </tr>
-    </table>
-    <br>
-    <br>
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <div class="col-md-6">
+                                <h5 th:text="#{incomes}">Incomes: </h5>
+                            </div>
+                            <div class="col-md-6">
+                                <p id="income_sum"></p>
+                            </div>
+                        </div>
 
-    <form action="/ui/groups/list">
-        <input type="submit" class="btn btn-dark login-form" value="Back"/>
-    </form>
+                        <div class="col">
+                            <div class="col-md-6">
+                                <h5 th:text="#{transactions}">Transactions: </h5>
+                            </div>
+                            <div class="col-md-6">
+                                <p id="transactions_sum"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script type="text/javascript">
+                <div id="users_list"></div>
+                <form action="/">
+                    <input type="submit" class="btn btn-dark" value="Back"/>
+                </form>
 
-        $.ajaxSetup({
-            cache: false,
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            }
-        });
+            </div>
+        </div>
+    </div>
+</div>
 
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
 
-        $(document).delegate('#btnDeleteGroup', 'click', function (event) {
-            event.preventDefault();
+    $.ajaxSetup({
+        cache: false,
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        }
+    });
 
-            var groupId = $('#groupId').text();
+    $.getJSON('/users/list_users', function (json) {
+        console.log(json);
 
-            console.log(groupId);
+        let tr = [];
+        for (let i = 0; i < json.length; i++) {
 
-            // alert("groupId=" + groupId);
+            tr.push('<div class="list-item">');
+            tr.push('<div><a data-abc="true"><span class="w-48 avatar gd-warning">');
+            tr.push(json[i].first_name.toString().charAt(0));
+            tr.push('</span></a></div>');
+            tr.push('<div class="flex"><a class="item-author text-color" data-abc="true">');
+            tr.push(json[i].first_name + " " + json[i].last_name);
+            tr.push('</a></div>');
+            tr.push('</div>');
 
-            alert("button Delete!");
-
-            $.ajax({
-                type: "DELETE",
-                url: '/groups/' + groupId,
-                //data: JSON.stringify(userDTO),
-                success: function (result) {
-                    location.href = "/ui/groups/list";
-                    window.setTimeout(function () {
-                        location.reload();
-                    }, 1000);
-
-                    alert('SUCCESS!');
-                },
-                error: function (err) {
-                    alert('ERROR!');
-                }
-            });
-        });
-
-
-        function ajaxGet() {
-
-            var groupId = $('#groupId').text();
-
-            console.log(groupId);
-
-            $.getJSON('/groups/' + groupId, function (json) {
-
-                console.log(json);
-                // alert('json.name=' + json.name_group);
-
-                var tr = [];
-
-                tr.push('<tr>');
-                tr.push('<td>Id</td>');
-                tr.push('<td>' + json.id_groups + '</td>');
-                tr.push('</tr>');
-
-                tr.push('<tr>');
-                tr.push('<td>Name</td>');
-                tr.push('<td>' + json.name_group + '</td>');
-                tr.push('</tr>');
-
-                $('#groups_entity_table').append($(tr.join('')))
-            });
         }
 
-        $(document).ready(function () {
+        $('#users_list').append($(tr.join('')));
+    });
 
-            ajaxGet();
+    // $.getJSON('/transactions/sum_by_group', function (json) {
+    //     console.log("Transactions " + json);
+    // });
+
+    $.getJSON('/incomes/sum', function (json) {
+        if (json == null) {
+            json = 0.00;
+        }
+        console.log(json);
+
+        $('#income_sum').text(json);
+
+    });
+
+    let sum = 0.00
+
+    $.ajax({
+        type: "GET",
+        url: '/transactions/sum_by_group',
+        success: function (result) {
+            if (result) {
+                sum = result
+            }
+
+            $('#transactions_sum').text(sum);
+            console.log("Group transactions " + result);
+
+        },
+        error: function (err) {
+            alert('error');
+        }
+    });
+
+
+    $(document).delegate('#btnDeleteGroup', 'click', function (event) {
+        event.preventDefault();
+
+        let groupId = $('#groupId').text();
+
+        console.log(groupId);
+
+        alert("button Delete!");
+
+        $.ajax({
+            type: "DELETE",
+            url: '/groups/' + groupId,
+
+            success: function (result) {
+                location.href = "/ui/groups/list";
+                window.setTimeout(function () {
+                    location.reload();
+                }, 1000);
+
+                alert('SUCCESS!');
+            },
+            error: function (err) {
+                alert('ERROR!');
+            }
         });
+    });
 
-    </script>
+
+    function ajaxGet() {
+
+        let groupId = $('#groupId').text();
+
+        console.log(groupId);
+
+        $.getJSON('/groups/' + groupId, function (json) {
+
+            console.log(json);
+
+            $('#group_name').text(json.name_group);
+        });
+    }
+
+    $(document).ready(function () {
+
+        ajaxGet();
+    });
+
+</script>
 </div>
 
 <!--dropdown for locatization-->

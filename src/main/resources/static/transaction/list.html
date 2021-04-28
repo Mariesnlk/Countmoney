@@ -76,21 +76,53 @@
             <th th:text="#{transaction.sum}">Sum</th>
             <th th:text="#{transaction.period_from}">Period from</th>
             <th th:text="#{transaction.period_to}">Period to</th>
-<!--            <th th:text="#{transaction.user}">User</th>-->
+            <!--            <th th:text="#{transaction.user}">User</th>-->
             <th th:text="#{transaction.type_transaction}">Type Transaction</th>
         </tr>
-
     </table>
+    <tr>
+        <td th:text="#{transaction.period_from}">Period from</td>
+        <td><input id="period_from" name="period_from_name" type="date"></td>
+    </tr>
+    <tr>
+        <td th:text="#{transaction.period_to}">Period to</td>
+        <td><input id="period_to" name="period_to_name" type="date"></td>
+    </tr>
+    <tr>
+        <button id="choose" type="button" class="profile-edit-btn" name="btnChoose">Choose
+        </button>
+    </tr>
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script type="text/javascript">
 
+        $(document).delegate('#choose', 'click', function (event) {
+
+            event.preventDefault();
+            var periodFrom = $('#period_from').val();
+            var periodTo = $('#period_to').val();
+            $.ajax({
+                type: "GET",
+                url: '/transactions/period/?start=' + periodFrom + '&end=' + periodTo,
+                success: function (result) {
+
+                    alert('SUCCESS!');
+                    console.log(result);
+                },
+                error: function (err) {
+                    alert('ERROR!');
+                }
+            });
+
+
+        });
+
 
         function ajaxGet() {
             let user_id = $('#userId').text();
-            let url='/transactions'
-            if(user_id!=0){
-                url='/transactions/user/'+user_id
+            let url = '/transactions'
+            if (user_id != 0) {
+                url = '/transactions/user/' + user_id
             }
 
             $.getJSON(url, function (json) {
@@ -122,6 +154,9 @@
 
 
         $(document).ready(function () {
+
+
+
 
             ajaxGet();
 

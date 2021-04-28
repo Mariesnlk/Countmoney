@@ -1,5 +1,6 @@
 package com.mariia.syne.splitwise.controller.rest;
 
+import com.mariia.syne.splitwise.entity.Groups;
 import com.mariia.syne.splitwise.entity.Users;
 import com.mariia.syne.splitwise.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +33,12 @@ public class UsersRestController {
         return usersService.getAllUsers();
     }
 
-//    @GetMapping
-//    public List<Users> getListUsersByGroup() {
-//        Groups groupId = ((Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId_group();
-//        return usersService.getListUsersByGroup((Integer) groupId);
-//    }
+    @GetMapping("/list_users")
+    public List<Users> getListUsersByGroup() {
+        Users user = (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Groups group = user.getId_group();
+        return usersService.getListUsersByGroup(group.getId_groups());
+    }
 
     @GetMapping("/{id}")
     public Users getUser(@PathVariable Integer id) {
@@ -52,7 +54,7 @@ public class UsersRestController {
 
     @PutMapping("/{id}")
     public void updateUser(@RequestBody Users user, @PathVariable Integer id) {
-        Users currentUser=(Users) SecurityContextHolder.getContext().
+        Users currentUser = (Users) SecurityContextHolder.getContext().
                 getAuthentication().getPrincipal();
         if (user.getPassword().equals("")) {
             user.setPassword(currentUser.getPassword());

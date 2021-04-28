@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TransactionsService {
@@ -42,6 +44,16 @@ public class TransactionsService {
     public Double getSumUserTransactions(Integer user_id) {
 
         return transactionsRepository.getSumUserTransactions(user_id);
+    }
+
+    public Double getSumGroupTransactions(Integer group_id) {
+
+        return transactionsRepository.getSumUserGroupTransactions(group_id);
+    }
+
+    public List<Transactions> findAllByDateBetweenByIdUser(Integer user_id, Date start, Date end) {
+        return transactionsRepository.findAllByDateBetween(start, end).stream().
+                filter(elem -> elem.getIdUser().getId_users().equals(user_id)).collect(Collectors.toList());
     }
 
     public void addTransaction(Transactions transactions) {

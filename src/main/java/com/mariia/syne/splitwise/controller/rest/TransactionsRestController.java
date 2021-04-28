@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -46,6 +49,31 @@ public class TransactionsRestController {
         Integer id = ((Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId_users();
         return transactionsService.getSumUserTransactions(id);
     }
+
+    @GetMapping("/sum_by_group")
+    public Double getSumByGroup() {
+        Integer id = ((Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId_group().getId_groups();
+        return transactionsService.getSumGroupTransactions(id);
+    }
+
+    @GetMapping("/period")
+    public List<Transactions> findAllByDateBetweenByIdUser(@RequestParam String start, @RequestParam String end) {
+        Integer id = ((Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId_users();
+
+        SimpleDateFormat format = new SimpleDateFormat();
+        format.applyPattern("yyyy-MM-dd");
+        Date startDate = null;
+        Date endDate = null;
+        try {
+            startDate = format.parse(start);
+            endDate = format.parse(end);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return transactionsService.findAllByDateBetweenByIdUser(id, startDate, endDate);
+    }
+
 
     @GetMapping("/{id}")
     public Transactions getTransaction(@PathVariable Integer id) {

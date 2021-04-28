@@ -158,7 +158,7 @@
     $.getJSON('/typeTransactions', function (json) {
         console.log(json);
         $.each(json, function (key, entry) {
-            type_transaction_dropdown.append($('<option></option>').attr('value', entry.id_type_transaction).text(entry.name_type_transaction));
+            type_transaction_dropdown.append($('<option></option>').attr('value', JSON.stringify(entry)).text(entry.name_type_transaction));
         })
     });
 
@@ -196,7 +196,7 @@
             var idUser = $('#userId').text();
             var typeTransaction = $('#type_transaction-dropdown').val();
 
-            var transactionDTO = new TransactionDTO(id, date, destination, sum, periodFrom, periodTo, idUser, typeTransaction);
+            var transactionDTO = new TransactionDTO(id, date, destination, sum, periodFrom, periodTo, null, JSON.parse(typeTransaction));
 
             console.log(transactionDTO);
             console.log(JSON.stringify(transactionDTO));
