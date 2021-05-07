@@ -44,6 +44,12 @@ public class TransactionsRestController {
         return transactionsService.getTransactionsByUser(user_id);
     }
 
+    @GetMapping("group/{group_id}")
+    public List<Transactions> getTransactionsByGroup(@PathVariable Integer group_id) {
+
+        return transactionsService.getTransactionsByGroup(group_id);
+    }
+
     @GetMapping("/sum")
     public Double getSum() {
         Integer id = ((Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId_users();
@@ -56,10 +62,15 @@ public class TransactionsRestController {
         return transactionsService.getSumGroupTransactions(id);
     }
 
-    @GetMapping("/period")
-    public List<Transactions> findAllByDateBetweenByIdUser(@RequestParam String start, @RequestParam String end) {
-        Integer id = ((Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId_users();
+    @GetMapping("/regular_transactions/{user_id}")
+    public List<Transactions> getRegularTransactions(@PathVariable Integer user_id) {
 
+        return transactionsService.getRegularTransactionsByUserAndMonth(user_id);
+    }
+
+
+    @GetMapping("user/{user_id}/period")
+    public List<Transactions> findAllByDateBetweenByIdUser(@PathVariable Integer user_id,@RequestParam String start, @RequestParam String end) {
         SimpleDateFormat format = new SimpleDateFormat();
         format.applyPattern("yyyy-MM-dd");
         Date startDate = null;
@@ -71,9 +82,24 @@ public class TransactionsRestController {
             e.printStackTrace();
         }
 
-        return transactionsService.findAllByDateBetweenByIdUser(id, startDate, endDate);
+        return transactionsService.findAllByDateBetweenByIdUser(user_id, startDate, endDate);
     }
 
+    @GetMapping("group/{group_id}/period")
+    public List<Transactions> findAllByDateBetweenByIdGroup(@PathVariable Integer group_id,@RequestParam String start, @RequestParam String end) {
+        SimpleDateFormat format = new SimpleDateFormat();
+        format.applyPattern("yyyy-MM-dd");
+        Date startDate = null;
+        Date endDate = null;
+        try {
+            startDate = format.parse(start);
+            endDate = format.parse(end);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return transactionsService.findAllByDateBetweenByIdGroup(group_id, startDate, endDate);
+    }
 
     @GetMapping("/{id}")
     public Transactions getTransaction(@PathVariable Integer id) {

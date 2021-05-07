@@ -98,12 +98,16 @@
                 </div>
 
                 <div id="users_list">
-                    <h5 th:text="#{group.users}"> Group`s users </h5>
+                    <div class="headline">
+                        <h5 th:text="#{group.users}"> Group`s users </h5>
+                    </div>
                 </div>
                 <form action="/">
                     <input type="submit" class="btn btn-dark" value="Back"/>
                 </form>
-
+                    <button id="getTransactions" type="button" class="btn btn-dark" name="btnAllTransactions"
+                            th:text="#{transaction.list}">All Transactions
+                    </button>
             </div>
         </div>
     </div>
@@ -215,6 +219,10 @@
     $(document).ready(function () {
 
         ajaxGet();
+    });
+
+    $("#getTransactions").click(function () {
+        location.href = '/ui/transactions/list/group/' + $('#groupId').text()
     });
 
 </script>

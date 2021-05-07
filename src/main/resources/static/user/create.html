@@ -75,42 +75,79 @@
         <div class="w3-container">
 
             <h2 style="text-align: center" th:text="#{registration.registration}">Registration</h2>
-            <table id="create_user_entity_table" class="w3-table w3-bordered">
-                <tr>
-                    <th></th>
-                    <th></th>
-                </tr>
-                <tr>
-                    <td th:text="#{user.surname}">Surname</td>
-                    <td><input id="firstName" name="firstName_name" type="text" placeholder="Enter surname..."></td>
-                </tr>
-                <tr>
-                    <td th:text="#{user.name}">Name</td>
-                    <td><input id="lastName" name="lastName_name" type="text" placeholder="Enter name..."></td>
-                </tr>
-                <tr>
-                    <td th:text="#{user.login}">Login</td>
-                    <td><input id="login" name="login_name" type="text" placeholder="Enter login..."></td>
-                </tr>
-                <tr>
-                    <td th:text="#{user.password}">Password</td>
-                    <td><input id="password" name="password_name" type="password" placeholder="Enter password..."></td>
-                </tr>
-                <tr>
-                    <td th:text="#{user.group}">Group</td>
-                    <td><input id="group" name="group_name" type="text">
-                        <p><a href="/ui/groups/create" style="margin-left:25px" th:text="#{user.add_group}">
-                            Add group</a>
-                        </p>
-                    </td>
-                </tr>
+            <form class="needs-validation" novalidate>
+                <table id="create_user_entity_table" class="w3-table w3-bordered">
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td th:text="#{user.surname}">Surname</td>
+                        <td>
+                            <div class="input-group has-validation">
+                                <input class="form-control" id="firstName" name="firstName_name" type="text"
+                                       placeholder="Enter surname..." required>
+                                <div class="invalid-feedback" th:text="#{validation.surname}">
+                                    Enter your surname, please
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td th:text="#{user.name}">Name</td>
+                        <div class="input-group has-validation">
+                            <td>
+                                <div class="input-group has-validation">
+                                    <input class="form-control" id="lastName" name="lastName_name" type="text"
+                                           placeholder="Enter name..." required>
+                                    <div class="invalid-feedback" th:text="#{validation.name}">
+                                        Enter your name, please
+                                    </div>
+                                </div>
+                            </td>
+                        </div>
+                    </tr>
+                    <tr>
+                        <td th:text="#{user.login}">Login</td>
+                        <td>
+                            <div class="input-group has-validation">
+                                <input class="form-control" id="login" name="login_name" type="text"
+                                       placeholder="Enter login..." required>
+                                <div class="invalid-feedback" th:text="#{validation.login}">
+                                    Enter your login, please
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td th:text="#{user.password}">Password</td>
+                        <td>
+                            <div class="input-group has-validation">
+                                <input class="form-control" id="password" name="password_name" type="password"
+                                       placeholder="Enter password..." required>
+                                <div class="invalid-feedback" th:text="#{validation.password}">
+                                    Enter your password, please
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td th:text="#{user.group}">Group</td>
+                        <td><input id="group" name="group_name" type="text">
+                            <p><a href="/ui/groups/create" style="margin-left:25px" th:text="#{user.add_group}">
+                                Add group</a>
+                            </p>
+                        </td>
+                    </tr>
 
-            </table>
+                </table>
+            </form>
             <br>
             <br>
 
             <div class="container" style="text-align: center; margin-bottom: 10px">
-                <button id="btnSave" class="btnSaveUser btn btn-dark" th:text="#{button.save}">Save</button>
+                <button type="submit" id="btnSave" class="btnSaveUser btn btn-dark" th:text="#{button.save}">Save
+                </button>
                 <button onclick="location.href='/'" type="button" class="btn btn-dark" th:text="#{button.cancel}">
                     Cancel
                 </button>
@@ -133,6 +170,21 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
     <script type="text/javascript">
+
+
+        $(document).delegate('#btnSave', 'click', function (event) {
+            event.preventDefault();
+            let form = document.querySelector('.needs-validation')
+
+            if (form.checkValidity()) {
+                save()
+
+            }
+            form.classList.add('was-validated')
+
+        })
+
+
         if (sessionStorage.groupName) {
             $("#group").val(sessionStorage.groupName);
 
@@ -156,8 +208,10 @@
             this.id_group = id_group;
         }
 
-        $(document).delegate('#btnSave', 'click', function (event) {
-            event.preventDefault();
+        //$(document).delegate('#btnSave', 'click', function (event) {
+        //  event.preventDefault();
+        function save() {
+            alert('Saved')
 
             var group = $('#group').val();
 
@@ -188,7 +242,7 @@
 
                     $.ajax({
                         type: "POST",
-                       headers: {
+                        headers: {
                             'Accept': 'application/json',
                             'Content-Type': 'application/json',
                         },
@@ -211,8 +265,9 @@
                 }
 
             });
+        }
 
-        });
+        //  });
 
 
     </script>

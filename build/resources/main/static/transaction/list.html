@@ -66,6 +66,7 @@
 <div>
 
     <p id="userId" hidden><span th:text="${user_id}"/></p>
+    <p id="groupId" hidden><span th:text="${group_id}"/></p>
 
     <table id="transactions_table" class="table table-bordered">
 
@@ -80,83 +81,110 @@
             <th th:text="#{transaction.type_transaction}">Type Transaction</th>
         </tr>
     </table>
-    <tr>
-        <td th:text="#{transaction.period_from}">Period from</td>
-        <td><input id="period_from" name="period_from_name" type="date"></td>
-    </tr>
-    <tr>
-        <td th:text="#{transaction.period_to}">Period to</td>
-        <td><input id="period_to" name="period_to_name" type="date"></td>
-    </tr>
-    <tr>
-        <button id="choose" type="button" class="profile-edit-btn" name="btnChoose">Choose
-        </button>
-    </tr>
+
+    <div class="container" style="text-align: center">
+        <tr>
+            <td th:text="#{transaction.period_from}">Period from</td>
+            <td><input id="period_from" name="period_from_name" type="date"></td>
+        </tr>
+        <tr>
+            <td th:text="#{transaction.period_to}">Period to</td>
+            <td><input id="period_to" name="period_to_name" type="date"></td>
+        </tr>
+        <tr>
+            <button id="choose" type="button" class="btn btn-dark" name="btnChoose">Choose
+            </button>
+        </tr>
+        <tr>
+            <button onclick="location.href='/'" type="button" class="btn btn-dark" th:text="#{button.cancel}">
+                Cancel
+            </button>
+        </tr>
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script type="text/javascript">
+        function createTableRows(json) {
+            document.querySelectorAll('#transactions_table tr').forEach((elem, index) => {
+                if (index > 0) {
+                    elem.remove()
+                }
+            })
+            var tr = [];
+            for (var i = 0; i < json.length; i++) {
+
+                tr.push('<tr>');
+                tr.push('<td>' + json[i].id_transaction + '</td>');
+                tr.push('<td>' + json[i].date + '</td>');
+                tr.push('<td>' + json[i].destination + '</td>');
+                tr.push('<td>' + json[i].sum + '</td>');
+                if (json[i].period_from == null && json[i].period_to == null) {
+                    tr.push('<td>' + " " + '</td>');
+                    tr.push('<td>' + " " + '</td>');
+                } else {
+                    tr.push('<td>' + json[i].period_from + '</td>');
+                    tr.push('<td>' + json[i].period_to + '</td>');
+                }
+                tr.push('<td>' + json[i].id_type_transaction["name_type_transaction"] + '</td>');
+            }
+
+            $('#transactions_table').append($(tr.join('')));
+
+
+        }
 
         $(document).delegate('#choose', 'click', function (event) {
 
             event.preventDefault();
             var periodFrom = $('#period_from').val();
             var periodTo = $('#period_to').val();
+            let user_id = $('#userId').text();
+            let group_id = $('#groupId').text();
+            let url = '/transactions'
+            if (user_id != 0) {
+                url = '/transactions/user/' + user_id
+            } else if (group_id != 0) {
+                url = '/transactions/group/' + group_id
+            }
+
+
             $.ajax({
                 type: "GET",
-                url: '/transactions/period/?start=' + periodFrom + '&end=' + periodTo,
+                url: url + '/period/?start=' + periodFrom + '&end=' + periodTo,
                 success: function (result) {
 
                     alert('SUCCESS!');
                     console.log(result);
+                    createTableRows(result);
                 },
                 error: function (err) {
                     alert('ERROR!');
                 }
             });
 
-
         });
 
 
         function ajaxGet() {
             let user_id = $('#userId').text();
+            let group_id = $('#groupId').text();
             let url = '/transactions'
             if (user_id != 0) {
                 url = '/transactions/user/' + user_id
+            } else if (group_id != 0) {
+                url = '/transactions/group/' + group_id
             }
+
 
             $.getJSON(url, function (json) {
                 console.log(json);
+                createTableRows(json);
 
-                var tr = [];
-                for (var i = 0; i < json.length; i++) {
-
-                    tr.push('<tr>');
-                    tr.push('<td><a style="color: black" id=' + json[i].id_transaction + ' href="/ui/transactions/read/' + json[i].id_transaction + '">' +
-                        json[i].id_transaction + '</a></td>');
-                    tr.push('<td>' + json[i].date + '</td>');
-                    tr.push('<td>' + json[i].destination + '</td>');
-                    tr.push('<td>' + json[i].sum + '</td>');
-                    if (json[i].period_from == null && json[i].period_to == null) {
-                        tr.push('<td>' + " " + '</td>');
-                        tr.push('<td>' + " " + '</td>');
-                    } else {
-                        tr.push('<td>' + json[i].period_from + '</td>');// если null то не показывать
-                        tr.push('<td>' + json[i].period_to + '</td>');
-                    }
-                    // tr.push('<td>' + json[i].idUser.id_users + '</td>');//не показывать
-                    tr.push('<td>' + json[i].id_type_transaction["name_type_transaction"] + '</td>');
-                }
-
-                $('#transactions_table').append($(tr.join('')));
             });
         }
 
 
         $(document).ready(function () {
-
-
-
 
             ajaxGet();
 

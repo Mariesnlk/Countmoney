@@ -12,7 +12,7 @@ public interface TransactionsRepository extends CrudRepository<Transactions, Int
 
     List<Transactions> getAllByIdUser(Users id_user);
 
-    @Query(value ="SELECT SUM(sum) FROM Transactions WHERE id_user=?", nativeQuery = true)
+    @Query(value ="SELECT SUM(sum) FROM Transactions WHERE id_user=? AND id_type_transaction = 1", nativeQuery = true)
     Double getSumUserTransactions(Integer id_user);
 
     @Query(value ="SELECT SUM(sum) FROM Transactions " +
@@ -20,7 +20,7 @@ public interface TransactionsRepository extends CrudRepository<Transactions, Int
             "ON users.id_users=Transactions.id_user " +
             "LEFT JOIN user_groups " +
             "ON user_groups.id_groups=users.id_group " +
-            "WHERE user_groups.id_groups=?", nativeQuery = true)
+            "WHERE user_groups.id_groups=? AND  id_type_transaction = 1", nativeQuery = true)
     Double getSumUserGroupTransactions(Integer id_groups);
 
 
@@ -29,4 +29,11 @@ public interface TransactionsRepository extends CrudRepository<Transactions, Int
 
     List<Transactions> findAllByDateBetween(Date dateStart, Date dateEnd);
 
+    @Query(value ="SELECT * FROM Transactions " +
+            "LEFT JOIN users " +
+            "ON users.id_users=Transactions.id_user " +
+            "LEFT JOIN user_groups " +
+            "ON user_groups.id_groups=users.id_group " +
+            "WHERE user_groups.id_groups=? ", nativeQuery = true)
+    List<Transactions> findAllTransactionsByGroup(Integer id_groups);
 }

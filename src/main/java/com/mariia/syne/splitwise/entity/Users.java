@@ -50,6 +50,10 @@ public class Users implements UserDetails {
     public Users() {
     }
 
+    public Users(Integer id_users) {
+        this.id_users = id_users;
+    }
+
     public Users(String first_name, String last_name, String login, String password, Set<Role> roles, Groups id_group) {
         this.first_name = first_name;
         this.last_name = last_name;

@@ -26,6 +26,14 @@ public class TransactionsController {
         return "transaction/list";
     }
 
+    @GetMapping("/list/group/{group_id}")
+    public String showTransactionsByGroup(@PathVariable String group_id, Model model){
+
+        model.addAttribute("group_id",group_id);
+
+        return "transaction/list";
+    }
+
     @GetMapping("/read/{transaction_id}")
     public String showTransactionsRead(@PathVariable String transaction_id, Model model){
 
