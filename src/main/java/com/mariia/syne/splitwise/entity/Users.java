@@ -5,7 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -21,10 +21,10 @@ public class Users implements UserDetails {
 
     private String last_name;
 
-    @Size(min=2, message = "Not less then 5 symbols")
+    @NotNull
     private String login;
 
-    @Size(min=2, message = "Not less then 5 symbols")
+    @NotNull
     private String password;
 
     @Transient

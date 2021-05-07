@@ -82,13 +82,13 @@
         You have been logged out.
     </div>
 
-<!-- Logout -->
-<!--    <div>-->
-<!--        <h3>Welcome <span th:text="${#authentication.name}"/></h3>-->
-<!--        <form th:action="@{/logout}" method="post">-->
-<!--            <input type="submit" value="Logout"/>-->
-<!--        </form>-->
-<!--    </div>-->
+    <!-- Logout -->
+    <!--    <div>-->
+    <!--        <h3>Welcome <span th:text="${#authentication.name}"/></h3>-->
+    <!--        <form th:action="@{/logout}" method="post">-->
+    <!--            <input type="submit" value="Logout"/>-->
+    <!--        </form>-->
+    <!--    </div>-->
 
 
     <div style="width:600px;margin-left: auto;margin-right: auto;margin-top:50px;padding: 24px;">
@@ -102,7 +102,8 @@
                                 <label th:text="#{user.login}"> Login: </label>
                             </div>
                             <div class="col">
-                                <input type="text" name="username" placeholder="Enter login..."/>
+                                <input type="text" name="username" pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
+                                       placeholder="test@gmail.com" required/>
                             </div>
                         </div>
                     </div>
@@ -112,7 +113,9 @@
                                 <label th:text="#{user.password}"> Password: </label>
                             </div>
                             <div class="col">
-                                <input type="password" name="password" placeholder="Enter password..."/>
+                                <input type="password" name="password" placeholder="Enter password..."
+                                       pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$" minlength="8"
+                                       required/>
                             </div>
                         </div>
                     </div>
