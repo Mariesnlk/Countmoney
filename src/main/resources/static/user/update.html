@@ -138,6 +138,11 @@
                             th:text="#{income.add}">Add Incomes
                     </button>
                 </div>
+                <div class="profile-work">
+                    <button id="groupInfo" type="button" class="profile-edit-btn" name="btnAddIncomes"
+                            th:text="#{group.info}">Group Info
+                    </button>
+                </div>
             </div>
 
             <div class="col-md-4">
@@ -184,7 +189,6 @@
                                 </p>
                             </div>
                         </div>
-                        <!--                        add button change group-->
                     </div>
                 </div>
             </div>
@@ -204,7 +208,10 @@
 </script>
 
 <script type="text/javascript">
-    var userGroup;
+
+    let userGroup;
+    let groupId = 0;
+
     $.ajaxSetup({
         cache: false,
         headers: {
@@ -232,7 +239,6 @@
         var login = $('#login').val();
         var password = $('#password').val();
         var role = null;
-        // var group = $('#group_id').text();
 
         var usersDTO = new UsersDTO(userId, firstName, lastName, login, password, role, userGroup);
 
@@ -265,7 +271,7 @@
 
     $(document).delegate('#btnGoToRead', 'click', function (result) {
 
-        var userId = $('#userId').text();
+        let userId = $('#userId').text();
 
         location.href = "/ui/users/read/" + userId;
         window.setTimeout(function () {
@@ -277,12 +283,11 @@
 
 
     function ajaxGet() {
-        var userId = $('#userId').text();
+        let userId = $('#userId').text();
 
         $.getJSON('/users/' + userId, function (json) {
 
             console.log(json);
-            // alert("json.firstName=" + json.first_name);
             $('#user-name').text(json.first_name + ' ' + json.last_name)
             $('#user_id').text(json.id);
             $('#firstName').val(json.first_name);
@@ -290,10 +295,9 @@
             $('#login').val(json.login);
             $('#password').val('');
             $('#role').text(json.roles[0].name);
-            userGroup=json.id_group;
+            userGroup = json.id_group;
+            groupId = userGroup["id_groups"];
             $('#group_id').text(json.id_group["name_group"]);
-
-            console.log(json);
 
         });
 
@@ -318,7 +322,6 @@
                 }
 
                 $('#transactions_sum').text(sum);
-                // alert('success');
 
             },
             error: function (err) {
@@ -334,6 +337,10 @@
 
     $("#getTransactions").click(function () {
         location.href = '/ui/transactions/list/user/' + $('#userId').text()
+    });
+
+    $("#groupInfo").click(function () {
+        location.href = '/ui/groups/read/' + groupId
     });
 
 
