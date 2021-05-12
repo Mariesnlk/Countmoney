@@ -123,16 +123,14 @@
         event.preventDefault();
 
         $.getJSON('/groups', function (json) {
-            var nameGroup = $('#name_group').val();
+            let nameGroup = $('#name_group').val();
             console.log(json);
             let gr = json.filter(elem => elem.name_group === nameGroup);
             if (gr.length) {
                 alert('Group with this name already exist!')
             } else {
 
-                var id = $('#id_group').val();
-
-                var groupDTO = new GroupDTO(1, nameGroup);
+                let groupDTO = new GroupDTO(1, nameGroup);
 
                 console.log(groupDTO);
                 console.log(JSON.stringify(groupDTO));
@@ -146,8 +144,6 @@
                     url: "/groups",
                     data: JSON.stringify(groupDTO),
                     success: function (result) {
-                        //location.href = "/ui/groups/list";
-                        // localStorage.groupName = nameGroup;
                         sessionStorage.groupName = nameGroup;
                         window.setTimeout(function () {
                             location.reload();

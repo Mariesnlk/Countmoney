@@ -151,6 +151,10 @@
                             th:text="#{group.info}">Group Info
                     </button>
                 </div>
+                <div class="profile-work">
+                    <button id="getDebt" type="button" class="profile-edit-btn" name="btnGetDebt">Split debt
+                    </button>
+                </div>
             </div>
 
             <div class="col-md-4">
@@ -367,6 +371,10 @@
 
     $("#groupInfo").click(function () {
         location.href = '/ui/groups/read/' + groupId
+    });
+
+    $("#getDebt").click(function () {
+        location.href = '/ui/transactions/debt/user/' + groupId
     });
 
 </script>

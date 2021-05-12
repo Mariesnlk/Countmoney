@@ -18,6 +18,14 @@ public class TransactionsController {
         return "transaction/list";
     }
 
+    @GetMapping("/debt/user/{user_id}")
+    public String showTransactionsDebtByUser(@PathVariable String user_id, Model model){
+
+        model.addAttribute("user_id",user_id);
+
+        return "transaction/debt";
+    }
+
     @GetMapping("/list/user/{user_id}")
     public String showTransactionsByUser(@PathVariable String user_id, Model model){
 

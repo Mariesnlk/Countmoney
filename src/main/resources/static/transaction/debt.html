@@ -23,9 +23,6 @@
 
 <nav class="navbar navbar-expand navbar-dark bg-dark">
 
-    <p id="groupId" hidden><span th:text="${group_id}"/></p>
-    <p id="userId" hidden><span th:text="${user_id}"/></p>
-
     <div class="collapse navbar-collapse">
         <div class="container">
 
@@ -41,7 +38,6 @@
                 <div class="col">
                     <a class="nav-link link-light" th:text="#{navbar.home}" href="/">Home</a>
                 </div>
-
 
                 <div class="col">
                     <div class="container" style="text-align: right">
@@ -77,6 +73,9 @@
     <div class="card">
         <div class="w3-container">
 
+            <p id="groupId" hidden><span th:text="${group_id}"/></p>
+            <p id="userId" hidden><span th:text="${user_id}"/></p>
+
             <h2 style="text-align: center">Friends` debts</h2>
             <form class="needs-validation" novalidate>
                 <table id="create_transaction_entity_table" class="w3-table w3-bordered">
@@ -89,10 +88,9 @@
                         <td>From who</td>
                         <td>
                             <div class="input-group has-validation">
-                                <input class="form-control" id="date" name="date_name" type="date" required>
-                                <div class="invalid-feedback" th:text="#{validation.date}">
-                                    Add date, please
-                                </div>
+                                <select id="from-who-dropdown" name="from_who_name">
+                                    <option selected="true" disabled>Choose user</option>
+                                </select>
                             </div>
                         </td>
                     </tr>
@@ -100,11 +98,9 @@
                         <td>To who</td>
                         <td>
                             <div class="input-group has-validation">
-                                <input class="form-control" id="description" name="description_name" type='text'
-                                       list='description-dropdown' required>
-                                <datalist id='description-dropdown'>
-                                    <option selected="true" disabled></option>
-                                </datalist>
+                                <select id="to-who-dropdown" name="to_who_name">
+                                    <option selected="true" disabled>Choose user</option>
+                                </select>
                             </div>
                         </td>
                     </tr>
@@ -142,8 +138,27 @@
 
 <script type="text/javascript">
 
+    let from_who_dropdown = $('#from-who-dropdown');
+
+    from_who_dropdown.empty();
+    from_who_dropdown.prop('selectedIndex', 0);
+
+    let to_who_dropdown = $('#to-who-dropdown');
+
+    to_who_dropdown.empty();
+    to_who_dropdown.prop('selectedIndex', 0);
+
     $.getJSON('/users/list_users', function (json) {
         console.log(json);
+        $.each(json, function (key, entry) {
+            from_who_dropdown.append($('<option></option>').attr('value', entry).text(entry.first_name + " " + entry.last_name));
+        })
+    });
+
+    $.getJSON('/users/list_users', function (json) {
+        $.each(json, function (key, entry) {
+            to_who_dropdown.append($('<option></option>').attr('value', entry).text(entry.first_name + " " + entry.last_name));
+        })
     });
 
     function TransactionDTO(id, date, destination, sum, periodFrom, periodTo, idUser, idTypeTransaction) {
@@ -157,68 +172,72 @@
         this.id_type_transaction = idTypeTransaction;
     }
 
-    let transactionDTO = new TransactionDTO(id, new Date(), 'paying off friends\' debts', sum, null, null, null, 1);
-
-    console.log(transactionDTO);
-    console.log(JSON.stringify(transactionDTO));
-
-    alert("button Save!");
-
-    $.ajax({
-        type: "POST",
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-        },
-        url: "/transactions",
-        data: JSON.stringify(transactionDTO),
-        success: function (result) {
-
-            console.log(result);
-            alert('SUCCESS!');
-        },
-        error: function (err) {
-            alert('ERROR!');
-        }
-
-    });
-
-    function IncomeDTO(idIncome, periodFromIncome, periodToIncome, sum) {
+    function IncomeDTO(idIncome, periodFromIncome, periodToIncome, id_User, sum) {
         this.id_income = idIncome;
         this.period_from_income = periodFromIncome;
         this.period_to_income = periodToIncome;
+        this.id_user = id_User;
         this.sum_income = sum;
     }
 
-    let incomeDTO = new IncomeDTO(id, new Date(), new Date(), sum);
 
-    console.log(incomeDTO);
-    console.log(JSON.stringify(incomeDTO));
+    $(document).delegate('#btnSave', 'click', function (event) {
+        event.preventDefault();
 
-    alert("button Save!");
+        let transactionDTO = new TransactionDTO(null, new Date(), 'paying off friends\' debts', $('#sum').val(), null,
+            null, $('#from_who_dropdown').val(),  {id_type_transaction: 1, name_type_transaction: "irregular"});
 
-    $.ajax({
-        type: "POST",
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-        },
-        url: "/incomes",
-        data: JSON.stringify(incomeDTO),
-        success: function (result) {
-            location.href = "/ui/users/read/" + $('#userId').text();
-            window.setTimeout(function () {
-                location.reload();
-            }, 1000);
+        console.log(transactionDTO);
+        console.log(JSON.stringify(transactionDTO));
 
-            alert('SUCCESS!');
-        },
-        error: function (err) {
-            alert('ERROR!');
-        }
+        $.ajax({
+            type: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            url: "/transactions",
+            data: JSON.stringify(transactionDTO),
+            success: function (result) {
+
+                console.log(result);
+                // alert('SUCCESS!');
+            },
+            error: function (err) {
+                alert('ERROR!');
+            }
+
+        });
+
+
+        let incomeDTO = new IncomeDTO(null, new Date(), new Date(), $('#to_who_dropdown').val(), $('#sum').val());
+
+        console.log(incomeDTO);
+        console.log(JSON.stringify(incomeDTO));
+
+        $.ajax({
+            type: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            url: "/incomes",
+            data: JSON.stringify(incomeDTO),
+            success: function (result) {
+                location.href = "/ui/users/read/" + $('#userId').text();
+                window.setTimeout(function () {
+                    location.reload();
+                }, 1000);
+
+                // alert('SUCCESS!');
+            },
+            error: function (err) {
+                alert('ERROR!');
+            }
+
+        });
 
     });
-
 
 
 </script>
