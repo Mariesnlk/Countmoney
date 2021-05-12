@@ -72,8 +72,8 @@
 
         <tr>
             <th th:text="#{user.id}">№</th>
-            <th th:text="#{transaction.period_from}">Period from income</th>
-            <th th:text="#{transaction.period_to}">Period to income</th>
+            <th th:text="#{transaction.date}">Date</th>
+            <th th:text="#{member}">Member</th>
         </tr>
 
     </table>
@@ -101,37 +101,9 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script type="text/javascript">
 
-        // function ajaxGet() {
-        //     let user_id = $('#userId').text();
-        //     let url = '/incomes'
-        //     if (user_id != 0) {
-        //         url = '/incomes/user/' + user_id
-        //     }
-        //
-        //     $.getJSON(url, function (json) {
-        //         console.log(json);
-        //
-        //         let tr = [];
-        //         for (let i = 0; i < json.length; i++) {
-        //
-        //             tr.push('<tr>');
-        //             tr.push('<td>' + json[i].id_income + '</td>');
-        //             tr.push('<td>' + json[i].period_from_income + '</td>');
-        //             tr.push('<td>' + json[i].period_to_income + '</td>');
-        //         }
-        //
-        //         $('#incomes_table').append($(tr.join('')));
-        //     });
-        // }
-        //
-        // $(document).ready(function () {
-        //
-        //     ajaxGet();
-        //
-        // });
-
-
         function createTableRows(json) {
+
+            console.log(json);
 
             document.querySelectorAll('#incomes_table tr').forEach((elem, index) => {
                 if (index > 0) {
@@ -144,8 +116,8 @@
 
                 tr.push('<tr>');
                 tr.push('<td>' + json[i].id_income + '</td>');
-                tr.push('<td>' + json[i].period_from_income + '</td>');
-                tr.push('<td>' + json[i].period_to_income + '</td>');
+                tr.push('<td>' + json[i].date + '</td>');
+                tr.push('<td>' + json[i].idUser.first_name + ' ' + json[i].idUser.last_name + '</td>');
             }
 
             $('#incomes_table').append($(tr.join('')));
@@ -193,7 +165,6 @@
             } else if (group_id != 0) {
                 url = '/incomes/group/' + group_id
             }
-
 
             $.getJSON(url, function (json) {
                 console.log(json);

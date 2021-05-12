@@ -78,6 +78,7 @@
             <th th:text="#{transaction.period_from}">Period from</th>
             <th th:text="#{transaction.period_to}">Period to</th>
             <th th:text="#{transaction.type_transaction}">Type Transaction</th>
+            <th th:text="#{member}">Member</th>
         </tr>
     </table>
 
@@ -128,6 +129,7 @@
                     tr.push('<td>' + json[i].period_to + '</td>');
                 }
                 tr.push('<td>' + json[i].id_type_transaction["name_type_transaction"] + '</td>');
+                tr.push('<td>' + json[i].idUser.first_name + ' ' + json[i].idUser.last_name + '</td>');
             }
 
             $('#transactions_table').append($(tr.join('')));
