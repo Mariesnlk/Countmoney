@@ -134,8 +134,7 @@
                         <td th:text="#{transaction.period_from}">Period from</td>
                         <td>
                             <div class="input-group has-validation">
-                                <input class="form-control" id="period_from" name="period_from_name" type="date"
-                                       required>
+                                <input class="form-control" id="period_from" name="period_from_name" type="date">
                                 <div class="invalid-feedback" th:text="#{validation.period}">
                                     Add period for regular transaction, please
                                 </div>
@@ -146,7 +145,7 @@
                         <td th:text="#{transaction.period_to}">Period to</td>
                         <td>
                             <div class="input-group has-validation">
-                                <input class="form-control" id="period_to" name="period_to_name" type="date" required>
+                                <input class="form-control" id="period_to" name="period_to_name" type="date">
                                 <div class="invalid-feedback" th:text="#{validation.period}">
                                     Add period for regular transaction, please
                                 </div>
@@ -291,7 +290,7 @@
         function () {
             let typeTransaction = JSON.parse($('#type_transaction-dropdown').val());
             if (typeTransaction.name_type_transaction === "regular") {
-                $('.regData').css('display', 'block')
+                $('.regData').css('display', 'block'); $('#period_to').prop('required', true);$('#period_from').prop('required', true);
             }
         }
     )

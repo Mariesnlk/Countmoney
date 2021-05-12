@@ -74,41 +74,70 @@
     <p id="groupId" hidden><span th:text="${group_id}"/></p>
     <p id="userId" hidden><span th:text="${user_id}"/></p>
 
-    <div class="page-content page-container" id="page-content">
+    <div class="container">
+
         <div class="row">
-            <div class="list list-row block">
-                <h2 id="group_name"></h2>
+            <div class="col">
 
-                <div class="container">
+                <div class="page-content page-container" id="page-content">
                     <div class="row">
-                        <div class="col">
-                            <div class="headline">
-                                <h5 th:text="#{group.incomes}">Group`s incomes: </h5>
-                                <p id="income_sum"></p>
-                            </div>
-                        </div>
+                        <div class="list list-row block">
+                            <h2 id="group_name"></h2>
 
-                        <div class="col">
-                            <div class="headline">
-                                <h5 th:text="#{group.transactions}">Group`s transactions: </h5>
-                                <p id="transactions_sum"></p>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="headline">
+                                            <h5 th:text="#{group.incomes}">Group`s incomes: </h5>
+                                            <p id="income_sum"></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="headline">
+                                            <h5 th:text="#{group.transactions}">Group`s transactions: </h5>
+                                            <p id="transactions_sum"></p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+
+                            <div id="users_list">
+                                <div class="headline">
+                                    <h5 th:text="#{group.users}"> Group`s users </h5>
+                                </div>
+                            </div>
+                            <form action="/">
+                                <input type="submit" class="btn btn-dark" value="Back"/>
+                            </form>
                         </div>
                     </div>
                 </div>
-
-                <div id="users_list">
-                    <div class="headline">
-                        <h5 th:text="#{group.users}"> Group`s users </h5>
-                    </div>
-                </div>
-                <form action="/">
-                    <input type="submit" class="btn btn-dark" value="Back"/>
-                </form>
-                    <button id="getTransactions" type="button" class="btn btn-dark" name="btnAllTransactions"
-                            th:text="#{transaction.list}">All Transactions
-                    </button>
             </div>
+
+
+            <div class="col">
+
+                <div class="page-content page-container">
+                    <div class="row">
+                        <div class="list list-row block">
+
+                            <button id="getTransactions" type="button" class="btn btn-dark" name="btnAllTransactions"
+                                    th:text="#{transaction.list}">All Transactions
+                            </button>
+                            <br>
+                            <button id="getIncomes" type="button" class="btn btn-dark" name="btnAllIncomes"
+                                    th:text="#{income.list}">All Incomes
+                            </button>
+                            <br>
+                            <button id="getDebt" type="button" class="btn btn-dark" name="btnGetDebt"
+                                    th:text="#{debt}">Split debt
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
@@ -223,6 +252,14 @@
 
     $("#getTransactions").click(function () {
         location.href = '/ui/transactions/list/group/' + $('#groupId').text()
+    });
+
+    $("#getIncomes").click(function () {
+        location.href = '/ui/incomes/list/group/' + $('#groupId').text()
+    });
+
+    $("#getDebt").click(function () {
+        location.href = '/ui/transactions/debt/user/' + groupId
     });
 
 </script>
