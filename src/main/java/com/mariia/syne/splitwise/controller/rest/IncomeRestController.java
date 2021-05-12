@@ -51,7 +51,7 @@ public class IncomeRestController {
     public void addIncome(@RequestBody Income income) {
 
         Users user = (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        income.setId_user(user);
+        income.setIdUser(user);
 
         incomeService.addIncome(income);
     }
@@ -66,5 +66,11 @@ public class IncomeRestController {
     public void deleteIncome(@PathVariable Integer id) {
 
         incomeService.deleteIncome(id);
+    }
+
+    @GetMapping("user/{user_id}")
+    public List<Income> getIncomesByUser(@PathVariable Integer user_id) {
+
+        return incomeService.getIncomeByUser(user_id);
     }
 }

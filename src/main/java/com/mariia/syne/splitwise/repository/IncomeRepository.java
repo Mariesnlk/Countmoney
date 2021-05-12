@@ -1,10 +1,15 @@
 package com.mariia.syne.splitwise.repository;
 
 import com.mariia.syne.splitwise.entity.Income;
+import com.mariia.syne.splitwise.entity.Users;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.List;
+
 public interface IncomeRepository extends CrudRepository<Income, Integer> {
+
+    List<Income> getAllByIdUser(Users id_user);
 
     @Query(value = "SELECT SUM(sum_income) FROM Income WHERE id_user=?", nativeQuery = true)
     Double getSumAllIncomes(Integer id_user);

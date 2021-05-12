@@ -24,19 +24,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-   /* @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .inMemoryAuthentication()
-                .withUser(adminLogin)
-                .password(bCryptPasswordEncoder().encode(adminPassword))
-                .roles("admin")
-                .and()
-                .withUser(userLogin)
-                .password(bCryptPasswordEncoder().encode(userPassword))
-                .roles("user");
-
-    }*/
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

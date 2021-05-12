@@ -21,7 +21,7 @@ public class Income {
 
     @ManyToOne
     @JoinColumn(name = "id_user")
-    private Users id_user;
+    private Users idUser;
 
     private Double sum_income;
 
@@ -31,7 +31,7 @@ public class Income {
     public Income(Date period_from_income, Date period_to_income, Users id_user, Double sum_income) {
         this.period_from_income = period_from_income;
         this.period_to_income = period_to_income;
-        this.id_user = id_user;
+        this.idUser = id_user;
         this.sum_income = sum_income;
     }
 
@@ -39,7 +39,7 @@ public class Income {
         this.id_income = id_income;
         this.period_from_income = period_from_income;
         this.period_to_income = period_to_income;
-        this.id_user = id_user;
+        this.idUser = id_user;
         this.sum_income = sum_income;
     }
 
@@ -78,12 +78,12 @@ public class Income {
         this.period_to_income = period_to_income;
     }
 
-    public Users getId_user() {
-        return id_user;
+    public Users getIdUser() {
+        return idUser;
     }
 
-    public void setId_user(Users id_user) {
-        this.id_user = id_user;
+    public void setIdUser(Users idUser) {
+        this.idUser = idUser;
     }
 
     public Double getSum_income() {
@@ -100,7 +100,7 @@ public class Income {
                 "id_income=" + id_income +
                 ", period_from_income=" + period_from_income +
                 ", period_to_income=" + period_to_income +
-                ", id_user=" + id_user +
+                ", id_user=" + idUser +
                 ", sum_income=" + sum_income +
                 '}';
     }

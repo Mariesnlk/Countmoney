@@ -142,6 +142,11 @@
                     </button>
                 </div>
                 <div class="profile-work">
+                    <button id="getIncomes" type="button" class="profile-edit-btn" name="btnAllIncomes"
+                            th:text="#{income.list}">All Incomes
+                    </button>
+                </div>
+                <div class="profile-work">
                     <button id="groupInfo" type="button" class="profile-edit-btn" name="btnAddIncomes"
                             th:text="#{group.info}">Group Info
                     </button>
@@ -350,6 +355,10 @@
 
     $("#getTransactions").click(function () {
         location.href = '/ui/transactions/list/user/' + $('#userId').text()
+    });
+
+    $("#getIncomes").click(function () {
+        location.href = '/ui/incomes/list/user/' + $('#userId').text()
     });
 
     $("#updateUser").click(function () {
