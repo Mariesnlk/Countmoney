@@ -84,23 +84,11 @@
                     </tr>
 
                     <tr>
-                        <td th:text="#{transaction.period_from}">Period from</td>
+                        <td th:text="#{transaction.date}">Date</td>
                         <td>
                             <div class="input-group has-validation">
                                 <input class="form-control" id="periodFromIncome" name="periodFromIncome_name"
                                        type="date" required>
-                                <div class="invalid-feedback" th:text="#{validation.period_income}">
-                                    Add period of income, please
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td th:text="#{transaction.period_to}">Period to</td>
-                        <td>
-                            <div class="input-group has-validation">
-                                <input class="form-control" id="periodToIncome" name="periodToIncome_name" type="date"
-                                       required>
                                 <div class="invalid-feedback" th:text="#{validation.period_income}">
                                     Add period of income, please
                                 </div>
@@ -159,22 +147,20 @@
         }
     });
 
-    function IncomeDTO(idIncome, periodFromIncome, periodToIncome, sum) {
+    function IncomeDTO(idIncome, date, sum) {
         this.id_income = idIncome;
-        this.period_from_income = periodFromIncome;
-        this.period_to_income = periodToIncome;
+        this.date = date;
         this.sum_income = sum;
     }
 
     function save() {
         alert('Saved')
 
-        var id = $('#id_income').val();
-        var periodFromIncome = $('#periodFromIncome').val();
-        var periodToIncome = $('#periodToIncome').val();
-        var sum = $('#sum').val();
+        let id = $('#id_income').val();
+        let date = $('#periodFromIncome').val();
+        let sum = $('#sum').val();
 
-        var incomeDTO = new IncomeDTO(id, periodFromIncome, periodToIncome, sum);
+        let incomeDTO = new IncomeDTO(id, date, sum);
 
         console.log(incomeDTO);
         console.log(JSON.stringify(incomeDTO));

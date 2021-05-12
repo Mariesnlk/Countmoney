@@ -208,12 +208,10 @@
             this.id_group = id_group;
         }
 
-        //$(document).delegate('#btnSave', 'click', function (event) {
-        //  event.preventDefault();
         function save() {
             alert('Saved')
 
-            var group = $('#group').val();
+            let group = $('#group').val();
 
             $.getJSON('/groups', function (json) {
                 console.log(json);
@@ -223,15 +221,15 @@
                 if (!gr.length) {
                     alert('This group doesn`t exist. You can create your own group')
                 } else {
-                    var id = $('#user_id').val();
-                    var firstName = $('#firstName').val();
-                    var lastName = $('#lastName').val();
-                    var login = $('#login').val();
-                    var password = $('#password').val();
-                    var role = [{id: 1}];
+                    let id = $('#user_id').val();
+                    let firstName = $('#firstName').val();
+                    let lastName = $('#lastName').val();
+                    let login = $('#login').val();
+                    let password = $('#password').val();
+                    let role = [{id: 1}];
 
 
-                    var usersDTO = new UsersDTO(id, firstName, lastName, login, password, role, gr[0]);
+                    let usersDTO = new UsersDTO(id, firstName, lastName, login, password, role, gr[0]);
 
                     console.log(usersDTO);
                     console.log(JSON.stringify(usersDTO));

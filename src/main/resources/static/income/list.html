@@ -72,8 +72,8 @@
 
         <tr>
             <th th:text="#{user.id}">№</th>
-            <th th:text="#{transaction.period_from}">Period from income</th>
-            <th th:text="#{transaction.period_to}">Period to income</th>
+            <th th:text="#{transaction.date}">Date</th>
+<!--    add user column         -->
         </tr>
 
     </table>
@@ -144,8 +144,7 @@
 
                 tr.push('<tr>');
                 tr.push('<td>' + json[i].id_income + '</td>');
-                tr.push('<td>' + json[i].period_from_income + '</td>');
-                tr.push('<td>' + json[i].period_to_income + '</td>');
+                tr.push('<td>' + json[i].date + '</td>');
             }
 
             $('#incomes_table').append($(tr.join('')));

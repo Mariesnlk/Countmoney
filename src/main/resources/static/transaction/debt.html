@@ -172,10 +172,9 @@
         this.id_type_transaction = idTypeTransaction;
     }
 
-    function IncomeDTO(idIncome, periodFromIncome, periodToIncome, id_User, sum) {
+    function IncomeDTO(idIncome, date, id_User, sum) {
         this.id_income = idIncome;
-        this.period_from_income = periodFromIncome;
-        this.period_to_income = periodToIncome;
+        this.date = date;
         this.id_user = id_User;
         this.sum_income = sum;
     }
@@ -210,7 +209,7 @@
         });
 
 
-        let incomeDTO = new IncomeDTO(null, new Date(), new Date(), $('#to_who_dropdown').val(), $('#sum').val());
+        let incomeDTO = new IncomeDTO(null, new Date(), $('#to_who_dropdown').val(), $('#sum').val());
 
         console.log(incomeDTO);
         console.log(JSON.stringify(incomeDTO));

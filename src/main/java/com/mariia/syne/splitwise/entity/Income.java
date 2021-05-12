@@ -14,10 +14,7 @@ public class Income {
     private Integer id_income;
 
     @Temporal(TemporalType.DATE)
-    private Date period_from_income;
-
-    @Temporal(TemporalType.DATE)
-    private Date period_to_income;
+    private Date date;
 
     @ManyToOne
     @JoinColumn(name = "id_user")
@@ -28,25 +25,22 @@ public class Income {
     public Income() {
     }
 
-    public Income(Date period_from_income, Date period_to_income, Users idUser, Double sum_income) {
-        this.period_from_income = period_from_income;
-        this.period_to_income = period_to_income;
+    public Income(Date date, Users idUser, Double sum_income) {
+        this.date = date;
         this.idUser = idUser;
         this.sum_income = sum_income;
     }
 
-    public Income(Integer id_income, Date period_from_income, Date period_to_income, Users idUser, Double sum_income) {
+    public Income(Integer id_income, Date date, Users idUser, Double sum_income) {
         this.id_income = id_income;
-        this.period_from_income = period_from_income;
-        this.period_to_income = period_to_income;
+        this.date = date;
         this.idUser = idUser;
         this.sum_income = sum_income;
     }
 
-    public Income(Integer id_income, Date period_from_income, Date period_to_income, Double sum_income) {
+    public Income(Integer id_income, Date date,  Double sum_income) {
         this.id_income = id_income;
-        this.period_from_income = period_from_income;
-        this.period_to_income = period_to_income;
+        this.date = date;
         this.sum_income = sum_income;
     }
 
@@ -60,22 +54,12 @@ public class Income {
 
     @JsonFormat(pattern="yyyy-MM-dd")
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-    public Date getPeriod_from_income() {
-        return period_from_income;
+    public Date getDate() {
+        return date;
     }
 
-    public void setPeriod_from_income(Date period_from_income) {
-        this.period_from_income = period_from_income;
-    }
-
-    @JsonFormat(pattern="yyyy-MM-dd")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
-    public Date getPeriod_to_income() {
-        return period_to_income;
-    }
-
-    public void setPeriod_to_income(Date period_to_income) {
-        this.period_to_income = period_to_income;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public Users getIdUser() {
@@ -98,8 +82,7 @@ public class Income {
     public String toString() {
         return "Income{" +
                 "id_income=" + id_income +
-                ", period_from_income=" + period_from_income +
-                ", period_to_income=" + period_to_income +
+                ", date=" + date +
                 ", id_user=" + idUser +
                 ", sum_income=" + sum_income +
                 '}';
