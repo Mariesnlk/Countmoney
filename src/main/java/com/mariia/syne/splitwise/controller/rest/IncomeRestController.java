@@ -1,16 +1,12 @@
 package com.mariia.syne.splitwise.controller.rest;
 
 import com.mariia.syne.splitwise.entity.Income;
-import com.mariia.syne.splitwise.entity.Transactions;
 import com.mariia.syne.splitwise.entity.Users;
 import com.mariia.syne.splitwise.service.IncomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -84,35 +80,35 @@ public class IncomeRestController {
         return incomeService.getIncomesByGroup(group_id);
     }
 
-    @GetMapping("user/{user_id}/period")
-    public List<Income> findAllByDateBetweenByIdUser(@PathVariable Integer user_id,@RequestParam String start, @RequestParam String end) {
-        SimpleDateFormat format = new SimpleDateFormat();
-        format.applyPattern("yyyy-MM-dd");
-        Date startDate = null;
-        Date endDate = null;
-        try {
-            startDate = format.parse(start);
-            endDate = format.parse(end);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return incomeService.findAllByDateBetweenByIdUser(user_id, startDate, endDate);
-    }
-
-    @GetMapping("group/{group_id}/period")
-    public List<Income> findAllByDateBetweenByIdGroup(@PathVariable Integer group_id,@RequestParam String start, @RequestParam String end) {
-        SimpleDateFormat format = new SimpleDateFormat();
-        format.applyPattern("yyyy-MM-dd");
-        Date startDate = null;
-        Date endDate = null;
-        try {
-            startDate = format.parse(start);
-            endDate = format.parse(end);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return incomeService.findAllByDateBetweenByIdGroup(group_id, startDate, endDate);
-    }
+//    @GetMapping("user/{user_id}/period")
+//    public List<Income> findAllByDateBetweenByIdUser(@PathVariable Integer user_id,@RequestParam String start, @RequestParam String end) {
+//        SimpleDateFormat format = new SimpleDateFormat();
+//        format.applyPattern("yyyy-MM-dd");
+//        Date startDate = null;
+//        Date endDate = null;
+//        try {
+//            startDate = format.parse(start);
+//            endDate = format.parse(end);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return incomeService.findAllByDateBetweenByIdUser(user_id, startDate, endDate);
+//    }
+//
+//    @GetMapping("group/{group_id}/period")
+//    public List<Income> findAllByDateBetweenByIdGroup(@PathVariable Integer group_id,@RequestParam String start, @RequestParam String end) {
+//        SimpleDateFormat format = new SimpleDateFormat();
+//        format.applyPattern("yyyy-MM-dd");
+//        Date startDate = null;
+//        Date endDate = null;
+//        try {
+//            startDate = format.parse(start);
+//            endDate = format.parse(end);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return incomeService.findAllByDateBetweenByIdGroup(group_id, startDate, endDate);
+//    }
 }

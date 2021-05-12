@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class IncomeService {
@@ -59,15 +57,15 @@ public class IncomeService {
         incomeRepository.deleteById(id);
     }
 
-    public List<Income> findAllByDateBetweenByIdUser(Integer user_id, Date start, Date end) {
-        return incomeRepository.findAllByDateBetween(start, end).stream().
-                filter(elem -> elem.getIdUser().getId_users().equals(user_id)).collect(Collectors.toList());
-    }
-
-    public List<Income> findAllByDateBetweenByIdGroup(Integer group_id, Date start, Date end) {
-        return incomeRepository.findAllByDateBetween(start, end).stream().
-                filter(elem -> elem.getIdUser().getId_group().getId_groups().equals(group_id)).collect(Collectors.toList());
-    }
+//    public List<Income> findAllByDateBetweenByIdUser(Integer user_id, Date start, Date end) {
+//        return incomeRepository.findAllByDateBetween(start, end).stream().
+//                filter(elem -> elem.getIdUser().getId_users().equals(user_id)).collect(Collectors.toList());
+//    }
+//
+//    public List<Income> findAllByDateBetweenByIdGroup(Integer group_id, Date start, Date end) {
+//        return incomeRepository.findAllByDateBetween(start, end).stream().
+//                filter(elem -> elem.getIdUser().getId_group().getId_groups().equals(group_id)).collect(Collectors.toList());
+//    }
 
     public List<Income> getIncomesByGroup(Integer id) {
         return incomeRepository.findAllIncomesByGroup(id);

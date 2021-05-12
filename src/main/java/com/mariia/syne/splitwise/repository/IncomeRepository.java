@@ -5,7 +5,6 @@ import com.mariia.syne.splitwise.entity.Users;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.Date;
 import java.util.List;
 
 public interface IncomeRepository extends CrudRepository<Income, Integer> {
@@ -23,7 +22,7 @@ public interface IncomeRepository extends CrudRepository<Income, Integer> {
             "WHERE User_groups.id_groups=?", nativeQuery = true)
     Double getSumUserGroupIncomes(Integer id_groups);
 
-    List<Income> findAllByDateBetween(Date dateStart, Date dateEnd);
+//    List<Income> findAllByDateBetween(Date dateStart, Date dateEnd);
 
     @Query(value ="SELECT * FROM income " +
             "LEFT JOIN users " +
