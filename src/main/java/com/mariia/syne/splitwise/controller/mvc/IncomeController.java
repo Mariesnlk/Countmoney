@@ -34,6 +34,14 @@ public class IncomeController {
         return "income/list";
     }
 
+    @GetMapping("/list/group/{group_id}")
+    public String showIncomesByGroup(@PathVariable String group_id, Model model){
+
+        model.addAttribute("group_id",group_id);
+
+        return "income/list";
+    }
+
     @GetMapping("/create")
     public String showIncomesCreate(Model model){
         Integer userId = ((Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId_users();

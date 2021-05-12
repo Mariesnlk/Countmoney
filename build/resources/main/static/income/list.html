@@ -65,47 +65,150 @@
 
 <div>
 
+    <p id="userId" hidden><span th:text="${user_id}"/></p>
+    <p id="groupId" hidden><span th:text="${group_id}"/></p>
+
     <table id="incomes_table" class="table table-bordered">
 
         <tr>
-            <th th:text="#{user.id}">Id</th>
+            <th th:text="#{user.id}">№</th>
             <th th:text="#{transaction.period_from}">Period from income</th>
             <th th:text="#{transaction.period_to}">Period to income</th>
-            <th>User</th>
-            <!--  нужен ли user -->
         </tr>
 
     </table>
 
+    <div class="container" style="text-align: center">
+        <tr>
+            <td th:text="#{transaction.period_from}">Period from</td>
+            <td><input id="period_from" name="period_from_name" type="date"></td>
+        </tr>
+        <tr>
+            <td th:text="#{transaction.period_to}">Period to</td>
+            <td><input id="period_to" name="period_to_name" type="date"></td>
+        </tr>
+        <tr>
+            <button id="choose" type="button" class="btn btn-dark" name="btnChoose" th:text="#{button.choose}">Choose
+            </button>
+        </tr>
+        <tr>
+            <button onclick="location.href='/'" type="button" class="btn btn-dark" th:text="#{button.cancel}">
+                Cancel
+            </button>
+        </tr>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script type="text/javascript">
 
+        // function ajaxGet() {
+        //     let user_id = $('#userId').text();
+        //     let url = '/incomes'
+        //     if (user_id != 0) {
+        //         url = '/incomes/user/' + user_id
+        //     }
+        //
+        //     $.getJSON(url, function (json) {
+        //         console.log(json);
+        //
+        //         let tr = [];
+        //         for (let i = 0; i < json.length; i++) {
+        //
+        //             tr.push('<tr>');
+        //             tr.push('<td>' + json[i].id_income + '</td>');
+        //             tr.push('<td>' + json[i].period_from_income + '</td>');
+        //             tr.push('<td>' + json[i].period_to_income + '</td>');
+        //         }
+        //
+        //         $('#incomes_table').append($(tr.join('')));
+        //     });
+        // }
+        //
+        // $(document).ready(function () {
+        //
+        //     ajaxGet();
+        //
+        // });
+
+
+        function createTableRows(json) {
+
+            document.querySelectorAll('#incomes_table tr').forEach((elem, index) => {
+                if (index > 0) {
+                    elem.remove()
+                }
+            })
+
+            let tr = [];
+            for (let i = 0; i < json.length; i++) {
+
+                tr.push('<tr>');
+                tr.push('<td>' + json[i].id_income + '</td>');
+                tr.push('<td>' + json[i].period_from_income + '</td>');
+                tr.push('<td>' + json[i].period_to_income + '</td>');
+            }
+
+            $('#incomes_table').append($(tr.join('')));
+
+        }
+
+        $(document).delegate('#choose', 'click', function (event) {
+
+            event.preventDefault();
+            let periodFrom = $('#period_from').val();
+            let periodTo = $('#period_to').val();
+            let user_id = $('#userId').text();
+            let group_id = $('#groupId').text();
+            let url = '/incomes'
+            if (user_id != 0) {
+                url = '/incomes/user/' + user_id
+            } else if (group_id != 0) {
+                url = '/incomes/group/' + group_id
+            }
+
+
+            $.ajax({
+                type: "GET",
+                url: url + '/period/?start=' + periodFrom + '&end=' + periodTo,
+                success: function (result) {
+
+                    alert('SUCCESS!');
+                    console.log(result);
+                    createTableRows(result);
+                },
+                error: function (err) {
+                    alert('ERROR!');
+                }
+            });
+
+        });
+
 
         function ajaxGet() {
+            let user_id = $('#userId').text();
+            let group_id = $('#groupId').text();
+            let url = '/incomes'
+            if (user_id != 0) {
+                url = '/incomes/user/' + user_id
+            } else if (group_id != 0) {
+                url = '/incomes/group/' + group_id
+            }
 
-            $.getJSON('/incomes', function (json) {
+
+            $.getJSON(url, function (json) {
                 console.log(json);
+                createTableRows(json);
 
-                var tr = [];
-                for (var i = 0; i < json.length; i++) {
-
-                    tr.push('<tr>');
-                    tr.push('<td><a id=' + json[i].id_income + ' href="/ui/incomes/read/' + json[i].id_income + '">' +
-                        json[i].id_income + '</a></td>');
-                    tr.push('<td>' + json[i].period_from_income + '</td>');
-                    tr.push('<td>' + json[i].period_to_income + '</td>');
-                    tr.push('<td>' + json[i].id_user.id_users + '</td>');
-                }
-
-                $('#incomes_table').append($(tr.join('')));
             });
         }
+
 
         $(document).ready(function () {
 
             ajaxGet();
 
         });
+
     </script>
 
 </div>

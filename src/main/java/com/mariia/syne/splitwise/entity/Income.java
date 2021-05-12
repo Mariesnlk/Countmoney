@@ -28,18 +28,18 @@ public class Income {
     public Income() {
     }
 
-    public Income(Date period_from_income, Date period_to_income, Users id_user, Double sum_income) {
+    public Income(Date period_from_income, Date period_to_income, Users idUser, Double sum_income) {
         this.period_from_income = period_from_income;
         this.period_to_income = period_to_income;
-        this.idUser = id_user;
+        this.idUser = idUser;
         this.sum_income = sum_income;
     }
 
-    public Income(Integer id_income, Date period_from_income, Date period_to_income, Users id_user, Double sum_income) {
+    public Income(Integer id_income, Date period_from_income, Date period_to_income, Users idUser, Double sum_income) {
         this.id_income = id_income;
         this.period_from_income = period_from_income;
         this.period_to_income = period_to_income;
-        this.idUser = id_user;
+        this.idUser = idUser;
         this.sum_income = sum_income;
     }
 

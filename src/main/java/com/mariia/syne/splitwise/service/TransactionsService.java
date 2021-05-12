@@ -79,12 +79,11 @@ return false;
 
     public double getSumByRegular(Transactions t) {
         Calendar cal = Calendar.getInstance();
-        Calendar calnow = Calendar.getInstance();
+        Calendar calNow = Calendar.getInstance();
         cal.setTime(t.getPeriod_from());
-        calnow.setTime(new Date());
-        int month = calnow.get(Calendar.MONTH) - cal.get(Calendar.MONTH);
+        calNow.setTime(new Date());
+        int month = calNow.get(Calendar.MONTH) - cal.get(Calendar.MONTH);
         return t.getSum() * month;
-
 
     }
 

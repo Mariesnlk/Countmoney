@@ -77,7 +77,6 @@
             <th th:text="#{transaction.sum}">Sum</th>
             <th th:text="#{transaction.period_from}">Period from</th>
             <th th:text="#{transaction.period_to}">Period to</th>
-            <!--            <th th:text="#{transaction.user}">User</th>-->
             <th th:text="#{transaction.type_transaction}">Type Transaction</th>
         </tr>
     </table>
@@ -92,7 +91,7 @@
             <td><input id="period_to" name="period_to_name" type="date"></td>
         </tr>
         <tr>
-            <button id="choose" type="button" class="btn btn-dark" name="btnChoose">Choose
+            <button id="choose" type="button" class="btn btn-dark" name="btnChoose" th:text="#{button.choose}">Choose
             </button>
         </tr>
         <tr>
@@ -139,8 +138,8 @@
         $(document).delegate('#choose', 'click', function (event) {
 
             event.preventDefault();
-            var periodFrom = $('#period_from').val();
-            var periodTo = $('#period_to').val();
+            let periodFrom = $('#period_from').val();
+            let periodTo = $('#period_to').val();
             let user_id = $('#userId').text();
             let group_id = $('#groupId').text();
             let url = '/transactions'
@@ -192,6 +191,7 @@
             ajaxGet();
 
         });
+
     </script>
 
 </div>

@@ -88,7 +88,7 @@
             <td><input id="period_to" name="period_to_name" type="date"></td>
         </tr>
         <tr>
-            <button id="choose" type="button" class="btn btn-dark" name="btnChoose">Choose
+            <button id="choose" type="button" class="btn btn-dark" name="btnChoose" th:text="#{button.choose}">Choose
             </button>
         </tr>
         <tr>
@@ -101,34 +101,114 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script type="text/javascript">
 
-        function ajaxGet() {
+        // function ajaxGet() {
+        //     let user_id = $('#userId').text();
+        //     let url = '/incomes'
+        //     if (user_id != 0) {
+        //         url = '/incomes/user/' + user_id
+        //     }
+        //
+        //     $.getJSON(url, function (json) {
+        //         console.log(json);
+        //
+        //         let tr = [];
+        //         for (let i = 0; i < json.length; i++) {
+        //
+        //             tr.push('<tr>');
+        //             tr.push('<td>' + json[i].id_income + '</td>');
+        //             tr.push('<td>' + json[i].period_from_income + '</td>');
+        //             tr.push('<td>' + json[i].period_to_income + '</td>');
+        //         }
+        //
+        //         $('#incomes_table').append($(tr.join('')));
+        //     });
+        // }
+        //
+        // $(document).ready(function () {
+        //
+        //     ajaxGet();
+        //
+        // });
+
+
+        function createTableRows(json) {
+
+            document.querySelectorAll('#incomes_table tr').forEach((elem, index) => {
+                if (index > 0) {
+                    elem.remove()
+                }
+            })
+
+            let tr = [];
+            for (let i = 0; i < json.length; i++) {
+
+                tr.push('<tr>');
+                tr.push('<td>' + json[i].id_income + '</td>');
+                tr.push('<td>' + json[i].period_from_income + '</td>');
+                tr.push('<td>' + json[i].period_to_income + '</td>');
+            }
+
+            $('#incomes_table').append($(tr.join('')));
+
+        }
+
+        $(document).delegate('#choose', 'click', function (event) {
+
+            event.preventDefault();
+            let periodFrom = $('#period_from').val();
+            let periodTo = $('#period_to').val();
             let user_id = $('#userId').text();
+            let group_id = $('#groupId').text();
             let url = '/incomes'
             if (user_id != 0) {
                 url = '/incomes/user/' + user_id
+            } else if (group_id != 0) {
+                url = '/incomes/group/' + group_id
             }
+
+
+            $.ajax({
+                type: "GET",
+                url: url + '/period/?start=' + periodFrom + '&end=' + periodTo,
+                success: function (result) {
+
+                    alert('SUCCESS!');
+                    console.log(result);
+                    createTableRows(result);
+                },
+                error: function (err) {
+                    alert('ERROR!');
+                }
+            });
+
+        });
+
+
+        function ajaxGet() {
+            let user_id = $('#userId').text();
+            let group_id = $('#groupId').text();
+            let url = '/incomes'
+            if (user_id != 0) {
+                url = '/incomes/user/' + user_id
+            } else if (group_id != 0) {
+                url = '/incomes/group/' + group_id
+            }
+
 
             $.getJSON(url, function (json) {
                 console.log(json);
+                createTableRows(json);
 
-                let tr = [];
-                for (let i = 0; i < json.length; i++) {
-
-                    tr.push('<tr>');
-                    tr.push('<td>' + json[i].id_income + '</td>');
-                    tr.push('<td>' + json[i].period_from_income + '</td>');
-                    tr.push('<td>' + json[i].period_to_income + '</td>');
-                }
-
-                $('#incomes_table').append($(tr.join('')));
             });
         }
+
 
         $(document).ready(function () {
 
             ajaxGet();
 
         });
+
     </script>
 
 </div>
