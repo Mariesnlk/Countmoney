@@ -1,5 +1,6 @@
 package com.mariia.syne.splitwise.controller.rest;
 
+import com.mariia.syne.splitwise.entity.Frequency;
 import com.mariia.syne.splitwise.entity.Transactions;
 import com.mariia.syne.splitwise.entity.Users;
 import com.mariia.syne.splitwise.service.TransactionsService;
@@ -38,6 +39,13 @@ public class TransactionsRestController {
         return transactionsService.getDescription();
     }
 
+    @GetMapping("/allFrequency")
+    public List<Frequency> getFrequency() {
+
+        return transactionsService.getAllFrequency();
+    }
+
+
     @GetMapping("user/{user_id}")
     public List<Transactions> getTransactionsByUser(@PathVariable Integer user_id) {
 
@@ -70,7 +78,7 @@ public class TransactionsRestController {
 
 
     @GetMapping("user/{user_id}/period")
-    public List<Transactions> findAllByDateBetweenByIdUser(@PathVariable Integer user_id,@RequestParam String start, @RequestParam String end) {
+    public List<Transactions> findAllByDateBetweenByIdUser(@PathVariable Integer user_id, @RequestParam String start, @RequestParam String end) {
         SimpleDateFormat format = new SimpleDateFormat();
         format.applyPattern("yyyy-MM-dd");
         Date startDate = null;
@@ -86,7 +94,7 @@ public class TransactionsRestController {
     }
 
     @GetMapping("group/{group_id}/period")
-    public List<Transactions> findAllByDateBetweenByIdGroup(@PathVariable Integer group_id,@RequestParam String start, @RequestParam String end) {
+    public List<Transactions> findAllByDateBetweenByIdGroup(@PathVariable Integer group_id, @RequestParam String start, @RequestParam String end) {
         SimpleDateFormat format = new SimpleDateFormat();
         format.applyPattern("yyyy-MM-dd");
         Date startDate = null;

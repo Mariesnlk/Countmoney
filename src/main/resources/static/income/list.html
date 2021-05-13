@@ -73,6 +73,7 @@
         <tr>
             <th th:text="#{user.id}">№</th>
             <th th:text="#{transaction.date}">Date</th>
+            <th th:text="#{transaction.sum}">Sum</th>
             <th th:text="#{member}">Member</th>
         </tr>
 
@@ -117,6 +118,7 @@
                 tr.push('<tr>');
                 tr.push('<td>' + json[i].id_income + '</td>');
                 tr.push('<td>' + json[i].date + '</td>');
+                tr.push('<td>' + json[i].sum_income + '</td>');
                 tr.push('<td>' + json[i].idUser.first_name + ' ' + json[i].idUser.last_name + '</td>');
             }
 

@@ -47,16 +47,12 @@ public class Users implements UserDetails {
     @Transient
     private List<Transactions> transactions;
 
-    public Double getSumTransactions() {
-        return sumTransactions;
-    }
-
-    public void setSumTransactions(Double sumTransactions) {
-        this.sumTransactions = sumTransactions;
-    }
-
     @Transient
     private Double sumTransactions;
+
+
+    @Transient
+    private Double sumIncomes;
 
     public Users() {
     }
@@ -96,6 +92,22 @@ public class Users implements UserDetails {
         this.id_group = id_group;
         this.incomes = incomes;
         this.transactions = transactions;
+    }
+
+    public Double getSumTransactions() {
+        return sumTransactions;
+    }
+
+    public void setSumTransactions(Double sumTransactions) {
+        this.sumTransactions = sumTransactions;
+    }
+
+    public Double getSumIncomes() {
+        return sumIncomes;
+    }
+
+    public void setSumIncomes(Double sumIncomes) {
+        this.sumIncomes = sumIncomes;
     }
 
 

@@ -34,6 +34,10 @@ public class Transactions {
     @JoinColumn(name = "id_type_transaction")
     private TypeTransaction id_type_transaction;
 
+    @ManyToOne
+    @JoinColumn(name = "id_frequency")
+    private Frequency id_frequency;
+
     public Transactions() {
     }
 
@@ -49,7 +53,7 @@ public class Transactions {
     }
 
     public Transactions(Integer id_transaction, Date date, String destination, double sum, Date period_from,
-                        Date period_to, Users id_user, TypeTransaction id_type_transaction) {
+                        Date period_to, Users id_user, TypeTransaction id_type_transaction, Frequency id_frequency) {
         this.id_transaction = id_transaction;
         this.date = date;
         this.destination = destination;
@@ -58,6 +62,7 @@ public class Transactions {
         this.period_to = period_to;
         this.idUser = id_user;
         this.id_type_transaction = id_type_transaction;
+        this.id_frequency = id_frequency;
     }
 
     public Transactions(Integer id_transaction, Date date, String destination, double sum, Date period_from,
@@ -71,6 +76,14 @@ public class Transactions {
         this.id_type_transaction = id_type_transaction;
     }
 
+    public Frequency getId_frequency() {
+        return id_frequency;
+    }
+
+    public void setId_frequency(Frequency id_frequency) {
+        this.id_frequency = id_frequency;
+    }
+
     public Integer getId_transaction() {
         return id_transaction;
     }
@@ -79,7 +92,7 @@ public class Transactions {
         this.id_transaction = id_transaction;
     }
 
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     public Date getDate() {
         return date;
@@ -105,7 +118,7 @@ public class Transactions {
         this.sum = sum;
     }
 
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     public Date getPeriod_from() {
         return period_from;
@@ -115,7 +128,7 @@ public class Transactions {
         this.period_from = period_from;
     }
 
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     public Date getPeriod_to() {
         return period_to;
