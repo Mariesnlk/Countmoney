@@ -152,6 +152,16 @@
                             </div>
                         </td>
                     </tr>
+                    <tr class="regData">
+                        <td >Frequency</td>
+                        <td>
+                            <select id="frequency-dropdown" name="frequency_name">
+                                <option selected="true" disabled>Choose frequency</option>
+                            </select>
+                        </td>
+                    </tr>
+
+
 
                 </table>
             </form>
@@ -174,6 +184,31 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 <script type="text/javascript">
+    $.ajax({
+        type: "GET",
+        url: '/transactions/sum_by_group',
+        success: function (result) {
+            if (result) {
+                sum = result
+            }
+            $.getJSON('/incomes/sum-by-group', function (json) {
+                let incomes = 0.0;
+                if (json != null) {
+                    incomes = json;
+                }
+                if (incomes - sum < 0) {
+                    $(".card").text( "Ваш баланс превышен. Вы не можете совершать транзакции");
+                    $(".card").css('color','red');
+
+                }
+
+
+            })
+
+
+        }
+    });
+
 
     $(document).delegate('#btnSave', 'click', function (event) {
         event.preventDefault();
@@ -206,6 +241,19 @@
         console.log(json);
         $.each(json, function (key, entry) {
             type_transaction_dropdown.append($('<option></option>').attr('value', JSON.stringify(entry)).text(entry.name_type_transaction));
+        })
+    });
+
+
+    let frequency_dropdown = $('#frequency-dropdown');
+
+    frequency_dropdown.empty();
+    frequency_dropdown.prop('selectedIndex', 0);
+
+    $.getJSON('/allFrequency', function (json) {
+        console.log(json);
+        $.each(json, function (key, entry) {
+            frequency_dropdown.append($('<option></option>').attr('value', JSON.stringify(entry)).text(entry.value));
         })
     });
 
@@ -290,7 +338,9 @@
         function () {
             let typeTransaction = JSON.parse($('#type_transaction-dropdown').val());
             if (typeTransaction.name_type_transaction === "regular") {
-                $('.regData').css('display', 'block'); $('#period_to').prop('required', true);$('#period_from').prop('required', true);
+                $('.regData').css('display', 'block');
+                $('#period_to').prop('required', true);
+                $('#period_from').prop('required', true);
             }
         }
     )
