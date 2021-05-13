@@ -47,6 +47,17 @@ public class Users implements UserDetails {
     @Transient
     private List<Transactions> transactions;
 
+    public Double getSumTransactions() {
+        return sumTransactions;
+    }
+
+    public void setSumTransactions(Double sumTransactions) {
+        this.sumTransactions = sumTransactions;
+    }
+
+    @Transient
+    private Double sumTransactions;
+
     public Users() {
     }
 

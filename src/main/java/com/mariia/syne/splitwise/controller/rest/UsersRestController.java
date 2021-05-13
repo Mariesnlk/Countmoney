@@ -2,6 +2,7 @@ package com.mariia.syne.splitwise.controller.rest;
 
 import com.mariia.syne.splitwise.entity.Groups;
 import com.mariia.syne.splitwise.entity.Users;
+import com.mariia.syne.splitwise.service.TransactionsService;
 import com.mariia.syne.splitwise.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,6 +26,10 @@ public class UsersRestController {
     private UsersService usersService;
 
     @Autowired
+    private TransactionsService transactionsService;
+
+
+    @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @GetMapping
@@ -37,6 +42,8 @@ public class UsersRestController {
     public List<Users> getListUsersByGroup() {
         Users user = (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Groups group = user.getId_group();
+
+
         return usersService.getListUsersByGroup(group.getId_groups());
     }
 

@@ -17,13 +17,23 @@ body {
     font-size: 16px;
     line-height: 28px;
 }
+
 .headline h5 {
     font-weight: bold;
 }
 
-h2, form{
+h2, form {
     text-align: center;
     margin-bottom: 2%;
+}
+
+.page-content.page-container {
+    margin-top: 1%;
+    margin-left: 5%;
+}
+
+#buttons {
+    margin-bottom: 1%;
 }
 
 #page-content {
@@ -137,7 +147,7 @@ a:not([href]):not([tabindex]):focus {
     padding: .75rem .625rem
 }
 
-.list-row .list-item>* {
+.list-row .list-item > * {
     padding-left: .625rem;
     padding-right: .625rem
 }
