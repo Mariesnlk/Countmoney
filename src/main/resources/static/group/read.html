@@ -88,15 +88,23 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="headline">
-                                            <h5 th:text="#{group.incomes}">Group`s incomes: </h5>
+                                            <h5 id="labelIncomes" th:text="#{group.incomes}">Group`s incomes: </h5>
                                             <p id="income_sum"></p>
                                         </div>
                                     </div>
 
                                     <div class="col">
                                         <div class="headline">
-                                            <h5 th:text="#{group.transactions}">Group`s transactions: </h5>
+                                            <h5 id="labelTransactions" th:text="#{group.transactions}">Group`s
+                                                transactions: </h5>
                                             <p id="transactions_sum"></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="headline">
+                                            <h5>Balance</h5>
+                                            <p id="balance_sum"></p>
                                         </div>
                                     </div>
                                 </div>
@@ -148,6 +156,9 @@
                             <div id="chartContainer" style="height: 370px; width: 100%;">
                                 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
                             </div>
+                            <div id="chartContainerIncomes" style="height: 370px; width: 100%;">
+                                <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+                            </div>
 
                         </div>
                     </div>
@@ -169,15 +180,6 @@
         }
     });
 
-    $.getJSON('/incomes/sum-by-group', function (json) {
-        if (json == null) {
-            json = 0.00;
-        }
-        console.log(json);
-
-        $('#income_sum').text(json);
-
-    });
 
     let sum = 0.00
 
@@ -196,6 +198,7 @@
 
                 let tr = [];
                 let dataCanvas = [];
+                let dataCanvasIncomes = [];
                 for (let i = 0; i < json.length; i++) {
 
                     tr.push('<div class="list-item">');
@@ -207,14 +210,43 @@
                     tr.push('</a></div>');
                     tr.push('</div>');
                     let dataItem = {};
+                    let dataItemIncomes = {};
                     dataItem.label = json[i].first_name + " " + json[i].last_name;
+                    dataItemIncomes.label = json[i].first_name + " " + json[i].last_name;
                     dataItem.y = Math.round(json[i].sumTransactions / result * 100);
+                    dataItemIncomes.y = json[i].sumIncomes;
                     dataCanvas.push(dataItem);
+                    dataCanvasIncomes.push(dataItemIncomes);
 
                 }
-                drawCanvas(dataCanvas);
+                drawCanvas("chartContainer", dataCanvas, $("#labelTransactions").text());
 
                 $('#users_list').append($(tr.join('')));
+
+                $.getJSON('/incomes/sum-by-group', function (json) {
+                    if (json == null) {
+                        json = 0.00;
+                    }
+                    console.log(json);
+
+                    $('#income_sum').text(json);
+                    let balance = json -sum;
+                    $('#balance_sum').text(balance);
+                    if(balance<0){
+                        $('#balance_sum').css('color','red');
+                    }
+
+
+                    dataCanvasIncomes.forEach(elem => {
+                        elem.y = elem.y / json * 100
+                    });
+
+                    drawCanvas("chartContainerIncomes", dataCanvasIncomes, $("#labelIncomes").text());
+
+
+                });
+
+
             });
 
         },
@@ -283,12 +315,12 @@
         location.href = '/ui/transactions/debt/user/' + groupId
     });
 
-    function drawCanvas( data) {
-        var chart = new CanvasJS.Chart("chartContainer", {
+    function drawCanvas(container, data, text) {
+        var chart = new CanvasJS.Chart(container, {
             theme: "light2",
             animationEnabled: true,
             title: {
-                text: "Group`s Transactions"
+                text: text
             },
             data: [{
                 type: "pie",
