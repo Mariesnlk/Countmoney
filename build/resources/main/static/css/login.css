@@ -21,3 +21,11 @@ h5{
     color: red;
     text-align: center;
 }
+
+#text{
+    color: black!important;
+}
+
+#form{
+    margin-top: 10%;
+}

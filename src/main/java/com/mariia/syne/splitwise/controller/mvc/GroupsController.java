@@ -25,7 +25,7 @@ public class GroupsController {
     }
 
     @GetMapping("/create")
-    public String showGroupsCreate(){
+    public String showGroupsCreate(Model model){
 
         return "group/create";
     }

@@ -10,6 +10,10 @@
     color: white !important;
 }
 
+.dropdown-item{
+    color: black!important;
+}
+
 #sign-in{
     margin-right: 1%;
 }
