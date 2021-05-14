@@ -27,7 +27,7 @@ public class TransactionsService {
         return (List<Frequency>) frequencyRepository.findAll();
     }
 
-    static final long MILS_IN_DAY=86400000L;
+    static final long MILS_IN_DAY = 86400000L;
 
     public List<Transactions> getAllTransactions() {
 
@@ -77,15 +77,22 @@ public class TransactionsService {
 
     public Double getSumUserTransactions(Integer user_id) {
 
-        double sumIrreg = transactionsRepository.getSumUserTransactions(user_id);
+        double sumIrReg;
+
+        if (transactionsRepository.getSumUserTransactions(user_id) == null) {
+            sumIrReg = 0.0;
+        } else {
+            sumIrReg = transactionsRepository.getSumUserTransactions(user_id);
+        }
+
         List<Transactions> regTransactions = transactionsRepository.getAllByIdUser(new Users(user_id)).stream().
                 filter(t -> t.getId_type_transaction().getId_type_transaction() == 2).collect(Collectors.toList());
-        double identity = 0;
 
+        double identity = 0;
 
         double reg = regTransactions.stream().reduce(identity, (sum, y) -> sum + getSumByRegular(y), Double::sum);
 
-        return sumIrreg + reg;
+        return sumIrReg + reg;
     }
 
     public static double getSumByRegular(Transactions t) {
@@ -95,27 +102,24 @@ public class TransactionsService {
         calFrom.setTime(t.getPeriod_from());
         calTo.setTime(t.getPeriod_to());
         calNow.setTime(new Date());
-        Calendar calEnd =null;
-        if(calTo.before( calNow)){
-            calEnd=calTo;
+        Calendar calEnd = null;
+        if (calTo.before(calNow)) {
+            calEnd = calTo;
+        } else {
+            calEnd = calNow;
         }
-        else{
-            calEnd=calNow;
-        }
-        int period =0;
+        int period = 0;
 
-        if(t.getId_frequency().getValue().equals("month")) {
+        if (t.getId_frequency().getValue().equals("month")) {
             int diffYear = calEnd.get(Calendar.YEAR) - calFrom.get(Calendar.YEAR);
-            period =  diffYear*12+calEnd.get(Calendar.MONTH) - calFrom.get(Calendar.MONTH);
-        }
-        else  if(t.getId_frequency().getValue().equals("week")) {
+            period = diffYear * 12 + calEnd.get(Calendar.MONTH) - calFrom.get(Calendar.MONTH);
+        } else if (t.getId_frequency().getValue().equals("week")) {
 
-            period =(int) ((calEnd.getTimeInMillis() - calFrom.getTimeInMillis())/(MILS_IN_DAY*7));
+            period = (int) ((calEnd.getTimeInMillis() - calFrom.getTimeInMillis()) / (MILS_IN_DAY * 7));
 
-        }
-        else  if(t.getId_frequency().getValue().equals("day")) {
+        } else if (t.getId_frequency().getValue().equals("day")) {
 
-            period =(int) ((calEnd.getTimeInMillis() - calFrom.getTimeInMillis())/MILS_IN_DAY);
+            period = (int) ((calEnd.getTimeInMillis() - calFrom.getTimeInMillis()) / MILS_IN_DAY);
 
         }
 
