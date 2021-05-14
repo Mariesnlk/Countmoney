@@ -89,8 +89,8 @@
             $.getJSON('/users', function (json) {
                 console.log(json);
 
-                var tr = [];
-                for (var i = 0; i < json.length; i++) {
+                let tr = [];
+                for (let i = 0; i < json.length; i++) {
 
                     tr.push('<tr>');
                     tr.push('<td><a style="color: black" id=' + json[i].id_users + ' href="/ui/users/read/' + json[i].id_users + '">' +

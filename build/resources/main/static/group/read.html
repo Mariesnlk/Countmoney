@@ -58,7 +58,7 @@
     <p id="groupId" hidden><span th:text="${group_id}"/></p>
     <p id="userId" hidden><span th:text="${user_id}"/></p>
 
-    <div class="container">
+    <div class="container" id="form">
 
         <div class="row">
             <div class="col">
@@ -189,7 +189,7 @@
                     tr.push('<div><a data-abc="true"><span class="w-48 avatar gd-warning">');
                     tr.push(json[i].first_name.toString().charAt(0));
                     tr.push('</span></a></div>');
-                    tr.push('<div class="flex"><a class="item-author text-color" data-abc="true">');
+                    tr.push('<div class="flex"><a class="item-author text" data-abc="true">');
                     tr.push(json[i].first_name + " " + json[i].last_name);
                     tr.push('</a></div>');
                     tr.push('</div>');

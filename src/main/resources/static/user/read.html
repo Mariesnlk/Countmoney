@@ -11,11 +11,7 @@
 
 
     <title>User Info</title>
-    <style>
-        #modal {
-            display: none;
-        }
-    </style>
+
 </head>
 <body>
 
@@ -51,7 +47,7 @@
     <div class="navbar navbar-expand-md" id="sign-in">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="btn btn-sm btn-outline-secondary" href="ui/users/logout">Sign out</a>
+                <a class="btn btn-sm btn-outline-secondary" href="ui/users/logout" th:text="#{sign-out}">Sign out</a>
             </li>
         </ul>
     </div>
@@ -66,49 +62,45 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="profile-img">
-                    <img src="/static/images/unknown_user.jpg" alt="unknown_user"/>
-                    <div class="file btn btn-lg btn-primary" th:text="#{change_photo}">
-                        Change Photo
-                        <input type="file" name="file"/>
-                    </div>
+                    <img src="/static/images/user.jpg" alt="unknown_user"/>
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="profile-head">
-                    <h5 id="user-name"></h5>
+                    <h3 id="user-name"></h3>
 
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" role="tab"
                                aria-controls="home" aria-selected="true" th:text="#{about}">About</a>
                         </li>
                     </ul>
 
                     <div class="row">
                         <div class="col-md-6">
-                            <h5 th:text="#{incomes}">Incomes: </h5>
+                            <h4 th:text="#{incomes}">Incomes: </h4>
                         </div>
                         <div class="col-md-6">
-                            <p id="income_sum"></p>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h5 th:text="#{transactions}">Transactions: </h5>
-                        </div>
-                        <div class="col-md-6">
-                            <p id="transactions_sum"></p>
+                            <p id="income_sum" class="text-size"></p>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6">
-                            <h5 th:text="#{balance}">Balance: </h5>
+                            <h4 th:text="#{transactions}">Transactions: </h4>
                         </div>
                         <div class="col-md-6">
-                            <p id="balance_sum"></p>
+                            <p id="transactions_sum" class="text-size"></p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 th:text="#{balance}">Balance: </h4>
+                        </div>
+                        <div class="col-md-6">
+                            <p id="balance_sum" class="text-size"></p>
                         </div>
                     </div>
                 </div>
@@ -123,7 +115,7 @@
 
         <div class="row">
 
-            <div class="col-md-4">
+            <div class="col-md-4" id="class-button">
                 <div class="profile-work">
                     <button type="button" class="profile-edit-btn" name="btnAddTransaction"
                             onclick="location.href='/ui/transactions/create'"
@@ -161,41 +153,46 @@
             <div class="col-md-4">
                 <div class="tab-content profile-tab" id="myTabContent">
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="container">
+                        <div class="row">
+                            <div class="col">
                         <div class="row">
                             <div class="col-md-6">
-                                <label th:text="#{user.group}">Group</label>
+                                <label class="text-3" th:text="#{user.group}">Group</label>
                             </div>
                             <!--  -->
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <label th:text="#{user.name}">First name</label>
+                                <label class="text-3" th:text="#{user.name}">First name</label>
                             </div>
                             <!--  -->
                         </div>
                         <div class="row ">
                             <div class="col-md-6">
-                                <label th:text="#{user.surname}">Last name</label>
+                                <label class="text-3" th:text="#{user.surname}">Last name</label>
                             </div>
                             <!--  -->
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <label th:text="#{user.login}">Login</label>
+                                <label class="text-3" th:text="#{user.login}">Login</label>
                             </div>
                             <!--  -->
                         </div>
+                            </div>
+                            <div class="col">
+                        <div id="users_entity_table">
+
+                        </div>
+                            </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div id="users_entity_table">
+            <div class="col-md-4"></div>
 
-                </div>
-            </div>
-
-            <button id="modal" type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal"
+            <button id="modal" type="button" class="profile-edit-btn" data-toggle="modal" data-target="#exampleModal"
                     th:text="#{button.phrase}"> You have regular transaction
             </button>
 
@@ -302,20 +299,20 @@
             let tr = [];
 
             tr.push('<div class="row">');
-            tr.push('<div class="col-md-6">' + json.id_group["name_group"] + '</div>');
+            tr.push('<div class="col-md-6 text-3">' + json.id_group["name_group"] + '</div>');
             groupId = json.id_group["id_groups"]
             tr.push('</div>');
 
             tr.push('<div class="row">');
-            tr.push('<div class="col-md-6">' + json.first_name + '</div>');
+            tr.push('<div class="col-md-6 text-3">' + json.first_name + '</div>');
             tr.push('</div>');
 
             tr.push('<div class="row">');
-            tr.push('<div class="col-md-6">' + json.last_name + '</div>');
+            tr.push('<div class="col-md-6 text-3">' + json.last_name + '</div>');
             tr.push('</div>');
 
             tr.push('<div class="row">');
-            tr.push('<div class="col-md-6">' + json.login + '</div>');
+            tr.push('<div class="col-md-6 text-3">' + json.login + '</div>');
             tr.push('</div>');
 
             $('#users_entity_table').append($(tr.join('')))
@@ -334,7 +331,7 @@
                     sumTransactions = result
                 }
 
-                $('#transactions_sum').text(sumTransactions);
+                $('#transactions_sum').text(sumTransactions + " грн");
 
 
                 $.getJSON('/incomes/sum', function (json) {
@@ -343,12 +340,11 @@
                     }
                     console.log(json);
 
-                    $('#income_sum').text(json);
-
+                    $('#income_sum').text(json + " грн");
 
                     let balance = json - sumTransactions;
 
-                    $('#balance_sum').text(balance);
+                    $('#balance_sum').text(balance + " грн");
                     if (balance < 0) {
                         $('#balance_sum').css('color', 'red');
                     } else {

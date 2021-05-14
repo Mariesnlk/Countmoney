@@ -7,6 +7,28 @@
     background: #fff;
 }
 
+#modal {
+    display: none;
+}
+
+.text-size{
+    font-size: 1.5rem;
+}
+
+.text-3{
+    font-size: 1.17em;
+}
+
+#class-button{
+    margin-top: 1%;
+    text-align: center;
+}
+
+#modal{
+    margin-top: 2%;
+    margin-left: 2%;
+}
+
 .profile-img {
     text-align: center;
 }
@@ -34,8 +56,8 @@
     top: 0;
 }
 
-.profile-head h5 {
-    color: #333;
+.profile-head h3 {
+    color: black;
 }
 
 .profile-head h6 {
@@ -48,7 +70,7 @@
     width: 70%;
     padding: 2%;
     font-weight: 600;
-    color: #6c757d;
+    color: #66cc66;
     cursor: pointer;
 }
 
@@ -73,7 +95,7 @@
     border: none;
 }
 
-.profile-head .nav-tabs .nav-link.active {
+.profile-head .nav-tabs .nav-link.active, #home-tab {
     border: none;
     border-bottom: 2px solid #0062cc;
 }

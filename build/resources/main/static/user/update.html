@@ -63,17 +63,13 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="profile-img">
-                    <img src="/static/images/unknown_user.jpg" alt="unknown_user"/>
-                    <div class="file btn btn-lg btn-primary" th:text="#{change_photo}">
-                        Change Photo
-                        <input type="file" name="file"/>
-                    </div>
+                    <img src="/static/images/user.jpg" alt="unknown_user"/>
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="profile-head">
-                    <h5 id="user-name"></h5>
+                    <h3 id="user-name"></h3>
 
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
@@ -84,19 +80,28 @@
 
                     <div class="row">
                         <div class="col-md-6">
-                            <h5 th:text="#{incomes}">Incomes: </h5>
+                            <h4 th:text="#{incomes}">Incomes: </h4>
                         </div>
                         <div class="col-md-6">
-                            <p id="income_sum"></p>
+                            <p id="income_sum" class="text-size"></p>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6">
-                            <h5 th:text="#{transactions}">Transactions: </h5>
+                            <h4 th:text="#{transactions}">Transactions: </h4>
                         </div>
                         <div class="col-md-6">
-                            <p id="transactions_sum"></p>
+                            <p id="transactions_sum" class="text-size"></p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 th:text="#{balance}">Balance: </h4>
+                        </div>
+                        <div class="col-md-6">
+                            <p id="balance_sum" class="text-size"></p>
                         </div>
                     </div>
                 </div>
@@ -111,7 +116,7 @@
 
         <div class="row">
 
-            <div class="col-md-4">
+            <div class="col-md-4" id="class-button">
                 <div class="profile-work">
                     <button type="button" class="profile-edit-btn" name="btnAddTransaction"
                             onclick="location.href='/ui/transactions/create'"
@@ -130,8 +135,18 @@
                     </button>
                 </div>
                 <div class="profile-work">
+                    <button id="getIncomes" type="button" class="profile-edit-btn" name="btnAllIncomes"
+                            th:text="#{income.list}">All Incomes
+                    </button>
+                </div>
+                <div class="profile-work">
                     <button id="groupInfo" type="button" class="profile-edit-btn" name="btnAddIncomes"
                             th:text="#{group.info}">Group Info
+                    </button>
+                </div>
+                <div class="profile-work">
+                    <button id="getDebt" type="button" class="profile-edit-btn" name="btnGetDebt"
+                            th:text="#{debt}">Split debt
                     </button>
                 </div>
             </div>
@@ -141,15 +156,15 @@
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                         <div class="row">
                             <div class="col-md-6">
-                                <label>Group</label>
+                                <label class="text-3">Group</label>
                             </div>
                             <div class="col-md-6">
-                                <p id="group_id"/>
+                                <p id="group_id" class="text-3"/>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <label>First name</label>
+                                <label class="text-3">First name</label>
                             </div>
                             <div class="col-md-6">
                                 <p><input id="firstName" name="firstName_name" type="text"></p>
@@ -157,7 +172,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <label>Last name</label>
+                                <label class="text-3">Last name</label>
                             </div>
                             <div class="col-md-6">
                                 <p><input id="lastName" name="lastName_name" type="text"></p>
@@ -165,7 +180,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <label>Login</label>
+                                <label class="text-3">Login</label>
                             </div>
                             <div class="col-md-6">
                                 <p><input id="login" name="login_name" type="text"></p>
@@ -173,7 +188,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <label>Password</label>
+                                <label class="text-3">Password</label>
                             </div>
                             <div class="col-md-6">
                                 <p><input id="password" name="password_name" type="text" placeholder="change password">
@@ -224,14 +239,14 @@
     $(document).delegate('#saveUser', 'click', function (event) {
         event.preventDefault();
 
-        var userId = $('#userId').text();
-        var firstName = $('#firstName').val();
-        var lastName = $('#lastName').val();
-        var login = $('#login').val();
-        var password = $('#password').val();
-        var role = null;
+        let userId = $('#userId').text();
+        let firstName = $('#firstName').val();
+        let lastName = $('#lastName').val();
+        let login = $('#login').val();
+        let password = $('#password').val();
+        let role = null;
 
-        var usersDTO = new UsersDTO(userId, firstName, lastName, login, password, role, userGroup);
+        let usersDTO = new UsersDTO(userId, firstName, lastName, login, password, role, userGroup);
 
         console.log(usersDTO);
         console.log(JSON.stringify(usersDTO));
@@ -292,27 +307,36 @@
 
         });
 
-        $.getJSON('/incomes/sum', function (json) {
-            if (json == null) {
-                json = 0.00;
-            }
-            console.log(json);
-
-            $('#income_sum').text(json);
-
-        });
-
-        let sum = 0.00
+        let sumTransactions = 0.00
 
         $.ajax({
             type: "GET",
             url: '/transactions/sum',
             success: function (result) {
                 if (result) {
-                    sum = result
+                    sumTransactions = result
                 }
 
-                $('#transactions_sum').text(sum);
+                $('#transactions_sum').text(sumTransactions + " грн");
+
+                $.getJSON('/incomes/sum', function (json) {
+                    if (json == null) {
+                        json = 0.00;
+                    }
+                    console.log(json);
+
+                    $('#income_sum').text(json + " грн");
+
+                    let balance = json - sumTransactions;
+
+                    $('#balance_sum').text(balance + " грн");
+                    if (balance < 0) {
+                        $('#balance_sum').css('color', 'red');
+                    } else {
+                        $('#balance_sum').css('color', 'green');
+                    }
+
+                });
 
             },
             error: function (err) {
