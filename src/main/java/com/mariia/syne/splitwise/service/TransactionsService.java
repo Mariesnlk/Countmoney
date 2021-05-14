@@ -1,7 +1,9 @@
 package com.mariia.syne.splitwise.service;
 
+import com.mariia.syne.splitwise.entity.Frequency;
 import com.mariia.syne.splitwise.entity.Transactions;
 import com.mariia.syne.splitwise.entity.Users;
+import com.mariia.syne.splitwise.repository.FrequencyRepository;
 import com.mariia.syne.splitwise.repository.TransactionsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,14 @@ public class TransactionsService {
     @Autowired
     private TransactionsRepository transactionsRepository;
 
+    @Autowired
+    private FrequencyRepository frequencyRepository;
+
+    public List<Frequency> getAllFrequency() {
+        return (List<Frequency>) frequencyRepository.findAll();
+    }
+
+    static final long MILS_IN_DAY=86400000L;
 
     public List<Transactions> getAllTransactions() {
 
@@ -36,15 +46,16 @@ public class TransactionsService {
     }
 
     public boolean transactionFilter(Transactions t) {
-        if(t.getId_type_transaction().getId_type_transaction() == 2){
-        Calendar from = Calendar.getInstance();
-        from.setTime(t.getPeriod_from());
-        Calendar to = Calendar.getInstance();
-        to.setTime(t.getPeriod_to());
-        Calendar now=Calendar.getInstance();
-        now.setTime(new Date());
-        return  from.before(now) && to.after(now);}
-return false;
+        if (t.getId_type_transaction().getId_type_transaction() == 2) {
+            Calendar from = Calendar.getInstance();
+            from.setTime(t.getPeriod_from());
+            Calendar to = Calendar.getInstance();
+            to.setTime(t.getPeriod_to());
+            Calendar now = Calendar.getInstance();
+            now.setTime(new Date());
+            return from.before(now) && to.after(now);
+        }
+        return false;
 
     }
 
@@ -77,13 +88,38 @@ return false;
         return sumIrreg + reg;
     }
 
-    public double getSumByRegular(Transactions t) {
-        Calendar cal = Calendar.getInstance();
+    public static double getSumByRegular(Transactions t) {
+        Calendar calFrom = Calendar.getInstance();
+        Calendar calTo = Calendar.getInstance();
         Calendar calNow = Calendar.getInstance();
-        cal.setTime(t.getPeriod_from());
+        calFrom.setTime(t.getPeriod_from());
+        calTo.setTime(t.getPeriod_to());
         calNow.setTime(new Date());
-        int month = calNow.get(Calendar.MONTH) - cal.get(Calendar.MONTH);
-        return t.getSum() * month;
+        Calendar calEnd =null;
+        if(calTo.before( calNow)){
+            calEnd=calTo;
+        }
+        else{
+            calEnd=calNow;
+        }
+        int period =0;
+
+        if(t.getId_frequency().getValue().equals("month")) {
+            int diffYear = calEnd.get(Calendar.YEAR) - calFrom.get(Calendar.YEAR);
+            period =  diffYear*12+calEnd.get(Calendar.MONTH) - calFrom.get(Calendar.MONTH);
+        }
+        else  if(t.getId_frequency().getValue().equals("week")) {
+
+            period =(int) ((calEnd.getTimeInMillis() - calFrom.getTimeInMillis())/(MILS_IN_DAY*7));
+
+        }
+        else  if(t.getId_frequency().getValue().equals("day")) {
+
+            period =(int) ((calEnd.getTimeInMillis() - calFrom.getTimeInMillis())/MILS_IN_DAY);
+
+        }
+
+        return t.getSum() * period;
 
     }
 

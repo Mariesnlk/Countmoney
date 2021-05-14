@@ -111,6 +111,15 @@
                             <p id="transactions_sum"></p>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5 th:text="#{balance}">Balance: </h5>
+                        </div>
+                        <div class="col-md-6">
+                            <p id="balance_sum"></p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -324,27 +333,38 @@
 
         });
 
-        $.getJSON('/incomes/sum', function (json) {
-            if (json == null) {
-                json = 0.00;
-            }
-            console.log(json);
-
-            $('#income_sum').text(json);
-
-        });
-
-        let sum = 0.00
+        let sumTransactions = 0.00
 
         $.ajax({
             type: "GET",
             url: '/transactions/sum',
             success: function (result) {
                 if (result) {
-                    sum = result
+                    sumTransactions = result
                 }
 
-                $('#transactions_sum').text(sum);
+                $('#transactions_sum').text(sumTransactions);
+
+
+                $.getJSON('/incomes/sum', function (json) {
+                    if (json == null) {
+                        json = 0.00;
+                    }
+                    console.log(json);
+
+                    $('#income_sum').text(json);
+
+
+                    let balance = json - sumTransactions;
+
+                    $('#balance_sum').text(balance);
+                    if (balance < 0) {
+                        $('#balance_sum').css('color', 'red');
+                    } else {
+                        $('#balance_sum').css('color', 'green');
+                    }
+
+                });
 
             },
             error: function (err) {

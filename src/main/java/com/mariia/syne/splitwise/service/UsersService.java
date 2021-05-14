@@ -2,6 +2,7 @@ package com.mariia.syne.splitwise.service;
 
 import com.mariia.syne.splitwise.entity.Transactions;
 import com.mariia.syne.splitwise.entity.Users;
+import com.mariia.syne.splitwise.repository.IncomeRepository;
 import com.mariia.syne.splitwise.repository.TransactionsRepository;
 import com.mariia.syne.splitwise.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,12 @@ public class UsersService implements UserDetailsService {
     private TransactionsRepository transactionsRepository;
 
     @Autowired
+    private IncomeRepository incomesRepository;
+
+    @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    static final long MILS_IN_DAY=86400000L;
 
 
     public List<Users> getAllUsers() {
@@ -39,12 +45,11 @@ public class UsersService implements UserDetailsService {
 
     public List<Users> getListUsersByGroup(Integer id_group) {
 
-        List<Users> users = usersRepository.getListUsersByGroup(id_group);//new ArrayList<>();
-        // usersRepository.getListUsersByGroup(id_group).forEach(users::add);
+        List<Users> users = usersRepository.getListUsersByGroup(id_group);
 
         for (Users u : users) {
             u.setSumTransactions(getSumUserTransactions(u));
-
+            u.setSumIncomes(incomesRepository.getSumAllIncomes(u.getId_users()));
         }
 
         return users;
@@ -72,15 +77,41 @@ public class UsersService implements UserDetailsService {
         return sumIrregular + regular;
     }
 
-    public double getSumByRegular(Transactions t) {
-        Calendar cal = Calendar.getInstance();
+    public static double getSumByRegular(Transactions t) {
+        Calendar calFrom = Calendar.getInstance();
+        Calendar calTo = Calendar.getInstance();
         Calendar calNow = Calendar.getInstance();
-        cal.setTime(t.getPeriod_from());
+        calFrom.setTime(t.getPeriod_from());
+        calTo.setTime(t.getPeriod_to());
         calNow.setTime(new Date());
-        int month = calNow.get(Calendar.MONTH) - cal.get(Calendar.MONTH);
-        return t.getSum() * month;
+        Calendar calEnd =null;
+        if(calTo.before( calNow)){
+            calEnd=calTo;
+        }
+        else{
+            calEnd=calNow;
+        }
+        int period =0;
+
+        if(t.getId_frequency().getValue().equals("month")) {
+            int diffYear = calEnd.get(Calendar.YEAR) - calFrom.get(Calendar.YEAR);
+            period =  diffYear*12+calEnd.get(Calendar.MONTH) - calFrom.get(Calendar.MONTH);
+        }
+        else  if(t.getId_frequency().getValue().equals("week")) {
+
+            period =(int) ((calEnd.getTimeInMillis() - calFrom.getTimeInMillis())/(MILS_IN_DAY*7));
+
+        }
+        else  if(t.getId_frequency().getValue().equals("day")) {
+
+            period =(int) ((calEnd.getTimeInMillis() - calFrom.getTimeInMillis())/MILS_IN_DAY);
+
+        }
+
+        return t.getSum() * period;
 
     }
+
 
 
     public Users getUser(Integer id) {

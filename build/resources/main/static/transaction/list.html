@@ -78,6 +78,7 @@
             <th th:text="#{transaction.period_from}">Period from</th>
             <th th:text="#{transaction.period_to}">Period to</th>
             <th th:text="#{transaction.type_transaction}">Type Transaction</th>
+            <th th:text="#{transaction.frequency}">Frequency</th>
             <th th:text="#{member}">Member</th>
         </tr>
     </table>
@@ -107,6 +108,8 @@
 
         function createTableRows(json) {
 
+            console.log(json);
+
             document.querySelectorAll('#transactions_table tr').forEach((elem, index) => {
                 if (index > 0) {
                     elem.remove()
@@ -129,11 +132,15 @@
                     tr.push('<td>' + json[i].period_to + '</td>');
                 }
                 tr.push('<td>' + json[i].id_type_transaction["name_type_transaction"] + '</td>');
+                if (json[i].id_frequency == null) {
+                    tr.push('<td>' + " " + '</td>');
+                } else {
+                    tr.push('<td>' + json[i].id_frequency["value"] + '</td>');
+                }
                 tr.push('<td>' + json[i].idUser.first_name + ' ' + json[i].idUser.last_name + '</td>');
             }
 
             $('#transactions_table').append($(tr.join('')));
-
 
         }
 
@@ -178,7 +185,6 @@
             } else if (group_id != 0) {
                 url = '/transactions/group/' + group_id
             }
-
 
             $.getJSON(url, function (json) {
                 console.log(json);
