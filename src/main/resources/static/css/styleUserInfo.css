@@ -1,11 +1,6 @@
-body {
-    background: url("/static/images/backgr.jpg") no-repeat center center fixed;
-    background-size: cover;
-}
-
 .emp-profile {
-    padding: 3%;
-    margin-top: 3%;
+    padding: 2%;
+    margin-top: 8%;
     margin-bottom: 3%;
     height: 80%;
     border-radius: 0.5rem;

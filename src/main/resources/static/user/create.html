@@ -126,6 +126,15 @@
                     </td>
                 </tr>
 
+<!--                <tr>-->
+<!--                    <td th:text="#{user.group}">Group</td>-->
+<!--                    <td><input id="group" name="group_name" type="file">-->
+<!--                        <p><a href="/ui/groups/create" id="add-group" th:text="#{user.add_group}">-->
+<!--                            Add group</a>-->
+<!--                        </p>-->
+<!--                    </td>-->
+<!--                </tr>-->
+
             </table>
         </form>
         <br>
@@ -231,9 +240,10 @@
                         'Accept': 'application/json',
                         'Content-Type': 'application/json',
                     },
-                    url: "/users",
+                    url: "/users/add",
                     data: JSON.stringify(usersDTO),
                     success: function (result) {
+                        alert("id_user " + result);
                         location.href = "/ui/users/read/" + result;
                         window.setTimeout(function () {
                             location.reload();
@@ -251,8 +261,6 @@
 
         });
     }
-
-    //  });
 
 
 </script>

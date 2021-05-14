@@ -1,5 +1,6 @@
 package com.mariia.syne.splitwise.controller.mvc;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,13 @@ public class UsersController {
 
         return "user/list";
     }
+
+    @GetMapping("/logout")
+    public String logoutUser(){
+        SecurityContextHolder.getContext().setAuthentication(null);
+        return "/login";
+    }
+
 
     @GetMapping("/read/{user_id}")
     public String showUsersRead(@PathVariable String user_id, Model model){

@@ -1,14 +1,20 @@
 package com.mariia.syne.splitwise.controller.rest;
 
 import com.mariia.syne.splitwise.entity.Groups;
+import com.mariia.syne.splitwise.entity.Role;
 import com.mariia.syne.splitwise.entity.Users;
 import com.mariia.syne.splitwise.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("users")
@@ -26,6 +32,9 @@ public class UsersRestController {
 
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    protected AuthenticationManager authenticationManager;
 
     @GetMapping
     public List<Users> getAllUsers() {
@@ -48,10 +57,16 @@ public class UsersRestController {
         return usersService.getUser(id);
     }
 
-    @PostMapping
+    @PostMapping("/add")
     public Integer addUser(@RequestBody Users user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        return usersService.addUser(user);
+        Integer id = usersService.addUser(user);
+        Set<Role> roles = new HashSet<>();
+        roles.add(new Role(1, "ROLE_USER"));
+        user.setRole(roles);
+        user.setId_users(id);//здесь имя поля может быть неправильным
+        authenticateUserAndSetSession(user);
+        return id;
     }
 
     @PutMapping("/{id}")
@@ -72,5 +87,18 @@ public class UsersRestController {
     public void deleteUser(@PathVariable Integer id) {
 
         usersService.deleteUser(id);
+    }
+
+    private void authenticateUserAndSetSession(Users user) {
+        String login = user.getLogin();
+        String password = user.getPassword();
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(login, password);
+        //request.getSession();
+
+        //token.setDetails(new WebAuthenticationDetails(request));
+        Authentication authenticatedUser = authenticationManager.authenticate(token);
+
+        SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
+
     }
 }

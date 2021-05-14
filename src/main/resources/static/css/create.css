@@ -10,3 +10,7 @@
 #text{
     color: black!important;
 }
+
+.regData {
+    display: none;
+}

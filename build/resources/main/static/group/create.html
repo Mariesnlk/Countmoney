@@ -152,6 +152,10 @@
 
                 $.ajax({
                     type: "POST",
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
                     url: "/groups",
                     data: JSON.stringify(groupDTO),
                     success: function (result) {
