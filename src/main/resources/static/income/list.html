@@ -117,7 +117,7 @@
             for (let i = 0; i < json.length; i++) {
 
                 tr.push('<tr>');
-                tr.push('<td>' + json[i].id_income + '</td>');
+                tr.push('<td class="income_id">' + json[i].id_income + '</td>');
                 tr.push('<td>' + json[i].date + '</td>');
                 tr.push('<td>' + json[i].sum_income + '</td>');
                 tr.push('<td>' + json[i].idUser.first_name + ' ' + json[i].idUser.last_name + '</td>');
@@ -144,7 +144,8 @@
             $(document).delegate('.btnDeleteIncome', 'click', function (event) {
                 event.preventDefault();
 
-                let incomeId = $('#incomeId').text();
+                let incomeId = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.
+                querySelector('.income_id').textContent;
 
                 console.log(incomeId);
 
@@ -156,7 +157,7 @@
                     type: "DELETE",
                     url: '/incomes/' + incomeId,
                     success: function (result) {
-                        location.href = "/ui/incomes/list";
+                        location.href = "/ui/incomes/list/user/" + $('#userId').text();
                         window.setTimeout(function () {
                             location.reload();
                         }, 1000);

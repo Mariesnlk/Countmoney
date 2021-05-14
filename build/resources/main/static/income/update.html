@@ -13,6 +13,14 @@
 </head>
 
 <body>
+
+<style>
+    body {
+        background: url("/static/images/backgr.jpg") no-repeat center center fixed;
+        background-size: cover;
+    }
+</style>
+
 <nav class="navbar navbar-expand navbar-dark bg-dark">
 
     <div class="collapse navbar-collapse">
@@ -23,25 +31,38 @@
                 <div class="col">
                     <a class="navbar-brand">
                         <img src="/static/images/icon.png" width="50" height="50" class="d-inline-block"/>
-                        Splitwise App
+                        CountMoney
                     </a>
                 </div>
 
-                <div class="col-6">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="/">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link">Choose language</a>
-                            <a href="?lang=ru">ru</a>
-                            <a href="?lang=en">en</a>
-                        </li>
-                    </ul>
+                <div class="col">
+                    <a class="nav-link link-light" th:text="#{navbar.home}" href="/">Home</a>
                 </div>
 
+
                 <div class="col">
-                    <a class="btn btn-sm btn-outline-secondary" href="/login">Sign in</a>
+                    <div class="container" style="text-align: right">
+                        <div class="row">
+                            <div class="col">
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button"
+                                            id="dropdownMenuButton"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                            th:text="#{navbar.choose_lang}"> Choose language
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="?lang=ua" th:text="#{navbar.ua}">ua</a>
+                                        <a class="dropdown-item" href="?lang=en" th:text="#{navbar.en}">en</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <a class="btn btn-sm btn-outline-secondary" href="/login" th:text="#{navbar.sign_in}">
+                                    Sign in
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -49,44 +70,59 @@
     </div>
 </nav>
 
-<div class="w3-container">
 
-    <p id="incomeId" hidden><span th:text="${income_id}"/></p>
+<p id="incomeId" hidden><span th:text="${income_id}"/></p>
+<p id="userId" hidden><span th:text="${user_id}"/></p>
 
-    <table id="update_income_entity_table" class="w3-table w3-bordered">
-        <tr>
-            <!--            <th>Property Name</th>-->
-            <!--            <th>Property Value</th>-->
-            <th></th>
-            <th></th>
-        </tr>
-        <tr>
-            <td>Id</td>
-            <td><label id="income_id" name="income_id_name"></label></td>
-        </tr>
+<div style="width:600px;margin-left: auto;margin-right: auto;margin-top:24px;padding: 24px;">
+    <div class="card">
+        <div class="w3-container">
 
-        <tr>
-            <td>Period from income</td>
-            <td><input id="period_from_income" name="period_from_income_name" type="text"></td>
-        </tr>
+            <h2 style="text-align: center">Update Income</h2>
+            <form class="needs-validation" novalidate>
+                <table id="create_income_entity_table" class="w3-table w3-bordered">
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
 
-        <tr>
-            <td>Period to income</td>
-            <td><input id="period_to_income" name="period_to_income_name" type="text"></td>
-        </tr>
+                    <tr>
+                        <td th:text="#{transaction.date}">Date</td>
+                        <td>
+                            <div class="input-group has-validation">
+                                <input class="form-control" id="periodFromIncome" name="periodFromIncome_name"
+                                       type="date" required>
+                                <div class="invalid-feedback" th:text="#{validation.period_income}">
+                                    Add period of income, please
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td th:text="#{transaction.sum}">Sum</td>
+                        <td>
+                            <div class="input-group has-validation">
+                                <input class="form-control" id="sum" name="sum_name" type="text" required>
+                                <div class="invalid-feedback" th:text="#{validation.sum}">
+                                    Enter sum, please
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            <br>
+            <br>
 
-        <tr>
-            <td>Id user</td>
-            <td><input id="id_user" name="id_user_name" type="text"></td>
-        </tr>
-    </table>
-    <br>
-    <br>
+            <div class="container" style="text-align: center; margin-bottom: 10px">
+                <button type="submit" id="btnSave" class="btnSaveIncome btn btn-dark" th:text="#{button.save}">Save
+                </button>
+                <button onclick="location.href='/'" type="button" class="btn btn-dark" th:text="#{button.cancel}">
+                    Cancel
+                </button>
+            </div>
 
-
-    <div class="container">
-        <button id="btnSave" class="btnSaveGroup">Save</button>
-        <button id="btnGoToRead" type="button">Cancel</button>
+        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -101,23 +137,21 @@
             }
         });
 
-        function IncomeDTO(idIncome, periodFromIncome, periodToIncome, idUser) {
+        function IncomeDTO(idIncome, date, idUser, sum) {
             this.id_income = idIncome;
-            this.period_from_income = periodFromIncome;
-            this.period_to_income = periodToIncome;
+            this.date = date;
             this.id_user = idUser;
+            this.sum_income = sum;
         }
 
         $(document).delegate('#btnSave', 'click', function (event) {
             event.preventDefault();
 
-            var id = $('#incomeId').text();
-            var periodFromIncome = $('#periodFromIncome').val();
-            var periodToIncome = $('#periodToIncome').val();
-            // var idUser = $('#isUser').val();
-            var idUser = null;
+            let id = $('#incomeId').text();
+            let date = $('#periodFromIncome').val();
+            let sum = $('#sum').val();
 
-            var incomeDTO = new IncomeDTO(id, periodFromIncome, periodToIncome, idUser);
+            let incomeDTO = new IncomeDTO(id, date, null, sum);
 
             console.log(incomeDTO);
             console.log(JSON.stringify(incomeDTO));
@@ -129,7 +163,7 @@
                 url: '/incomes/' + id,
                 data: JSON.stringify(incomeDTO),
                 success: function (result) {
-                    location.href = "/ui/incomes/read/" + id;
+                    location.href = "/ui/incomes/list/user/" + $('#userId').text();
                     window.setTimeout(function () {
                         location.reload();
                     }, 1000);
@@ -142,32 +176,18 @@
             });
         });
 
-
-        $(document).delegate('#btnGoToRead', 'click', function (result) {
-
-            var incomeId = $('#incomeId').text();
-
-            location.href = "/ui/incomes/read/" + incomeId;
-            window.setTimeout(function () {
-                location.reload();
-            }, 1000);
-
-            alert('SUCCESS!');
-        });
-
-
         function ajaxGet() {
 
-            var incomeId = $('#incomeId').text();
+            let incomeId = $('#incomeId').text();
 
             $.getJSON('/incomes/' + incomeId, function (json) {
 
                 console.log(json);
 
                 $('#income_id').text(json.id_income);
-                $('#period_from_income').val(json.period_from_income);
-                $('#period_to_income').val(json.period_from_income);
-                $('#id_user').val(json.id_user);
+                $('#periodFromIncome').val(json.date);
+                $('#sum').val(json.sum_income);
+                $('#user_id').text(json.id_user);
 
             });
         }
