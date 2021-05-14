@@ -62,6 +62,9 @@ public class IncomeRestController {
     @PutMapping("/{id}")
     public void updateIncome(@RequestBody Income income, @PathVariable Integer id) {
 
+        Users user = (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        income.setIdUser(user);
+
         incomeService.updateIncome(income, id);
     }
 

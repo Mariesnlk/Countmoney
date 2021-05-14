@@ -8,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/static/css/list.css" rel="stylesheet">
 
     <title>Incomes List</title>
 </head>
@@ -66,15 +67,15 @@
 <div>
 
     <p id="userId" hidden><span th:text="${user_id}"/></p>
-    <p id="groupId" hidden><span th:text="${group_id}"/></p>
 
     <table id="incomes_table" class="table table-bordered">
 
-        <tr>
-            <th th:text="#{user.id}">№</th>
-            <th th:text="#{transaction.date}">Date</th>
-            <th th:text="#{transaction.sum}">Sum</th>
-            <th th:text="#{member}">Member</th>
+        <tr class="table-success">
+            <th class="table-success" th:text="#{user.id}">№</th>
+            <th class="table-success" th:text="#{transaction.date}">Date</th>
+            <th class="table-success" th:text="#{transaction.sum}">Sum</th>
+            <th class="table-success" th:text="#{member}">Member</th>
+            <th class="table-success"></th>
         </tr>
 
     </table>
@@ -120,11 +121,56 @@
                 tr.push('<td>' + json[i].date + '</td>');
                 tr.push('<td>' + json[i].sum_income + '</td>');
                 tr.push('<td>' + json[i].idUser.first_name + ' ' + json[i].idUser.last_name + '</td>');
+                tr.push('<td> <div class="container"> <div class="row"> <div class="col">' +
+                    '<a class="edit" href="/ui/incomes/update/' + json[i].id_income + '">\n' +
+                    '                        <img src="/static/images/icon_edit.gif"\n' +
+                    '                             alt="modify"\n' +
+                    '                             style="width:27px;height:27px;"\n' +
+                    '                             title="modify">\n' +
+                    '                    </a> </div> <div class="col">\n' +
+                    '                    <a>\n' +
+                    '                        <img src="/static/images/icon_delete.gif"\n' +
+                    '                             alt="delete"\n' +
+                    '                             style="width:27px;height:27px;"\n' +
+                    '                             title="delete"\n' +
+                    '                             class="btnDeleteIncome">\n' +
+                    '                    </a> </div></div></td>')
+                tr.push('</tr>');
             }
 
             $('#incomes_table').append($(tr.join('')));
 
+
+            $(document).delegate('.btnDeleteIncome', 'click', function (event) {
+                event.preventDefault();
+
+                let incomeId = $('#incomeId').text();
+
+                console.log(incomeId);
+
+                alert("incomeId =" + incomeId);
+
+                alert("button Delete!");
+
+                $.ajax({
+                    type: "DELETE",
+                    url: '/incomes/' + incomeId,
+                    success: function (result) {
+                        location.href = "/ui/incomes/list";
+                        window.setTimeout(function () {
+                            location.reload();
+                        }, 1000);
+
+                        alert('SUCCESS!');
+                    },
+                    error: function (err) {
+                        alert('ERROR!');
+                    }
+                });
+            });
+
         }
+
 
         $(document).delegate('#choose', 'click', function (event) {
 
