@@ -1,6 +1,6 @@
 package com.mariia.syne.splitwise.service;
 
-import com.mariia.syne.splitwise.entity.Groups;
+import com.mariia.syne.splitwise.model.Groups;
 import com.mariia.syne.splitwise.repository.GroupsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

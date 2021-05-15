@@ -1,7 +1,7 @@
 package com.mariia.syne.splitwise.controller.rest;
 
-import com.mariia.syne.splitwise.entity.Income;
-import com.mariia.syne.splitwise.entity.Users;
+import com.mariia.syne.splitwise.model.Income;
+import com.mariia.syne.splitwise.model.Users;
 import com.mariia.syne.splitwise.service.IncomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;

@@ -8,6 +8,7 @@
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link href="/static/css/groupInfo.css" rel="stylesheet">
+    <link href="/static/css/styleUserInfo.css" rel="stylesheet">
     <link href="/static/css/navbar.css" rel="stylesheet">
 
     <title>Group Info</title>
@@ -32,7 +33,7 @@
                 <a class="nav-link link-light" href="/">About us</a>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false" th:text="#{navbar.choose_lang}"> Choose language
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -60,95 +61,106 @@
 
     <div class="container" id="form">
 
-        <div class="row">
-            <div class="col">
+        <div class="page-content page-container" id="page-content">
+            <div class="row">
+                <div class="list list-row block">
+                    <h2 id="group_name"></h2>
 
-                <div class="page-content page-container" id="page-content">
-                    <div class="row">
-                        <div class="list list-row block">
-                            <h2 id="group_name"></h2>
-
-                            <div class="container">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
                                 <div class="row">
-                                    <div class="col">
-                                        <div class="headline">
-                                            <h5 id="labelIncomes" th:text="#{group.incomes}">Group`s incomes: </h5>
-                                            <p id="income_sum"></p>
-                                        </div>
-                                    </div>
-
-                                    <div class="col">
-                                        <div class="headline">
-                                            <h5 id="labelTransactions" th:text="#{group.transactions}">Group`s
-                                                transactions: </h5>
-                                            <p id="transactions_sum"></p>
-                                        </div>
-                                    </div>
-
-                                    <div class="col">
-                                        <div class="headline">
-                                            <h5>Balance</h5>
-                                            <p id="balance_sum"></p>
+                                    <div class="headline">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <h4 id="labelIncomes" th:text="#{group.incomes}">Group`s
+                                                        incomes: </h4>
+                                                </div>
+                                                <div class="col">
+                                                    <p id="income_sum" class="text-size"></p>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div id="users_list">
-                                <div class="headline">
-                                    <h5 th:text="#{group.users}"> Group`s users </h5>
-                                </div>
-                            </div>
-                            <form action="/">
-                                <input type="submit" class="btn btn-dark" value="Back"/>
-                            </form>
-
-                            <div class="container" id="buttons">
                                 <div class="row">
-                                    <div class="col">
-                                        <button id="getTransactions" type="button" class="btn btn-dark"
-                                                name="btnAllTransactions"
-                                                th:text="#{transaction.list}">All Transactions
-                                        </button>
+                                    <div class="headline">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <h4 id="labelTransactions" th:text="#{group.transactions}">Group`s
+                                                        transactions: </h4>
+                                                </div>
+                                                <div class="col">
+                                                    <p id="transactions_sum" class="text-size"></p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col">
-                                        <button id="getIncomes" type="button" class="btn btn-dark" name="btnAllIncomes"
-                                                th:text="#{income.list}">All Incomes
-                                        </button>
+                                </div>
+
+                                <div class="row">
+                                    <div class="headline">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <h4>Balance</h4>
+                                                </div>
+                                                <div class="col">
+                                                    <p id="balance_sum" class="text-size"></p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col">
-                                        <button id="getDebt" type="button" class="btn btn-dark" name="btnGetDebt"
-                                                th:text="#{debt}">Split debt
-                                        </button>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4" id="class-button">
+                                        <div class="profile-work">
+                                            <button id="getTransactions" type="button" class="profile-edit-btn" name="btnAllTransactions"
+                                                    th:text="#{transaction.list}">All Transactions
+                                            </button>
+                                        </div>
+                                        <div class="profile-work">
+                                            <button id="getIncomes" type="button" class="profile-edit-btn" name="btnAllIncomes"
+                                                    th:text="#{income.list}">All Incomes
+                                            </button>
+                                        </div>
+                                        <div class="profile-work">
+                                            <button id="getDebt" type="button" class="profile-edit-btn" name="btnGetDebt"
+                                                    th:text="#{debt}">Split debt
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col">
+                                <div id="users_list">
+                                    <div class="headline">
+                                        <h5 th:text="#{group.users}"> Group`s users </h5>
                                     </div>
                                 </div>
                             </div>
-
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div id="chartContainer" style="height: 370px; width: 100%;">
+                                    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div id="chartContainerIncomes" style="height: 370px; width: 100%;">
+                                    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-
-            <div class="col">
-
-                <div class="page-content page-container">
-                    <div class="row">
-                        <div class="list list-row block">
-
-
-                            <div id="chartContainer" style="height: 370px; width: 100%;">
-                                <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-                            </div>
-                            <div id="chartContainerIncomes" style="height: 370px; width: 100%;">
-                                <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 </div>
@@ -175,7 +187,7 @@
                 sum = result
             }
 
-            $('#transactions_sum').text(sum);
+            $('#transactions_sum').text(sum + " грн");
             console.log("Group transactions " + result);
             $.getJSON('/users/list_users', function (json) {
                 console.log(json);
@@ -213,13 +225,13 @@
                     }
                     console.log(json);
 
-                    $('#income_sum').text(json);
-                    let balance = json -sum;
-                    $('#balance_sum').text(balance);
-                    if(balance<0){
-                        $('#balance_sum').css('color','red');
-                    } else{
-                        $('#balance_sum').css('color','green');
+                    $('#income_sum').text(json + " грн");
+                    let balance = json - sum;
+                    $('#balance_sum').text(balance + " грн");
+                    if (balance < 0) {
+                        $('#balance_sum').css('color', 'red');
+                    } else {
+                        $('#balance_sum').css('color', 'green');
                     }
 
 
@@ -229,12 +241,8 @@
 
                     drawCanvas("chartContainerIncomes", dataCanvasIncomes, $("#labelIncomes").text());
 
-
                 });
-
-
             });
-
         },
         error: function (err) {
             alert('error');
@@ -333,7 +341,6 @@
     }
 
 </script>
-</div>
 
 <!--dropdown for locatization-->
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

@@ -1,4 +1,4 @@
-package com.mariia.syne.splitwise.entity;
+package com.mariia.syne.splitwise.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;

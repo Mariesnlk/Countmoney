@@ -1,8 +1,8 @@
 package com.mariia.syne.splitwise.service;
 
-import com.mariia.syne.splitwise.entity.Frequency;
-import com.mariia.syne.splitwise.entity.Transactions;
-import com.mariia.syne.splitwise.entity.Users;
+import com.mariia.syne.splitwise.model.Frequency;
+import com.mariia.syne.splitwise.model.Transactions;
+import com.mariia.syne.splitwise.model.Users;
 import com.mariia.syne.splitwise.repository.FrequencyRepository;
 import com.mariia.syne.splitwise.repository.TransactionsRepository;
 import org.springframework.beans.factory.annotation.Autowired;

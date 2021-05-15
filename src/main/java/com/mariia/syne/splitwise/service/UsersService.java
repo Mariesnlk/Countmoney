@@ -1,7 +1,7 @@
 package com.mariia.syne.splitwise.service;
 
-import com.mariia.syne.splitwise.entity.Transactions;
-import com.mariia.syne.splitwise.entity.Users;
+import com.mariia.syne.splitwise.model.Transactions;
+import com.mariia.syne.splitwise.model.Users;
 import com.mariia.syne.splitwise.repository.IncomeRepository;
 import com.mariia.syne.splitwise.repository.TransactionsRepository;
 import com.mariia.syne.splitwise.repository.UsersRepository;

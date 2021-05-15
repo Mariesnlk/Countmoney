@@ -154,53 +154,53 @@
                 <div class="tab-content profile-tab" id="myTabContent">
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                         <div class="container">
-                        <div class="row">
-                            <div class="col">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label class="text-3" th:text="#{user.group}">Group</label>
-                            </div>
-                            <!--  -->
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label class="text-3" th:text="#{user.name}">First name</label>
-                            </div>
-                            <!--  -->
-                        </div>
-                        <div class="row ">
-                            <div class="col-md-6">
-                                <label class="text-3" th:text="#{user.surname}">Last name</label>
-                            </div>
-                            <!--  -->
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label class="text-3" th:text="#{user.login}">Login</label>
-                            </div>
-                            <!--  -->
-                        </div>
-                            </div>
-                            <div class="col">
-                        <div id="users_entity_table">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label class="text-3" th:text="#{user.group}">Group</label>
+                                        </div>
+                                        <!--  -->
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label class="text-3" th:text="#{user.name}">First name</label>
+                                        </div>
+                                        <!--  -->
+                                    </div>
+                                    <div class="row ">
+                                        <div class="col-md-6">
+                                            <label class="text-3" th:text="#{user.surname}">Last name</label>
+                                        </div>
+                                        <!--  -->
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label class="text-3" th:text="#{user.login}">Login</label>
+                                        </div>
+                                        <!--  -->
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div id="users_entity_table">
 
-                        </div>
+                                    </div>
+                                </div>
                             </div>
+                        </div>
                     </div>
+
+                    <div class="col-md-4"></div>
+
+                    <button id="modal" type="button" class="profile-edit-btn" data-toggle="modal"
+                            data-target="#exampleModal"
+                            th:text="#{button.phrase}"> You have regular transaction
+                    </button>
                 </div>
             </div>
-
-            <div class="col-md-4"></div>
-
-            <button id="modal" type="button" class="profile-edit-btn" data-toggle="modal" data-target="#exampleModal"
-                    th:text="#{button.phrase}"> You have regular transaction
-            </button>
-
         </div>
     </form>
 </div>
-</div>
-</form>
 
 
 <!-- Modal -->
@@ -386,7 +386,6 @@
     });
 
 </script>
-</div>
 
 <!--dropdown for locatization-->
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

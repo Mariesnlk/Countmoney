@@ -1,4 +1,4 @@
-package com.mariia.syne.splitwise.entity;
+package com.mariia.syne.splitwise.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;

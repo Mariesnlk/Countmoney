@@ -1,8 +1,8 @@
 package com.mariia.syne.splitwise.controller.rest;
 
-import com.mariia.syne.splitwise.entity.Groups;
-import com.mariia.syne.splitwise.entity.Role;
-import com.mariia.syne.splitwise.entity.Users;
+import com.mariia.syne.splitwise.model.Groups;
+import com.mariia.syne.splitwise.model.Role;
+import com.mariia.syne.splitwise.model.Users;
 import com.mariia.syne.splitwise.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;

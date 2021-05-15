@@ -1,4 +1,4 @@
-package com.mariia.syne.splitwise.entity;
+package com.mariia.syne.splitwise.model;
 
 import javax.persistence.*;
 import java.util.List;

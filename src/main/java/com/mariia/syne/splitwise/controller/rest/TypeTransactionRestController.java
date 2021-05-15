@@ -1,6 +1,6 @@
 package com.mariia.syne.splitwise.controller.rest;
 
-import com.mariia.syne.splitwise.entity.TypeTransaction;
+import com.mariia.syne.splitwise.model.TypeTransaction;
 import com.mariia.syne.splitwise.service.TypeTransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

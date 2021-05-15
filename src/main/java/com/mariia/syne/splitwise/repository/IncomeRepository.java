@@ -1,7 +1,7 @@
 package com.mariia.syne.splitwise.repository;
 
-import com.mariia.syne.splitwise.entity.Income;
-import com.mariia.syne.splitwise.entity.Users;
+import com.mariia.syne.splitwise.model.Income;
+import com.mariia.syne.splitwise.model.Users;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
