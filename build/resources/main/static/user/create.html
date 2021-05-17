@@ -238,7 +238,8 @@
                 let role = [{id: 1}];
 
                 $.getJSON('/users', function (json) {
-                    let users = json.filter(user => user.first_name == firstName & user.last_name == lastName);
+
+                    let users = json.filter(user => user.login == login);
 
                     if (!users.length) {
 
@@ -268,7 +269,7 @@
                                 location.href = "/ui/users/read/" + result;
                                 window.setTimeout(function () {
                                     location.reload();
-                                }, 1000);
+                                }, 2000);
 
                                 //alert('SUCCESS!');
                             },

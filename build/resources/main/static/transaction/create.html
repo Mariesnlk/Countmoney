@@ -60,7 +60,7 @@
 <div class="container" id="form"
      style="width:600px;margin-left: auto;margin-right: auto;margin-top:24px;padding: 24px;">
     <div class="card">
-        <p id="card" hidden><span th:text="${min-balance}"/></p>
+
         <p id="userId" hidden><span th:text="${user_id}"/></p>
 
         <h2 style="text-align: center" th:text="#{transaction.add}">Add Transaction</h2>
@@ -159,6 +159,21 @@
             </button>
         </div>
 
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -285,6 +300,9 @@
             console.log(transactionDTO);
             console.log(JSON.stringify(transactionDTO));
 
+            $('#exampleModalLabel').text("Транзакцію додано!");
+            $('#exampleModal').modal('show');
+
             $.ajax({
                 type: "POST",
                 headers: {
@@ -311,17 +329,6 @@
         });
 
     }
-
-    $('#type_transaction-dropdown').change(
-        function () {
-            let typeTransaction = JSON.parse($('#type_transaction-dropdown').val());
-            if (typeTransaction.name_type_transaction === "regular") {
-                $('.regData').css('display', 'block');
-                $('#period_to').prop('required', true);
-                $('#period_from').prop('required', true);
-            }
-        }
-    )
 
 </script>
 

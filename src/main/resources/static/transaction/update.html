@@ -6,8 +6,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link href="/static/css/navbar.css" rel="stylesheet">
+    <link href="/static/css/create.css" rel="stylesheet">
 
     <title>Transaction Update</title>
 
@@ -55,96 +55,201 @@
 
 </nav>
 
-<div class="w3-container">
+<p id="transactionId" hidden><span th:text="${transaction_id}"/></p>
+<p id="userId" hidden><span th:text="${user_id}"/></p>
 
-    <p id="transactionId" hidden><span th:text="${transaction_id}"/></p>
+<div class="container" id="form"
+     style="width:600px;margin-left: auto;margin-right: auto;margin-top:24px;padding: 24px;">
+    <div class="card">
 
-    <table id="update_transaction_entity_table" class="w3-table w3-bordered">
-        <tr>
-            <th></th>
-            <th></th>
-        </tr>
-        <tr>
-            <td>Id</td>
-            <td><label id="transaction_id" name="transation_id_name"></label></td>
-        </tr>
+        <h2 style="text-align: center" th:text="#{transaction.update}">Update Transaction</h2>
+        <form class="needs-validation" novalidate>
+            <table id="update_transaction_entity_table" class="w3-table w3-bordered">
+                <tr>
+                    <th></th>
+                    <th></th>
+                </tr>
 
-        <tr>
-            <td>Date</td>
-            <td><input id="date" name="date_name" type="date"></td>
-        </tr>
-        <tr>
-            <td>Destination</td>
-            <td><input id="destination" name="destination_name" type="text"></td>
-        </tr>
-        <tr>
-            <td>Sum</td>
-            <td><input id="sum" name="sum_name" type="text"></td>
-        </tr>
-        <tr>
-            <td>Period from</td>
-            <td><input id="period_from" name="period_from_name" type="date"></td>
-        </tr>
-        <tr>
-            <td>Period to</td>
-            <td><input id="period_to" name="period_to_name" type="date"></td>
-        </tr>
-        <tr>
-            <td>User</td>
-            <td><input id="id_user" name="id_user_name"></td>
-        </tr>
-        <tr>
-            <td>Type Transaction</td>
-            <td><input id="id_type_transaction" name="id_type_transaction_name"></td>
-        </tr>
+                <tr>
+                    <td th:text="#{transaction.date}">Date</td>
+                    <td>
+                        <div class="input-group has-validation">
+                            <input class="form-control" id="date" name="date_name"
+                                   type="date" required>
+                            <div class="invalid-feedback" th:text="#{validation.date}">
+                                Add period of income, please
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td th:text="#{transaction.description}">Destination</td>
+                    <td>
+                        <div class="input-group has-validation">
+                            <input class="form-control" id="description" name="description_name" type='text'
+                                   list='description-dropdown' pattern="^[a-zA-Zа-яіїЇА-ЯІЇ_ ]*$" required>
+                            <datalist id='description-dropdown'>
+                                <option selected="true" disabled></option>
+                            </datalist>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td th:text="#{transaction.sum}">Sum</td>
+                    <td>
+                        <div class="input-group has-validation">
+                            <input class="form-control" id="sum" name="sum_name" type="text" pattern="^[0-9.]*$"
+                                   required>
+                            <div class="invalid-feedback" th:text="#{validation.sum}">
+                                Enter sum, please
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td th:text="#{transaction.type_transaction}">Type Transaction</td>
+                    <td>
+                        <select id="type_transaction-dropdown" name="type_transaction_name">
+                            <option selected="true" disabled>Choose type transaction</option>
+                        </select>
+                    </td>
+                </tr>
 
-    </table>
-    <br>
-    <br>
+                <tr>
+                    <td th:text="#{transaction.period_from}">Period from</td>
+                    <td>
+                        <div class="input-group has-validation">
+                            <input class="form-control" id="period_from" name="period_from_name" type="date">
+                            <div class="invalid-feedback" th:text="#{validation.period}">
+                                Add period for regular transaction, please
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td th:text="#{transaction.period_to}">Period to</td>
+                    <td>
+                        <div class="input-group has-validation">
+                            <input class="form-control" id="period_to" name="period_to_name" type="date">
+                            <div class="invalid-feedback" th:text="#{validation.period}">
+                                Add period for regular transaction, please
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td th:text="#{transaction.frequency}">Frequency</td>
+                    <td>
+                        <select id="frequency-dropdown" name="frequency_name">
+                            <option selected="true" disabled>Choose frequency</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <br>
+        <br>
 
 
-    <div class="container">
-        <button id="btnSave" class="btnSaveTransaction">Save</button>
-        <button id="btnGoToRead" type="button">Cancel</button>
+        <div class="container" style="text-align: center; margin-bottom: 10px">
+            <button type="submit" id="btnSave" class="btnSaveTransaction btn btn-dark" th:text="#{button.save}">
+                Save
+            </button>
+            <button onclick="location.href='/'" type="button" class="btn btn-dark" th:text="#{button.cancel}">
+                Cancel
+            </button>
+        </div>
     </div>
+</div>
 
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
-    <script type="text/javascript">
+<script type="text/javascript">
 
-        $.ajaxSetup({
-            cache: false,
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            }
-        });
-
-        function TransactionDTO(id, date, destination, sum, periodFrom, periodTo, idUser, idTypeTransaction) {
-            this.id_transaction = id;
-            this.date = date;
-            this.destination = destination;
-            this.sum = sum;
-            this.period_from = periodFrom;
-            this.period_to = periodTo;
-            this.id_user = idUser;
-            this.id_type_transaction = idTypeTransaction;
+    $.ajaxSetup({
+        cache: false,
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
         }
+    });
 
-        $(document).delegate('#btnSave', 'click', function (event) {
-            event.preventDefault();
+    let description_dropdown = $('#description-dropdown');
 
-            var id = $('#id_transaction').val();
-            var date = $('#date').val();
-            var destination = $('#destination').val();
-            var sum = $('#sum').val();
-            var periodFrom = $('#period_from').val();
-            var periodTo = $('#period_to').val();
-            var idUser = $('#id_user').text();
-            var idTypeTransaction = $('#id_type_transaction').text();
+    description_dropdown.empty();
+    description_dropdown.prop('selectedIndex', 0);
 
-            var transactionDTO = new TransactionDTO(id, date, destination, sum, periodFrom, periodTo, idUser,
-                idTypeTransaction);
+    $.getJSON('/transactions/allDescriptions', function (json) {
+        console.log(json);
+        $.each(json, function (key, entry) {
+            description_dropdown.append($('<option></option>').attr('value', entry).text(entry));
+        })
+    });
+
+    let type_transaction_dropdown = $('#type_transaction-dropdown');
+
+    type_transaction_dropdown.empty();
+    type_transaction_dropdown.prop('selectedIndex', 0);
+
+    $.getJSON('/typeTransactions', function (json) {
+        console.log(json);
+        $.each(json, function (key, entry) {
+            type_transaction_dropdown.append($('<option></option>').attr('value', JSON.stringify(entry)).text(entry.name_type_transaction));
+        })
+    });
+
+
+    let frequency_dropdown = $('#frequency-dropdown');
+
+    frequency_dropdown.empty();
+    frequency_dropdown.prop('selectedIndex', 0);
+
+    $.getJSON('/transactions/allFrequency', function (json) {
+        console.log(json);
+        $.each(json, function (key, entry) {
+            frequency_dropdown.append($('<option></option>').attr('value', JSON.stringify(entry)).text(entry.value));
+        })
+    });
+
+    function TransactionDTO(id, date, destination, sum, periodFrom, periodTo, idUser, idTypeTransaction, idFrequency) {
+        this.id_transaction = id;
+        this.date = date;
+        this.destination = destination;
+        this.sum = sum;
+        this.period_from = periodFrom;
+        this.period_to = periodTo;
+        this.id_user = idUser;
+        this.id_type_transaction = idTypeTransaction;
+        this.id_frequency = idFrequency;
+    }
+
+    $(document).delegate('#btnSave', 'click', function (event) {
+        event.preventDefault();
+
+        $.getJSON('/typeTransactions', function (json) {
+            console.log(json);
+
+            let id = $('#id_transaction').val();
+            let date = $('#date').val();
+            let destination = $('#description').val();
+            let sum = $('#sum').val();
+
+            let typeTransaction = JSON.parse($('#type_transaction-dropdown').val());
+            let periodFrom;
+            let periodTo;
+            let idFrequency;
+
+            if (typeTransaction.name_type_transaction === "regular") {
+                periodFrom = $('#period_from').val();
+                periodTo = $('#period_to').val();
+                idFrequency = JSON.parse($('#frequency-dropdown').val());
+            } else {
+                periodFrom = null;
+                periodTo = null;
+                idFrequency = null;
+            }
+
+            let transactionDTO = new TransactionDTO(id, date, destination, sum, periodFrom, periodTo, null, typeTransaction, idFrequency);
 
             console.log(transactionDTO);
             console.log(JSON.stringify(transactionDTO));
@@ -157,7 +262,7 @@
                 url: '/transactions/' + id,
                 data: JSON.stringify(transactionDTO),
                 success: function (result) {
-                    location.href = "/ui/transactions/read/" + id;
+                    location.href = "/ui/transactions/list/user" + $('#userId').text();
                     window.setTimeout(function () {
                         location.reload();
                     }, 1000);
@@ -169,50 +274,35 @@
                 }
             });
         });
+    });
 
+    function ajaxGet() {
 
-        $(document).delegate('#btnGoToRead', 'click', function (result) {
+        let id = $('#transactionId').text();
 
-            var id = $('#transactionId').text();
+        $.getJSON('/transactions/' + id, function (json) {
 
-            location.href = "/ui/transactions/read/" + id;
-            window.setTimeout(function () {
-                location.reload();
-            }, 1000);
+            console.log(json);
 
-            alert('SUCCESS!');
+            $('#transaction_id').text(json.id_transaction);
+            $('#date').val(json.date);
+            $('#description-dropdown').val(json.destination);
+            $('#sum').val(json.sum);
+            $('#period_from').val(json.period_from);
+            $('#period_to').val(json.period_to);
+            $('#id_user').text(json.id_user.id_users);
+            $('#frequency-dropdown').text(json.frequency);
+            $('#type_transaction-dropdown').val(json.id_type_transaction["name_type_transaction"]);
+
         });
+    }
 
+    $(document).ready(function () {
 
-        function ajaxGet() {
+        ajaxGet();
+    });
 
-            var id = $('#transactionId').text();
-
-            $.getJSON('/transactions/' + id, function (json) {
-
-                console.log(json);
-                // alert("json.firstName=" + json.first_name);
-
-                $('#transaction_id').text(json.id_transaction);
-                $('#date').val(json.date);
-                $('#destination').val(json.destination);
-                $('#sum').val(json.sum);
-                $('#period_from').val(json.period_from);
-                $('#period_to').val(json.period_to);
-                $('#id_user').text(json.id_user.id_users);
-                $('#id_type_transaction').text(json.id_type_transaction["name_type_transaction"]);
-
-            });
-        }
-
-        $(document).ready(function () {
-
-            ajaxGet();
-        });
-
-    </script>
-
-</div>
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"

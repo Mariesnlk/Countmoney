@@ -64,7 +64,7 @@
         <p id="groupId" hidden><span th:text="${group_id}"/></p>
         <p id="userId" hidden><span th:text="${user_id}"/></p>
 
-        <h2 style="text-align: center">Friends` debts</h2>
+        <h2 style="text-align: center" th:text="#{debt}">Splid debt</h2>
         <form class="needs-validation" novalidate>
             <table id="create_transaction_entity_table" class="w3-table w3-bordered">
                 <tr>
@@ -73,7 +73,7 @@
                 </tr>
 
                 <tr>
-                    <td>From who</td>
+                    <td th:text="#{from}">From who</td>
                     <td>
                         <div class="input-group has-validation">
                             <select id="from-who-dropdown" name="from_who_name">
@@ -83,7 +83,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>To who</td>
+                    <td th:text="#{to}">To who</td>
                     <td>
                         <div class="input-group has-validation">
                             <select id="to-who-dropdown" name="to_who_name">

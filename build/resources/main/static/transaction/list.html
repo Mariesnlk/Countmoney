@@ -9,6 +9,7 @@
           integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
     <link href="/static/css/navbar.css" rel="stylesheet">
+    <link href="/static/css/list.css" rel="stylesheet">
 
     <title>Transactions List</title>
 </head>
@@ -57,23 +58,24 @@
 
 </nav>
 
-<div>
+<div id="table">
 
     <p id="userId" hidden><span th:text="${user_id}"/></p>
     <p id="groupId" hidden><span th:text="${group_id}"/></p>
 
     <table id="transactions_table" class="table table-bordered">
 
-        <tr class="table-active">
-            <th th:text="#{user.id}">Id</th>
-            <th th:text="#{transaction.date}">Date</th>
-            <th th:text="#{transaction.description}">Destination</th>
-            <th th:text="#{transaction.sum}">Sum</th>
-            <th th:text="#{transaction.period_from}">Period from</th>
-            <th th:text="#{transaction.period_to}">Period to</th>
-            <th th:text="#{transaction.type_transaction}">Type Transaction</th>
-            <th th:text="#{transaction.frequency}">Frequency</th>
-            <th th:text="#{member}">Member</th>
+        <tr class="table-success">
+            <th class="table-success" th:text="#{user.id}">Id</th>
+            <th class="table-success" th:text="#{transaction.date}">Date</th>
+            <th class="table-success" th:text="#{transaction.description}">Destination</th>
+            <th class="table-success" th:text="#{transaction.sum}">Sum</th>
+            <th class="table-success" th:text="#{transaction.period_from}">Period from</th>
+            <th class="table-success" th:text="#{transaction.period_to}">Period to</th>
+            <th class="table-success" th:text="#{transaction.type_transaction}">Type Transaction</th>
+            <th class="table-success" th:text="#{transaction.frequency}">Frequency</th>
+            <th class="table-success" th:text="#{member}">Member</th>
+            <th></th>
         </tr>
     </table>
 
@@ -114,7 +116,7 @@
             for (let i = 0; i < json.length; i++) {
 
                 tr.push('<tr>');
-                tr.push('<td>' + json[i].id_transaction + '</td>');
+                tr.push('<td class="transaction_id">' + json[i].id_transaction + '</td>');
                 tr.push('<td>' + json[i].date + '</td>');
                 tr.push('<td>' + json[i].destination + '</td>');
                 tr.push('<td>' + json[i].sum + '</td>');
@@ -132,11 +134,51 @@
                     tr.push('<td>' + json[i].id_frequency["value"] + '</td>');
                 }
                 tr.push('<td>' + json[i].idUser.first_name + ' ' + json[i].idUser.last_name + '</td>');
+                tr.push('<td> <div class="container"> <div class="row"> <div class="col">' +
+                    '<a class="edit" href="/ui/transactions/update/' + json[i].id_transaction + '">\n' +
+                    '                        <img src="/static/images/icon_edit.gif"\n' +
+                    '                             alt="modify"\n' +
+                    '                             style="width:27px;height:27px;"\n' +
+                    '                             title="modify">\n' +
+                    '                    </a> </div> <div class="col">\n' +
+                    '                    <a>\n' +
+                    '                        <img src="/static/images/icon_delete.gif"\n' +
+                    '                             alt="delete"\n' +
+                    '                             style="width:27px;height:27px;"\n' +
+                    '                             title="delete"\n' +
+                    '                             class="btnDeleteTransaction">\n' +
+                    '                    </a> </div></div></td>')
+                tr.push('</tr>');
             }
 
             $('#transactions_table').append($(tr.join('')));
 
         }
+
+        $(document).delegate('.btnDeleteTransaction', 'click', function (event) {
+            event.preventDefault();
+
+            let transactionId = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.
+            querySelector('.transaction_id').textContent;
+
+            console.log(transactionId);
+
+            $.ajax({
+                type: "DELETE",
+                url: '/transactions/' + transactionId,
+                success: function (result) {
+                    location.href = "/ui/transactions/list/user/" + $('#userId').text();
+                    window.setTimeout(function () {
+                        location.reload();
+                    }, 1000);
+
+                    alert('Транзакцію видалено!');
+                },
+                error: function (err) {
+                    alert('ERROR!');
+                }
+            });
+        });
 
         $(document).delegate('#choose', 'click', function (event) {
 
