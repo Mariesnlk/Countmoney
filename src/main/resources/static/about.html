@@ -1,0 +1,80 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/static/css/navbar.css" rel="stylesheet">
+
+    <title>About Us </title>
+
+</head>
+<body>
+
+<nav class="navbar fixed-top navbar-expand navbar-dark bg-dark">
+
+    <a class="navbar-brand">
+        <img src="/static/images/icon.png" width="50" height="50" class="d-inline-block"/>
+        CountMoney
+    </a>
+
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link link-light" th:text="#{navbar.home}" href="/">Home</a>
+            </li>
+            <li class="nav-item" active>
+                <a class="nav-link link-light" href="./about.html">About us</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false" th:text="#{navbar.choose_lang}"> Choose language
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="?lang=ua" th:text="#{navbar.ua}">ua</a>
+                    <a class="dropdown-item" href="?lang=en" th:text="#{navbar.en}">en</a>
+                </div>
+            </li>
+        </ul>
+
+    </div>
+
+    <div class="navbar navbar-expand-md" id="sign-in">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="btn btn-sm btn-outline-secondary" href="/login" th:text="#{navbar.sign_in}">Sign in</a>
+            </li>
+        </ul>
+    </div>
+
+</nav>
+
+<div class="container">
+
+    <div id="background-info">
+        <div class="jumbotron p-3 p-md-5 text-black ">
+            <div class="col-md-6 px-0">
+                <h1 class="display-6 font-italic" th:text="#{index_jsp.logo}">Welcome to CountMoney!</h1>
+                <p class="lead my-3" th:text="#{index_jsp.logo_text}">This app will help you control your incomes and
+                    outgoings. You can use it with
+                    your friends and family.</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!--dropdown for locatization-->
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<!---->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+        crossorigin="anonymous">
+</script>
+
+</body>
+</html>

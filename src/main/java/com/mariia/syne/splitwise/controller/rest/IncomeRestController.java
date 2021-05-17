@@ -87,7 +87,8 @@ public class IncomeRestController {
     }
 
     @GetMapping("user/{user_id}/period")
-    public List<Income> findAllByDateBetweenByIdUser(@PathVariable Integer user_id,@RequestParam String start, @RequestParam String end) {
+    public List<Income> findAllByDateBetweenByIdUser(@PathVariable Integer user_id,@RequestParam String start,
+                                                     @RequestParam String end) {
         SimpleDateFormat format = new SimpleDateFormat();
         format.applyPattern("yyyy-MM-dd");
         Date startDate = null;

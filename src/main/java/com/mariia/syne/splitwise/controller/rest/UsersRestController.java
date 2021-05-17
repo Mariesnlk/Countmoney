@@ -64,7 +64,7 @@ public class UsersRestController {
         Set<Role> roles = new HashSet<>();
         roles.add(new Role(1, "ROLE_USER"));
         user.setRole(roles);
-        user.setId_users(id);//здесь имя поля может быть неправильным
+        user.setId_users(id);
         authenticateUserAndSetSession(user);
         return id;
     }
@@ -93,9 +93,7 @@ public class UsersRestController {
         String login = user.getLogin();
         String password = user.getPassword();
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(login, password);
-        //request.getSession();
 
-        //token.setDetails(new WebAuthenticationDetails(request));
         Authentication authenticatedUser = authenticationManager.authenticate(token);
 
         SecurityContextHolder.getContext().setAuthentication(authenticatedUser);

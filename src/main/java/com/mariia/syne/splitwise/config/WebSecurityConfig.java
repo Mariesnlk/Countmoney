@@ -37,7 +37,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/ui/groups/**", "/groups", "/groups/**",
                         "/ui/incomes/**", "/incomes", "/incomes/**",
                         "/ui/transactions/**", "/transactions","/transactions/**",
-                        "/ui/typeTransactions/**", "/typeTransactions", "/typeTransactions/**").permitAll()
+                        "/ui/typeTransactions/**", "/typeTransactions", "/typeTransactions/**",
+                        "/about", "/contacts").permitAll()
                .antMatchers().hasAnyRole("ADMIN","USER")
                 .anyRequest().authenticated()
                 .and()

@@ -29,7 +29,10 @@
                 <a class="nav-link link-light" th:text="#{navbar.home}" href="/">Home</a>
             </li>
             <li class="nav-item" active>
-                <a class="nav-link link-light" href="/">About us</a>
+                <a class="nav-link link-light" th:text="#{about-us}" href="/about">About us</a>
+            </li>
+            <li class="nav-item" active>
+                <a class="nav-link link-light" th:text="#{contacts}" href="/contacts">Contacts</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
@@ -84,7 +87,7 @@
                     <td th:text="#{transaction.sum}">Sum</td>
                     <td>
                         <div class="input-group has-validation">
-                            <input class="form-control" id="sum" name="sum_name" type="text" required>
+                            <input class="form-control" id="sum" name="sum_name" type="text" pattern="^[0-9.]*$" required>
                             <div class="invalid-feedback" th:text="#{validation.sum}">
                                 Enter sum, please
                             </div>
@@ -138,7 +141,6 @@
     }
 
     function save() {
-        alert('Saved')
 
         let id = $('#id_income').val();
         let date = $('#periodFromIncome').val();
@@ -147,9 +149,7 @@
         let incomeDTO = new IncomeDTO(id, date, sum);
 
         console.log(incomeDTO);
-        console.log(JSON.stringify(incomeDTO));
-
-        alert("button Save!");
+        console.log(JSON.stringify(incomeDTO));;
 
         $.ajax({
             type: "POST",
@@ -165,7 +165,7 @@
                     location.reload();
                 }, 1000);
 
-                alert('SUCCESS!');
+                //alert('SUCCESS!');
             },
             error: function (err) {
                 alert('ERROR!');

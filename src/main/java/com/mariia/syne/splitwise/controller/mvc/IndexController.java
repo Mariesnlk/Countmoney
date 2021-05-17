@@ -22,11 +22,25 @@ public class IndexController {
 
         if (roles.contains("ROLE_USER")) {
             Integer user_id = ((Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId_users();
-            model.addAttribute("user_id",user_id);
+            model.addAttribute("user_id", user_id);
 
             return "user/read";
 
         } else return "/index.html";
+
+    }
+
+    @GetMapping("about")
+    public String showAboutPage() {
+
+        return "/about.html";
+
+    }
+
+    @GetMapping("contacts")
+    public String showContactsPage() {
+
+        return "/contacts.html";
 
     }
 
