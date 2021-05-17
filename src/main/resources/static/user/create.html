@@ -75,7 +75,7 @@
                     <td>
                         <div class="input-group has-validation">
                             <input class="form-control" id="firstName" name="firstName_name" type="text"
-                                   placeholder="Enter surname..." pattern="^[A-Z][a-z]+$" required>
+                                   placeholder="Enter surname..." pattern="^[A-ZА-ЯІЇ][a-zа-яіїЇA-ZА-ЯІЇ\-']+$" required>
                             <div class="invalid-feedback" th:text="#{validation.surname}">
                                 Enter your surname, please
                             </div>
@@ -88,7 +88,7 @@
                         <td>
                             <div class="input-group has-validation">
                                 <input class="form-control" id="lastName" name="lastName_name" type="text"
-                                       placeholder="Enter name..." pattern="^[A-Z][a-z]+$" required>
+                                       placeholder="Enter name..." pattern="^[A-ZА-ЯІЇ][a-zа-яіїЇA-ZА-ЯІЇ\-']+$" required>
                                 <div class="invalid-feedback" th:text="#{validation.name}">
                                     Enter your name, please
                                 </div>

@@ -169,8 +169,8 @@ a:not([href]):not([tabindex]):focus {
 }
 
 .w-48 {
-    width: 50px !important;
-    height: 50px !important
+    width: 55px !important;
+    height: 55px !important
 }
 
 a:link {

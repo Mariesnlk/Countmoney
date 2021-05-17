@@ -6,7 +6,7 @@
     margin-left: 1%;
 }
 
-.nav-link, a{
+.nav-link, a, #getTransactions1, #getIncomes1, #getDebt1{
     color: white !important;
 }
 

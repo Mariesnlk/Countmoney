@@ -30,7 +30,10 @@
                 <a class="nav-link link-light" th:text="#{navbar.home}" href="/">Home</a>
             </li>
             <li class="nav-item" active>
-                <a class="nav-link link-light" href="/">About us</a>
+                <a class="nav-link link-light" th:text="#{about-us}" href="/about">About us</a>
+            </li>
+            <li class="nav-item" active>
+                <a class="nav-link link-light" th:text="#{contacts}" href="/contacts">Contacts</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
@@ -72,7 +75,7 @@
                     <td>
                         <div class="input-group has-validation">
                             <input class="form-control" id="firstName" name="firstName_name" type="text"
-                                   placeholder="Enter surname..." required>
+                                   placeholder="Enter surname..." pattern="^[A-ZА-ЯІЇ][a-zа-яіїЇA-ZА-ЯІЇ\-']+$" required>
                             <div class="invalid-feedback" th:text="#{validation.surname}">
                                 Enter your surname, please
                             </div>
@@ -85,7 +88,7 @@
                         <td>
                             <div class="input-group has-validation">
                                 <input class="form-control" id="lastName" name="lastName_name" type="text"
-                                       placeholder="Enter name..." required>
+                                       placeholder="Enter name..." pattern="^[A-ZА-ЯІЇ][a-zа-яіїЇA-ZА-ЯІЇ\-']+$" required>
                                 <div class="invalid-feedback" th:text="#{validation.name}">
                                     Enter your name, please
                                 </div>
@@ -98,7 +101,7 @@
                     <td>
                         <div class="input-group has-validation">
                             <input class="form-control" id="login" name="login_name" type="text"
-                                   placeholder="Enter login..." required>
+                                   pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$" placeholder="test@gmail.com" required>
                             <div class="invalid-feedback" th:text="#{validation.login}">
                                 Enter your login, please
                             </div>
@@ -110,7 +113,8 @@
                     <td>
                         <div class="input-group has-validation">
                             <input class="form-control" id="password" name="password_name" type="password"
-                                   placeholder="Enter password..." required>
+                                   placeholder="Enter password..." minlength="8" required>
+                            <!--                                   pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$"-->
                             <div class="invalid-feedback" th:text="#{validation.password}">
                                 Enter your password, please
                             </div>
@@ -147,6 +151,22 @@
                     <a class="font-weight-bold lead mb-0" id="text" href="/login" th:text="#{navbar.sign_in}">Sign
                         in</a>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
         </div>
     </div>
@@ -195,7 +215,6 @@
     }
 
     function save() {
-        alert('Saved')
 
         let group = $('#group').val();
 
@@ -205,8 +224,12 @@
             let gr = json.filter(elem => elem.name_group === group);
 
             if (!gr.length) {
-                alert('This group doesn`t exist. You can create your own group')
+
+                $('#exampleModalLabel').text("Такої групи не існує, додайте її!");
+                $('#exampleModal').modal('show');
+
             } else {
+
                 let id = $('#user_id').val();
                 let firstName = $('#firstName').val();
                 let lastName = $('#lastName').val();
@@ -214,41 +237,49 @@
                 let password = $('#password').val();
                 let role = [{id: 1}];
 
+                $.getJSON('/users', function (json) {
+                    let users = json.filter(user => user.first_name == firstName & user.last_name == lastName);
 
-                let usersDTO = new UsersDTO(id, firstName, lastName, login, password, role, gr[0]);
+                    if (!users.length) {
 
-                console.log(usersDTO);
-                console.log(JSON.stringify(usersDTO));
+                        $('#exampleModalLabel').text("Цей користувач вже існує");
+                        $('#exampleModal').modal('show');
 
-                alert("User " + usersDTO.first_name + " " + usersDTO.last_name + " was added!");
+                    } else {
 
-                alert("button Save!");
+                        let usersDTO = new UsersDTO(id, firstName, lastName, login, password, role, gr[0]);
 
-                $.ajax({
-                    type: "POST",
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-                    url: "/users/add",
-                    data: JSON.stringify(usersDTO),
-                    success: function (result) {
-                        alert("id_user " + result);
-                        location.href = "/ui/users/read/" + result;
-                        window.setTimeout(function () {
-                            location.reload();
-                        }, 1000);
+                        console.log(usersDTO);
+                        console.log(JSON.stringify(usersDTO));
 
-                        alert('SUCCESS!');
-                    },
-                    error: function (err) {
-                        alert('ERROR!');
+
+                        $('#exampleModalLabel').text("Користувач " + usersDTO.first_name + " " + usersDTO.last_name + " доданий");
+                        $('#exampleModal').modal('show');
+
+                        $.ajax({
+                            type: "POST",
+                            headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json',
+                            },
+                            url: "/users/add",
+                            data: JSON.stringify(usersDTO),
+                            success: function (result) {
+                                location.href = "/ui/users/read/" + result;
+                                window.setTimeout(function () {
+                                    location.reload();
+                                }, 1000);
+
+                                //alert('SUCCESS!');
+                            },
+                            error: function (err) {
+                                alert('ERROR!');
+                            }
+
+                        });
                     }
-
                 });
-
             }
-
         });
     }
 

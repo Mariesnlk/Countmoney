@@ -29,7 +29,10 @@
                 <a class="nav-link link-light" th:text="#{navbar.home}" href="/">Home</a>
             </li>
             <li class="nav-item" active>
-                <a class="nav-link link-light" href="/">About us</a>
+                <a class="nav-link link-light" th:text="#{about-us}" href="/about">About us</a>
+            </li>
+            <li class="nav-item" active>
+                <a class="nav-link link-light" th:text="#{contacts}" href="/contacts">Contacts</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
@@ -95,6 +98,21 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" th:text="#{group-exist}">This group is already exist!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 <script type="text/javascript">
@@ -126,7 +144,6 @@
     }
 
     function save() {
-        alert('Saved')
 
         $.getJSON('/groups', function (json) {
 
@@ -138,17 +155,14 @@
             let gr = json.filter(elem => elem.name_group === nameGroup);
 
             if (gr.length) {
-                alert('Group with this name already exist!')
+                $('#exampleModal').modal('show');
+
             } else {
 
                 let groupDTO = new GroupDTO(id, nameGroup);
 
                 console.log(groupDTO);
                 console.log(JSON.stringify(groupDTO));
-
-                alert("Group " + groupDTO.name_group + " was added!");
-
-                alert("button Save!");
 
                 $.ajax({
                     type: "POST",
@@ -164,7 +178,7 @@
                             location.reload();
                         }, 1000);
 
-                        alert('SUCCESS!');
+                        //alert('SUCCESS!');
                     },
                     error: function (err) {
                         alert('ERROR!');

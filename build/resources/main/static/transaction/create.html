@@ -29,7 +29,10 @@
                 <a class="nav-link link-light" th:text="#{navbar.home}" href="/">Home</a>
             </li>
             <li class="nav-item" active>
-                <a class="nav-link link-light" href="/">About us</a>
+                <a class="nav-link link-light" th:text="#{about-us}" href="/about">About us</a>
+            </li>
+            <li class="nav-item" active>
+                <a class="nav-link link-light" th:text="#{contacts}" href="/contacts">Contacts</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
@@ -57,7 +60,7 @@
 <div class="container" id="form"
      style="width:600px;margin-left: auto;margin-right: auto;margin-top:24px;padding: 24px;">
     <div class="card">
-
+        <p id="card" hidden><span th:text="${min-balance}"/></p>
         <p id="userId" hidden><span th:text="${user_id}"/></p>
 
         <h2 style="text-align: center" th:text="#{transaction.add}">Add Transaction</h2>
@@ -84,7 +87,7 @@
                     <td>
                         <div class="input-group has-validation">
                             <input class="form-control" id="description" name="description_name" type='text'
-                                   list='description-dropdown' required>
+                                   list='description-dropdown' pattern="^[a-zA-Zа-яіїЇА-ЯІЇ_ ]*$" required>
                             <datalist id='description-dropdown'>
                                 <option selected="true" disabled></option>
                             </datalist>
@@ -95,7 +98,7 @@
                     <td th:text="#{transaction.sum}">Sum</td>
                     <td>
                         <div class="input-group has-validation">
-                            <input class="form-control" id="sum" name="sum_name" type="text" required>
+                            <input class="form-control" id="sum" name="sum_name" type="text" pattern="^[0-9.]*$" required>
                             <div class="invalid-feedback" th:text="#{validation.sum}">
                                 Enter sum, please
                             </div>
@@ -176,7 +179,7 @@
                     incomes = json;
                 }
                 if (incomes - sum < 0) {
-                    $(".card").text("Ваш баланс превышен. Вы не можете совершать транзакции");
+                    $(".card").text("Ваш баланс від'ємний. Ви не можете додавати транзакцію!");
                     $(".card").css('color', 'red');
                 }
             })
@@ -253,7 +256,6 @@
 
 
     function save() {
-        alert('Saved')
 
         $.getJSON('/typeTransactions', function (json) {
             console.log(json);
@@ -283,8 +285,6 @@
             console.log(transactionDTO);
             console.log(JSON.stringify(transactionDTO));
 
-            alert("button Save!");
-
             $.ajax({
                 type: "POST",
                 headers: {
@@ -300,7 +300,7 @@
                     }, 1000);
 
                     console.log(result);
-                    alert('SUCCESS!');
+                    //alert('SUCCESS!');
                 },
                 error: function (err) {
                     alert('ERROR!');
