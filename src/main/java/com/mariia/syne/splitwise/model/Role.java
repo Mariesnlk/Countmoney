@@ -1,31 +1,29 @@
 package com.mariia.syne.splitwise.model;
 
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import javax.persistence.*;
 import java.util.Set;
 
+@Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@RequiredArgsConstructor
+@Builder
 public class Role  implements GrantedAuthority {
 
     @Id
+    @Column
     private Integer id;
 
+    @Column
     private String name;
 
     @Transient
     @ManyToMany(mappedBy = "roles")
+    @Column
     private Set<Users> users;
-    public Role() {
-    }
-
-    public Role(Integer id) {
-        this.id = id;
-    }
-
-    public Role(Integer id, String name) {
-        this.id = id;
-        this.name = name;
-    }
 
     public Integer getId() {
         return id;

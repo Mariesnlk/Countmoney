@@ -1,48 +1,36 @@
 package com.mariia.syne.splitwise.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
 
+@Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@RequiredArgsConstructor
+@Builder
 public class Income {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private Integer id_income;
 
     @Temporal(TemporalType.DATE)
+    @Column
     private Date date;
 
     @ManyToOne
     @JoinColumn(name = "id_user")
+    @Column
     private Users idUser;
 
+    @Column
     private Double sum_income;
-
-    public Income() {
-    }
-
-    public Income(Date date, Users idUser, Double sum_income) {
-        this.date = date;
-        this.idUser = idUser;
-        this.sum_income = sum_income;
-    }
-
-    public Income(Integer id_income, Date date, Users idUser, Double sum_income) {
-        this.id_income = id_income;
-        this.date = date;
-        this.idUser = idUser;
-        this.sum_income = sum_income;
-    }
-
-    public Income(Integer id_income, Date date,  Double sum_income) {
-        this.id_income = id_income;
-        this.date = date;
-        this.sum_income = sum_income;
-    }
 
     public Integer getId_income() {
         return id_income;
@@ -78,13 +66,4 @@ public class Income {
         this.sum_income = sum_income;
     }
 
-    @Override
-    public String toString() {
-        return "Income{" +
-                "id_income=" + id_income +
-                ", date=" + date +
-                ", id_user=" + idUser +
-                ", sum_income=" + sum_income +
-                '}';
-    }
 }

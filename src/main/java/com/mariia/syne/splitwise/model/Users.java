@@ -1,6 +1,7 @@
 package com.mariia.syne.splitwise.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -10,31 +11,43 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+@Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@RequiredArgsConstructor
+@Builder
 public class Users implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private Integer id_users;
 
+    @Column
     private String first_name;
 
+    @Column
     private String last_name;
 
     @NotNull
+    @Column
     private String login;
 
     @NotNull
+    @Column
     private String password;
 
     @Transient
     private String passwordConfirm;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @Column
     private Set<Role> roles;
 
     @ManyToOne
     @JoinColumn(name = "id_group")
+    @Column
     private Groups id_group;
 
     @OneToMany
@@ -53,63 +66,6 @@ public class Users implements UserDetails {
 
     @Transient
     private Double sumIncomes;
-
-    public Users() {
-    }
-
-    public Users(Integer id_users) {
-        this.id_users = id_users;
-    }
-
-    public Users(String first_name, String last_name, String login, String password, Set<Role> roles, Groups id_group) {
-        this.first_name = first_name;
-        this.last_name = last_name;
-        this.login = login;
-        this.password = password;
-        this.roles = roles;
-        this.id_group = id_group;
-    }
-
-    public Users(Integer id_users, String first_name, String last_name, String login, String password, Set<Role> roles,
-                 Groups id_group) {
-        this.id_users = id_users;
-        this.first_name = first_name;
-        this.last_name = last_name;
-        this.login = login;
-        this.password = password;
-        this.roles = roles;
-        this.id_group = id_group;
-    }
-
-    public Users(Integer id_users, String first_name, String last_name, String login, String password, Set<Role> roles,
-                 Groups id_group, List<Income> incomes, List<Transactions> transactions) {
-        this.id_users = id_users;
-        this.first_name = first_name;
-        this.last_name = last_name;
-        this.login = login;
-        this.password = password;
-        this.roles = roles;
-        this.id_group = id_group;
-        this.incomes = incomes;
-        this.transactions = transactions;
-    }
-
-    public Double getSumTransactions() {
-        return sumTransactions;
-    }
-
-    public void setSumTransactions(Double sumTransactions) {
-        this.sumTransactions = sumTransactions;
-    }
-
-    public Double getSumIncomes() {
-        return sumIncomes;
-    }
-
-    public void setSumIncomes(Double sumIncomes) {
-        this.sumIncomes = sumIncomes;
-    }
-
 
     @Override
     public String getUsername() {
@@ -141,20 +97,8 @@ public class Users implements UserDetails {
         return getRoles();
     }
 
-    public String getPasswordConfirm() {
-        return passwordConfirm;
-    }
-
-    public void setPasswordConfirm(String passwordConfirm) {
-        this.passwordConfirm = passwordConfirm;
-    }
-
     public Set<Role> getRoles() {
         return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
     }
 
     public void setId_users(Integer users) {
@@ -163,22 +107,6 @@ public class Users implements UserDetails {
 
     public Integer getId_users() {
         return id_users;
-    }
-
-    public String getFirst_name() {
-        return first_name;
-    }
-
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
-    }
-
-    public String getLast_name() {
-        return last_name;
-    }
-
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
     }
 
     public String getLogin() {
@@ -209,10 +137,6 @@ public class Users implements UserDetails {
         return id_group;
     }
 
-    public void setId_group(Groups id_group) {
-        this.id_group = id_group;
-    }
-
     @JsonIgnore
     public List<Income> getIncomes() {
         return incomes;
@@ -231,16 +155,4 @@ public class Users implements UserDetails {
         this.transactions = transactions;
     }
 
-    @Override
-    public String toString() {
-        return "Users{" +
-                "id_user=" + id_users +
-                ", first_name='" + first_name + '\'' +
-                ", last_name='" + last_name + '\'' +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", role='" + roles + '\'' +
-                ", id_group='" + id_group + '\'' +
-                '}';
-    }
 }

@@ -50,6 +50,10 @@ dependencies {
     // https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf
 //    compile group: 'org.thymeleaf', name: 'thymeleaf', version: '2.0.5'
 
+    // https://projectlombok.org
+    compileOnly 'org.projectlombok:lombok:1.18.4'
+    annotationProcessor 'org.projectlombok:lombok:1.18.4'
+
     testImplementation 'org.hamcrest:hamcrest:2.2'
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {

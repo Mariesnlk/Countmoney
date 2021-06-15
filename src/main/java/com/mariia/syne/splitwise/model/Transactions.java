@@ -1,23 +1,32 @@
 package com.mariia.syne.splitwise.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
 
+@Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@RequiredArgsConstructor
+@Builder
 public class Transactions {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private Integer id_transaction;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
+    @Column
     private String destination;
 
+    @Column
     private double sum;
 
     @Temporal(TemporalType.DATE)
@@ -28,68 +37,21 @@ public class Transactions {
 
     @ManyToOne
     @JoinColumn(name = "id_user")
+    @Column
     private Users idUser;
 
     @ManyToOne
     @JoinColumn(name = "id_type_transaction")
+    @Column
     private TypeTransaction id_type_transaction;
 
     @ManyToOne
     @JoinColumn(name = "id_frequency")
+    @Column
     private Frequency id_frequency;
-
-    public Transactions() {
-    }
-
-    public Transactions(Date date, String destination, double sum, Date period_from, Date period_to, Users id_user,
-                        TypeTransaction id_type_transaction) {
-        this.date = date;
-        this.destination = destination;
-        this.sum = sum;
-        this.period_from = period_from;
-        this.period_to = period_to;
-        this.idUser = id_user;
-        this.id_type_transaction = id_type_transaction;
-    }
-
-    public Transactions(Integer id_transaction, Date date, String destination, double sum, Date period_from,
-                        Date period_to, Users id_user, TypeTransaction id_type_transaction, Frequency id_frequency) {
-        this.id_transaction = id_transaction;
-        this.date = date;
-        this.destination = destination;
-        this.sum = sum;
-        this.period_from = period_from;
-        this.period_to = period_to;
-        this.idUser = id_user;
-        this.id_type_transaction = id_type_transaction;
-        this.id_frequency = id_frequency;
-    }
-
-    public Transactions(Integer id_transaction, Date date, String destination, double sum, Date period_from,
-                        Date period_to, TypeTransaction id_type_transaction) {
-        this.id_transaction = id_transaction;
-        this.date = date;
-        this.destination = destination;
-        this.sum = sum;
-        this.period_from = period_from;
-        this.period_to = period_to;
-        this.id_type_transaction = id_type_transaction;
-    }
 
     public Frequency getId_frequency() {
         return id_frequency;
-    }
-
-    public void setId_frequency(Frequency id_frequency) {
-        this.id_frequency = id_frequency;
-    }
-
-    public Integer getId_transaction() {
-        return id_transaction;
-    }
-
-    public void setId_transaction(Integer id_transaction) {
-        this.id_transaction = id_transaction;
     }
 
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -124,20 +86,11 @@ public class Transactions {
         return period_from;
     }
 
-    public void setPeriod_from(Date period_from) {
-        this.period_from = period_from;
-    }
-
     @JsonFormat(pattern = "yyyy-MM-dd")
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     public Date getPeriod_to() {
         return period_to;
     }
-
-    public void setPeriod_to(Date period_to) {
-        this.period_to = period_to;
-    }
-
 
     public Users getIdUser() {
         return idUser;
@@ -151,21 +104,4 @@ public class Transactions {
         return id_type_transaction;
     }
 
-    public void setId_type_transaction(TypeTransaction id_type_transaction) {
-        this.id_type_transaction = id_type_transaction;
-    }
-
-    @Override
-    public String toString() {
-        return "Transactions{" +
-                "id_transaction=" + id_transaction +
-                ", date=" + date +
-                ", destination='" + destination + '\'' +
-                ", sum=" + sum +
-                ", period_from=" + period_from +
-                ", period_to=" + period_to +
-                ", id_user=" + idUser +
-                ", id_type_transaction=" + id_type_transaction +
-                '}';
-    }
 }
