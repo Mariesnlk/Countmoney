@@ -17,11 +17,10 @@ The customer can view incomes/transactions statistics, filter:
 ### Prerequisites
 - JDK, JRE 8 or later,
 - Maven,
-- Jsp,
 - MySQL.
 
 ## Set up
 - Clone the project to local repository.
-- Create database db_supermarket.
+- Create database db_supermarket, you can uncommit in applocation.properties lines, which automatically is built enteties.
 
 
